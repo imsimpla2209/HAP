@@ -4,7 +4,7 @@ import { BiEdit } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { getUsers } from "../../../features/admin/customers/customerSlice";
+import { getUsers } from "../../../features/customers/customerSlice";
 import { deleteAUser, updateUserRole } from "../../../features/auth/authSlice";
 import CustomModal from "../../../components/CustomModal";
 
@@ -66,7 +66,7 @@ const User = () => {
   };
   const customerstate = useSelector((state) => state.customer.customers);
   const data1 = [];
-  console.log(customerstate[0]?._id)  
+  console.log(customerstate[0]?._id)
   console.log(customerstate[1]?._id)
   console.log(userId)
   for (let i = 0; i < customerstate.length; i++) {
@@ -115,13 +115,13 @@ const User = () => {
       <div>
         <Table columns={columns} dataSource={data1} />
         <CustomModal
-        hideModal={hideModal}
-        open={open}
-        performAction={() => {
-          deleteUser(userId);
-        }}
-        title="Are you sure you want to delete this brand?"
-      />
+          hideModal={hideModal}
+          open={open}
+          performAction={() => {
+            deleteUser(userId);
+          }}
+          title="Are you sure you want to delete this brand?"
+        />
       </div>
     </div>
   );

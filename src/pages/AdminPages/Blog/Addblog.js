@@ -9,7 +9,7 @@ import {
   delImg,
   resetUploadState,
   uploadImg,
-} from "../../../features/admin/upload/uploadSlice";
+} from "../../../features/upload/uploadSlice";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -24,7 +24,7 @@ import {
 } from "../../../features/admin/blog/blogSlice";
 
 import { getBlogcats } from "../../../features/admin/blogcat/blogcatSlice";
-import { resetImgProductState } from "../../../features/admin/product/productSlice";
+import { resetImgProductState } from "../../../features/product/productSlice";
 let schema = yup.object().shape({
   title: yup.string().required("Title is Required"),
   description: yup.string().required("Description is Required"),
@@ -141,10 +141,10 @@ const Addblog = () => {
           >
             <option value="">Select Blog Category</option>
             {bCatState.map((item, index) => (
-                <option key={index} value={item._id}>
-                  {item.title}
-                </option>
-              ))}
+              <option key={index} value={item._id}>
+                {item.title}
+              </option>
+            ))}
           </select>
           {formik.touched.blogcat && formik.errors.blogcat && (
             <div className="error">{formik.errors.blogcat}</div>

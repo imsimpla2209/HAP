@@ -16,12 +16,12 @@ import {
   resetImgProductState,
   resetState,
   updateProduct,
-} from "../../../features/admin/product/productSlice";
+} from "../../../features/product/productSlice";
 import {
   delImg,
   resetUploadState,
   uploadImg,
-} from "../../../features/admin/upload/uploadSlice";
+} from "../../../features/upload/uploadSlice";
 import "./addproduct.css";
 
 let schema = yup.object().shape({
