@@ -1,22 +1,17 @@
-import axios from "axios"
-import { base_url } from "../../../utils/axiosConfig";
-import { config } from "../../../utils/axiosConfig";
+import { Http } from "apis/http";
 
-const getCategorys = async(userData) =>{
-    const response = await axios.get(`${base_url}category/`, userData)
-    return response.data
-}
-
+const getCategorys = async (userData) => {
+    const response = await Http.get("Admin/categories");
+    return response.data;
+};
 
 const getACategory = async (id) => {
-    const response = await axios.get(`${base_url}category/${id}`, config);
+    const response = await Http.get(`Admin/categories/${id}`);
     return response.data;
-  };
-  
-  
-const categoryService ={
+};
+
+const categoryService = {
     getCategorys,
     getACategory,
-
-}
-export default categoryService
+};
+export default categoryService;

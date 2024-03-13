@@ -1,17 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from '../features/customer/user/authSlice';
-import productReducer from '../features/customer/products/productSlice';
-import blogReducer from '../features/customer/blogs/blogSlice';
-import contactReducer from '../features/customer/contact/contactSlice';
-import categoryReducer from '../features/customer/category/categorySlice';
-import brandReducer from '../features/customer/brand/brandSlice';
-import adminCategoryReducer from '../features/admin/admin-category/categorySlice';
 import adminBrandReducer from '../features/admin/admin-brand/brandSlice';
-import customerReducer from '../features/admin/customers/customerSlice';
 import blogcatReducer from '../features/admin/blogcat/blogcatSlice';
-import enquiryReducer from '../features/admin/enquiry/enquirySlice';
-import uploadReducer from '../features/admin/upload/uploadSlice';
 import couponReducer from '../features/admin/coupon/couponSlice';
+import customerReducer from '../features/customers/customerSlice';
+import enquiryReducer from '../features/admin/enquiry/enquirySlice';
+import uploadReducer from '../features/upload/uploadSlice';
+import categoryReducer from '../features/category/categorySlice';
+import productReducer from '../features/product/productSlice';
+
+import blogReducer from '../features/customer/blogs/blogSlice';
+import brandReducer from '../features/customer/brand/brandSlice';
+import contactReducer from '../features/customer/contact/contactSlice';
+import authReducer from '../features/customer/user/authSlice';
 
 
 export const store = configureStore({
@@ -20,16 +20,14 @@ export const store = configureStore({
     auth: authReducer,
     product: productReducer,
     blog: blogReducer,
-    category: categoryReducer,
     brand: brandReducer,
     contact: contactReducer,
 
     //admin
     customer: customerReducer,
-    product: productReducer,
     blogcat: blogcatReducer,
     adminBrand: adminBrandReducer,
-    adminCategory: adminCategoryReducer,
+    category: categoryReducer,
     enquiry: enquiryReducer,
     blog: blogReducer,
     upload: uploadReducer,

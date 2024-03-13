@@ -1,5 +1,6 @@
 import axios from "axios";
 import { base_url, config } from "../../../utils/axiosConfig";
+import { getProductById } from "apis";
 
 const getProducts = async (data) => {
   const response = await axios.get(
@@ -18,7 +19,7 @@ const getProducts = async (data) => {
 };
 
 const getProduct = async (id) => {
-  const respone = await axios.get(`${base_url}product/${id}`);
+  const respone = await getProductById(id);
   if (respone.data) {
     return respone.data;
   }

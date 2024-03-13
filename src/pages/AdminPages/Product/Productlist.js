@@ -4,7 +4,7 @@ import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { Table, } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct, getProducts, resetState } from "../../../features/admin/product/productSlice";
+import { deleteProduct, getProducts, resetState } from "../../../features/product/productSlice";
 import { Link } from "react-router-dom";
 import CustomModal from "../../../components/CustomModal";
 import { getBrands } from "../../../features/customer/brand/brandSlice";
@@ -72,11 +72,11 @@ const Productlist = () => {
       dispatch(getProducts());
     }, 100);
   };
-  
+
   const productstate = useSelector((state) => state.product.products);
   const brandState = useSelector((state) => state.brand.brands);
   const categoryState = useSelector((state) => state.category.categorys);
-  
+
   console.log(productstate)
   const data1 = [];
   for (let i = 0; i < productstate.length; i++) {

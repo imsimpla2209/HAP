@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios'
 
 export const instance = axios.create({
   withCredentials: true,
-  baseURL: '/api/',
+  baseURL: 'http://haanphat.somee.com/api/',
 });
 
 export class HttpError {

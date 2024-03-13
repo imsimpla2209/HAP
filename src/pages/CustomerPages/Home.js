@@ -19,6 +19,7 @@ import {
   removeFromWishlist,
 } from "../../features/customer/products/productSlice";
 import { getUserProductWishList } from "../../features/customer/user/authSlice";
+import { getCategories } from "apis";
 
 const Home = () => {
   const blogState = useSelector((state) => state?.blog?.blog);
@@ -29,6 +30,7 @@ const Home = () => {
   useEffect(() => {
     getBlogs();
     getProducts();
+    getCategories();
   }, []);
 
   const getBlogs = () => {
