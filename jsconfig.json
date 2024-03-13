@@ -4,7 +4,7 @@
     "jsx": "react",
     "esModuleInterop": true,
     "strict": true,
-    // "checkJs": true
+    "checkJs": true,
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules", "**/*.spec.js", "**/*.test.js"]

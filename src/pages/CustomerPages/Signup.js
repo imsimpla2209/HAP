@@ -8,18 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../features/customer/user/authSlice";
 import { useNavigate } from "react-router-dom";
 
-const phoneRegExp =
-  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const signUpSchema = yup.object({
   firstname: yup.string().required("First name is required"),
   lastname: yup.string().required("Last name should be required"),
   email: yup.string().nullable().email("Email not valid").required("Email is required"),
-  mobile: yup
-    .string()
-    .required("Mobile phone is required")
-    .matches(phoneRegExp, "Phone number is not valid")
-    .min(10, "too short")
-    .max(10, "too long"),
   password: yup
     .string()
     .required("Password is requird")
@@ -35,7 +27,6 @@ function Signup() {
       firstname: "",
       lastname: "",
       email: "",
-      mobile: "",
       password: "",
     },
     validationSchema: signUpSchema,
@@ -102,19 +93,6 @@ function Signup() {
                     />
                     <div className="error">
                       {formik.touched.email && formik.errors.email}
-                    </div>
-                  </div>
-                  <div className="mt-1">
-                    <CustomInput
-                      type="tel"
-                      name="mobile"
-                      placeholder="Mobile"
-                      value={formik.values.mobile}
-                      onChange={formik.handleChange("mobile")}
-                      onBlur={formik.handleBlur("mobile")}
-                    />
-                    <div className="error">
-                      {formik.touched.mobile && formik.errors.mobile}
                     </div>
                   </div>
                   <div className="mt-1">
