@@ -55,6 +55,7 @@ export const updateCategory = createAsyncThunk(
   }
 );
 
+
 export const deleteCategory = createAsyncThunk(
   "category/delete-category",
   async(id, thunkAPI)=>{

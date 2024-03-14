@@ -9,62 +9,62 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  createCategory,
-  getACategory,
+  createColor,
+  getAColor,
   resetState,
-  updateCategory,
-} from "../../../features/category/categorySlice";
-// "../../../features/customer/category/categorySlice"
+  updateColor,
+} from "../../../features/color/colorsSlice";
+// "../../../features/customer/color/colorSlice"
 let schema = yup.object().shape({
-  categoryName: yup.string().required("CategoryName Product is Required"),
+  colorName: yup.string().required("ColorName Product is Required"),
 });
 
-const Addcat = () => {
+const AddColor = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const getCategoryId = location.pathname.split("/")[3];
-  const isEditMode = getCategoryId !== undefined;
+  const getColorId = location.pathname.split("/")[3];
+  const isEditMode = getColorId !== undefined;
 
-  const newCategory = useSelector((state) => state.category.categorys);
+  const newColor = useSelector((state) => state.color.colors);
 
-  const { categoryName } = newCategory;
+  const { colorName } = newColor;
 
   useEffect(() => {
     if (isEditMode) {
-      dispatch(getACategory(getCategoryId -1));
+      dispatch(getAColor(getColorId -1));
     }
-  }, [isEditMode, getCategoryId, dispatch]);
+  }, [isEditMode, getColorId, dispatch]);
  
   useEffect(() => {
-    if (newCategory && newCategory[getCategoryId -1]) {
-      formik.setFieldValue("categoryName", newCategory[getCategoryId -1].categoryName);
+    if (newColor && newColor[getColorId -1]) {
+      formik.setFieldValue("colorName", newColor[getColorId -1].colorName);
     }
-  }, [newCategory, getCategoryId]);
+  }, [newColor, getColorId]);
 
   const formik = useFormik({
     initialValues: {
-      categoryName: "",
+      colorName: "",
     },
     validationSchema: schema,
 
     onSubmit: (values) => {
       console.log("Input data:", values); // Logging the input data
-      if (getCategoryId !== undefined) {
-        const data = { id: getCategoryId, categoryData: values };
+      if (getColorId !== undefined) {
+        const data = { id: getColorId, colorData: values };
         console.log("Data to be sent:", data); // Logging the data to be sent
-        dispatch(updateCategory(data));
+        dispatch(updateColor(data));
         setTimeout(() => {
-          navigate("/admin/category-list");
+          navigate("/admin/color-list");
           dispatch(resetState());
         }, 1000);
       } else {
         console.log("Input data:", values); // Logging the input data
-        dispatch(createCategory(values));
+        dispatch(createColor(values));
         formik.resetForm();
         setTimeout(() => {
-          navigate("/admin/category-list");
+          navigate("/admin/color-list");
           dispatch(resetState());
         }, 1000);
       }
@@ -73,28 +73,28 @@ const Addcat = () => {
 
   return (
     <div>
-      <h3 className="mb-4 categoryname">
-        {getCategoryId !== undefined ? "Edit" : "Add"} Category
+      <h3 className="mb-4 colorname">
+        {getColorId !== undefined ? "Edit" : "Add"} Color
       </h3>
       <div className="form-group">
         <form onSubmit={formik.handleSubmit} className="add-blog-form">
-          <label htmlFor="categoryName">Category Name</label>
+          <label htmlFor="colorName">Color Name</label>
           <CustomInput
             type="text"
-            id="categoryName"
-            name="categoryName"
+            id="colorName"
+            name="colorName"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.categoryName}
+            value={formik.values.colorName}
           />
           <div className="error">
-            {formik.touched.categoryName && formik.errors.categoryName}
+            {formik.touched.colorName && formik.errors.colorName}
           </div>
           <button
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            {getCategoryId !== undefined ? "Edit" : "Add"} Category
+            {getColorId !== undefined ? "Edit" : "Add"} Color
           </button>
         </form>
       </div>
@@ -102,4 +102,4 @@ const Addcat = () => {
   );
 };
 
-export default Addcat;
+export default AddColor;

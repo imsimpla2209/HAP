@@ -8,6 +8,7 @@ export const getBrands = createAsyncThunk(
     try {
       return await brandService.getBrands();
     } catch (error) {
+      // @ts-ignore
       return thunkAPI.rejectWithValue(error);
     }
   }

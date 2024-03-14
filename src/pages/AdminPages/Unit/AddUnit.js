@@ -9,14 +9,15 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  createCategory,
-  getACategory,
+  createUnit,
+  getAUnit,
   resetState,
-  updateCategory,
-} from "../../../features/category/categorySlice";
-// "../../../features/customer/category/categorySlice"
+  updateUnit,
+} from "../../../features/unit/unitsSlice";
+import CustomModal from "../../../components/CustomModal";
+// "../../../features/customer/unit/unitSlice"
 let schema = yup.object().shape({
-  categoryName: yup.string().required("CategoryName Product is Required"),
+  unitName: yup.string().required("UnitName Product is Required"),
 });
 
 const Addcat = () => {
@@ -24,47 +25,47 @@ const Addcat = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const getCategoryId = location.pathname.split("/")[3];
-  const isEditMode = getCategoryId !== undefined;
+  const getUnitId = location.pathname.split("/")[3];
+  const isEditMode = getUnitId !== undefined;
 
-  const newCategory = useSelector((state) => state.category.categorys);
+  const newUnit = useSelector((state) => state.unit.units);
 
-  const { categoryName } = newCategory;
+  const { unitName } = newUnit;
 
   useEffect(() => {
     if (isEditMode) {
-      dispatch(getACategory(getCategoryId -1));
+      dispatch(getAUnit(getUnitId -1));
     }
-  }, [isEditMode, getCategoryId, dispatch]);
+  }, [isEditMode, getUnitId, dispatch]);
  
   useEffect(() => {
-    if (newCategory && newCategory[getCategoryId -1]) {
-      formik.setFieldValue("categoryName", newCategory[getCategoryId -1].categoryName);
+    if (newUnit && newUnit[getUnitId -1]) {
+      formik.setFieldValue("unitName", newUnit[getUnitId -1].unitName);
     }
-  }, [newCategory, getCategoryId]);
+  }, [newUnit, getUnitId]);
 
   const formik = useFormik({
     initialValues: {
-      categoryName: "",
+      unitName: "",
     },
     validationSchema: schema,
 
     onSubmit: (values) => {
       console.log("Input data:", values); // Logging the input data
-      if (getCategoryId !== undefined) {
-        const data = { id: getCategoryId, categoryData: values };
+      if (getUnitId !== undefined) {
+        const data = { id: getUnitId, unitData: values };
         console.log("Data to be sent:", data); // Logging the data to be sent
-        dispatch(updateCategory(data));
+        dispatch(updateUnit(data));
         setTimeout(() => {
-          navigate("/admin/category-list");
+          navigate("/admin/unit-list");
           dispatch(resetState());
         }, 1000);
       } else {
         console.log("Input data:", values); // Logging the input data
-        dispatch(createCategory(values));
+        dispatch(createUnit(values));
         formik.resetForm();
         setTimeout(() => {
-          navigate("/admin/category-list");
+          navigate("/admin/unit-list");
           dispatch(resetState());
         }, 1000);
       }
@@ -73,28 +74,28 @@ const Addcat = () => {
 
   return (
     <div>
-      <h3 className="mb-4 categoryname">
-        {getCategoryId !== undefined ? "Edit" : "Add"} Category
+      <h3 className="mb-4 unitname">
+        {getUnitId !== undefined ? "Edit" : "Add"} Unit
       </h3>
       <div className="form-group">
         <form onSubmit={formik.handleSubmit} className="add-blog-form">
-          <label htmlFor="categoryName">Category Name</label>
+          <label htmlFor="unitName">Unit Name</label>
           <CustomInput
             type="text"
-            id="categoryName"
-            name="categoryName"
+            id="unitName"
+            name="unitName"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.categoryName}
+            value={formik.values.unitName}
           />
           <div className="error">
-            {formik.touched.categoryName && formik.errors.categoryName}
+            {formik.touched.unitName && formik.errors.unitName}
           </div>
           <button
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            {getCategoryId !== undefined ? "Edit" : "Add"} Category
+            {getUnitId !== undefined ? "Edit" : "Add"} Unit
           </button>
         </form>
       </div>
