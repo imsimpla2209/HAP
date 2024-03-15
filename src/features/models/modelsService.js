@@ -20,15 +20,15 @@ const updateModel = async (productId, model) => {
   const response = await instance.put(
     `Admin/products/${productId}/models/edit/${model?.id}`,
     {
-      ModelId: model.modelData.ModelId,
+      modelId: model.modelData.modelId,
       ProductId: model.modelData.ProductId,
-      UnitId: model.modelData.UnitId,
-      ColorId: model.modelData.ColorId,
-      Specification: model.modelData.Specification,
-      PrimaryPrice: model.modelData.PrimaryPrice,
-      SecondaryPrice: model.modelData.SecondaryPrice,
-      Available: model.modelData.Available,
-      Description: model.modelData.Description,
+      unitId: model.modelData.unitId,
+      colorId: model.modelData.colorId,
+      specification: model.modelData.specification,
+      primaryPrice: model.modelData.primaryPrice,
+      secondaryPrice: model.modelData.secondaryPrice,
+      available: model.modelData.available,
+      description: model.modelData.description,
     },
     config
   );
