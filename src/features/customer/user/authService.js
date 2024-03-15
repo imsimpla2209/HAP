@@ -1,15 +1,19 @@
 import axios from "axios";
 import { base_url, config } from "../../../utils/axiosConfig";
+import { Http } from "apis/http";
+
+
 
 const register = async (userData) => {
-  const response = await axios.post(`${base_url}user/register`, userData);
-  if (response.data) {
+  const response = await Http.post(`authentication/sign-up`, userData)
+    if (response.data) {
     localStorage.setItem("customer", JSON.stringify(response.data));
   }
 };
 
 const login = async (userData) => {
-  const response = await axios.post(`${base_url}user/login`, userData, config);
+  const response = await Http.post(`authentication/login`, userData, config);
+  
   if (response.data) {
     localStorage.setItem("customer", JSON.stringify(response.data));
   }

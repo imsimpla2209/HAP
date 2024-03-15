@@ -81,14 +81,14 @@ const MainLayout = () => {
                   label: "Product List",
                 },
                 {
-                  key: "brand",
+                  key: "unit",
                   icon: <TbBrandBootstrap className="fs-4" />,
-                  label: "Brand",
+                  label: "Unit",
                 },
                 {
-                  key: "brand-list",
+                  key: "unit-list",
                   icon: <TbBrandBootstrap className="fs-4" />,
-                  label: "Brand List",
+                  label: "Unit List",
                 },
                 {
                   key: "category",
@@ -99,6 +99,16 @@ const MainLayout = () => {
                   key: "category-list",
                   icon: <TbCategory className="fs-4" />,
                   label: "Category List",
+                },
+                {
+                  key: "color",
+                  icon: <TbCategory className="fs-4" />,
+                  label: "Color",
+                },
+                {
+                  key: "color-list",
+                  icon: <TbCategory className="fs-4" />,
+                  label: "Color List",
                 },
               ],
             },
