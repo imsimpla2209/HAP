@@ -7,9 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deleteABrand,
   getBrands,
-} from "../../../features/customer/brand/brandSlice";
+} from "../../../features/admin/admin-brand/brandSlice";
 import { Link } from "react-router-dom";
-import { resetState } from "../../../features/customer/brand/brandSlice";
+import { resetState } from "../../../features/admin/admin-brand/brandSlice";
 import CustomModal from "../../../components/CustomModal";
 
 const columns = [

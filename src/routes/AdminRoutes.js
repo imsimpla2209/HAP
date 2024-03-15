@@ -23,42 +23,42 @@ import EditUser from '../pages/AdminPages/User/EditUser';
 import User from '../pages/AdminPages/User/User';
 import { OpenRoutes } from '../routing/OpenRoute';
 import { PrivateRoutes } from '../routing/PrivateRoute';
-import './App.css';
+import '../App.css';
 
 
 function AdminRoutes() {
   return (
-      <Routes>
-        <Route path="/" element={<OpenRoutes><Login/> </OpenRoutes>} />
-        <Route path="/admin" element={<PrivateRoutes><MainLayout /></PrivateRoutes> } >
-          <Route index element={<Dashboard />} />
-          <Route path="product" element={<Addproduct />} />
-          <Route path="product/:id" element={<Addproduct />} />
-          <Route path="enquiries" element={<Enquiries />} />
-          <Route path="enquiries/:id" element={<ViewEnq />} />
-          <Route path="blog" element={<Addblog />} />
-          <Route path="blog/:id" element={<Addblog />} />
-          <Route path="blog-category" element={<Addblogcat />} />
-          <Route path="blog-category/:id" element={<Addblogcat />} />
-          <Route path="blog-list" element={<Bloglist />} />
-          <Route path="blog-category-list" element={<Blogcatlist />} />
-          <Route path="coupon-list" element={<Couponlist />} />
-          <Route path="coupon" element={<Addcoupon />} />
-          <Route path="coupon/:id" element={<Addcoupon />} />
-          <Route path="order" element={<Orders />} />
-          <Route path="order/:id" element={<ViewOrder />} />
-          <Route path="customers" element={<Customers />} />
-          <Route path="users" element={<User />} />
-          <Route path="user/:id" element={<EditUser />} />
-          <Route path="category" element={<Addcat />} />
-          <Route path="category/:id" element={<Addcat />} />
-          <Route path="category-list" element={<Categorylist />} />
-          <Route path="brand" element={<Addbrand />} />
-          <Route path="brand/:id" element={<Addbrand />} />
-          <Route path="brand-list" element={<Brandlist />} />
-          <Route path="product-list" element={<Productlist />} />
-        </Route>
-      </Routes>
+    <Routes>
+      <Route path="/" element={<OpenRoutes><Login /> </OpenRoutes>} />
+      <Route path="/admin" element={<MainLayout />} >
+        <Route index element={<Dashboard />} />
+        <Route path="product" element={<Addproduct />} />
+        <Route path="product/:id" element={<Addproduct />} />
+        <Route path="enquiries" element={<Enquiries />} />
+        <Route path="enquiries/:id" element={<ViewEnq />} />
+        <Route path="blog" element={<Addblog />} />
+        <Route path="blog/:id" element={<Addblog />} />
+        <Route path="blog-category" element={<Addblogcat />} />
+        <Route path="blog-category/:id" element={<Addblogcat />} />
+        <Route path="blog-list" element={<Bloglist />} />
+        <Route path="blog-category-list" element={<Blogcatlist />} />
+        <Route path="coupon-list" element={<Couponlist />} />
+        <Route path="coupon" element={<Addcoupon />} />
+        <Route path="coupon/:id" element={<Addcoupon />} />
+        <Route path="order" element={<Orders />} />
+        <Route path="order/:id" element={<ViewOrder />} />
+        <Route path="customers" element={<Customers />} />
+        <Route path="users" element={<User />} />
+        <Route path="user/:id" element={<EditUser />} />
+        <Route path="category" element={<Addcat />} />
+        <Route path="category/:id" element={<Addcat />} />
+        <Route path="category-list" element={<Categorylist />} />
+        <Route path="brand" element={<Addbrand />} />
+        <Route path="brand/:id" element={<Addbrand />} />
+        <Route path="brand-list" element={<Brandlist />} />
+        <Route path="product-list" element={<Productlist />} />
+      </Route>
+    </Routes>
   );
 }
 

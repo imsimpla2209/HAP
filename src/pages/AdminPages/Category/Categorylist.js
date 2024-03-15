@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
-import {  Table,  } from "antd";
+import { Table, } from "antd";
 import {
   deleteCategory,
   getCategorys,
-} from "../../../features/customer/category/categorySlice";
+} from "../../../features/category/categorySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CustomModal from "../../../components/CustomModal";

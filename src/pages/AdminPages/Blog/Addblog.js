@@ -21,7 +21,7 @@ import {
   resetImgBlogState,
   resetState,
   updateBlog,
-} from "../../../features/admin/blog/blogSlice";
+} from "../../../features/blog/blogSlice";
 
 import { getBlogcats } from "../../../features/admin/blogcat/blogcatSlice";
 import { resetImgProductState } from "../../../features/product/productSlice";

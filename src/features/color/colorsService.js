@@ -1,23 +1,23 @@
-import { Http } from "apis/http"
+import { instance } from "apis/http"
 import { config } from "../auth/authService"
 
 const getColors = async () => {
-  const response = await Http.get("Admin/colors")
+  const response = await instance.get("Admin/colors")
   return response.data
 }
 
 const createColor = async (dataColor) => {
-  const response = await Http.post("Admin/colors/add", dataColor, config)
+  const response = await instance.post("Admin/colors/add", dataColor, config)
   return response.data
 }
 
 const getAColor = async (id) => {
-  const response = await Http.get(`Admin/colors/${id}`, config);
+  const response = await instance.get(`Admin/colors/${id}`, config);
   return response.data;
 };
 
 const updateColor = async (color) => {
-  const response = await Http.put(
+  const response = await instance.put(
     `Admin/colors/edit/${color?.id}`,
     {
       colorName: color.colorData.name,
@@ -29,7 +29,7 @@ const updateColor = async (color) => {
   return response.data;
 };
 const deleteColor = async (id) => {
-  const response = await Http.delete(`Admin/colors/remove/${id}`, config)
+  const response = await instance.delete(`Admin/colors/remove/${id}`, config)
   return response.data
 }
 

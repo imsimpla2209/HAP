@@ -13,7 +13,7 @@ import {
   getACategory,
   resetState,
   updateCategory,
-} from "../../../features/customer/category/categorySlice";
+} from "../../../features/category/categorySlice";
 
 let schema = yup.object().shape({
   title: yup.string().required("Title Product is Required"),

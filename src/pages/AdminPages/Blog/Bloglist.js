@@ -3,11 +3,11 @@ import React, { useEffect } from "react";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { Segmented, Space, Switch, Table, Typography } from "antd";
-import { deleteBlog, getBlogs } from "../../../features/admin/blog/blogSlice";
+import { deleteBlog, getBlogs } from "../../../features/blog/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CustomModal from "../../../components/CustomModal";
-import { resetState } from "../../../features/admin/blog/blogSlice";
+import { resetState } from "../../../features/blog/blogSlice";
 import { useState } from "react";
 import { getBlogcats } from "../../../features/admin/blogcat/blogcatSlice";
 
