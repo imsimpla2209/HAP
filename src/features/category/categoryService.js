@@ -20,7 +20,7 @@ const createCategory = async (data) => {
 const updateCategory = async (category) => {
   const response = await instance.put(
     `Admin/categories/edit/${category.id}`,
-    { title: category.categoryData.title },
+    { categoryName: category.categoryData.categoryName },
     config
   );
   return response.data;

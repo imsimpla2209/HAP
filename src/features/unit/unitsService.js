@@ -20,7 +20,7 @@ const updateUnit = async (unit) => {
   const response = await instance.put(
     `Admin/units/edit/${unit?.id}`,
     {
-      unitName: unit.unitData.name,
+      unitName: unit.unitData.unitName, // corrected property name
     },
     config
   );

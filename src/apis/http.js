@@ -4,6 +4,7 @@ export const instance = axios.create({
   baseURL: 'http://haanphat.somee.com/api/',
 });
 
+
 export class HttpError {
   message;
   code;
@@ -34,11 +35,18 @@ instance.interceptors.response.use(
     return response;
   },
   function (error) {
-    // if (error.response?.status === ResponseStatus.UNAUTHORIZED) {
+    if (error.response && error.response.status === 401) {
+      // Xử lý lỗi 401 (Unauthorized) ở đây
+    }
 
-    // }
+    // Xử lý lỗi CORS
+    if (error.isAxiosError && error.response && error.response.status === 0) {
+      const corsError = new HttpError(error);
+      return Promise.reject(corsError);
+    }
+
     return Promise.reject(new HttpError(error));
-  },
+  }
 );
 
 export const LOCALSTORAGE = {

@@ -221,9 +221,6 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
-        if (state.isError === true) {
-          toast.info("Email or numberphone already use");
-        }
       })
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;

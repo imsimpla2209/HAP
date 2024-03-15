@@ -10,8 +10,14 @@ const getACategory = async (id) => {
     return response.data;
 };
 
+const addCategory = async(dataCategories)=>{
+    const response = await Http.post(`Admin/categories/add?categoryName=${dataCategories}`)
+    return response.data;
+}
+
 const categoryService = {
     getCategorys,
     getACategory,
+    addCategory
 };
 export default categoryService;

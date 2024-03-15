@@ -2,18 +2,20 @@
 import React, { useEffect, useState } from "react";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
-import { Table, } from "antd";
-import {
-  deleteCategory,
-  getCategorys,
-} from "../../../features/category/categorySlice";
+import { Space, Table, Typography } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import {
+  deleteUnit,
+  getUnits,
+} from "../../../features/unit/unitsSlice";
+import { resetState } from "../../../features/unit/unitsSlice";
 import CustomModal from "../../../components/CustomModal";
 
 const columns = [
   {
-    title: "Thứ tự",
+    width: 100,
+    title: "SNo",
     dataIndex: "key",
   },
   {
@@ -21,58 +23,48 @@ const columns = [
     dataIndex: "title",
     sorter: (a, b) => a.title.length - b.title.length,
   },
-
   {
     title: "Hành động",
-    dataIndex: "action",
     width: 150,
+    dataIndex: "action",
   },
 ];
 
-const Categorylist = () => {
-  const dispatch = useDispatch();
+const UnitList = () => {
   const [open, setOpen] = useState(false);
-  const [categoryId, setcategoryId] = useState("");
+  const [unitId, setunitId] = useState("");
   const showModal = (e) => {
     setOpen(true);
-    setcategoryId(e);
+    setunitId(e);
   };
 
   const hideModal = () => {
     setOpen(false);
   };
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getCategorys());
-  }, [dispatch]);
-
-  const deleteACategory = (e) => {
-    console.log(e)
-    dispatch(deleteCategory(e));
-    setOpen(false);
-    setTimeout(() => {
-      dispatch(getCategorys());
-    }, 100);
-  };
-
-  const categoryState = useSelector((state) => state.category.categorys);
-
+    dispatch(resetState());
+    dispatch(getUnits());
+  }, []);
+  const unitState = useSelector((state) => state.unit.units);
+  console.log(unitState)
   const data1 = [];
-  for (let i = 0; i < categoryState.length; i++) {
+  for (let i = 0; i < unitState.length; i++) {
     data1.push({
       key: i + 1,
-      title: categoryState[i].categoryName,
+      title: unitState[i].unitName,
       action: (
         <>
           <Link
             className="ms-3 fs-3 text-danger"
-            to={`/admin/category/${categoryState[i].categoryId}`}
+            to={`/admin/unit/${unitState[i].unitId}`}
           >
             <BiEdit />
           </Link>
+
           <button
             className="ms-3 fs-3 text-danger bg-transparent border-0"
-            onClick={() => showModal(categoryState[i].categoryId)}
+            onClick={() => showModal(unitState[i].unitId)}
           >
             <AiFillDelete />
           </button>
@@ -80,20 +72,27 @@ const Categorylist = () => {
       ),
     });
   }
+
+  const deleteUnit = (e) => {
+    dispatch(deleteUnit(e));
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getUnits());
+    }, 100);
+  };
   return (
     <div>
-      <h3 className="mb-4 title">category List</h3>
+      <h3 className="mb-4 title">Unit List</h3>
       <Table columns={columns} dataSource={data1} />
       <CustomModal
         hideModal={hideModal}
         open={open}
         performAction={() => {
-          deleteACategory(categoryId);
-
+          deleteUnit(unitId);
         }}
-        title="Are you sure you want to delete this category?"
+        title="Are you sure you want to delete this unit?"
       />
     </div>
   );
 };
-export default Categorylist;
+export default UnitList;

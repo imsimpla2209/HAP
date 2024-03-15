@@ -24,6 +24,12 @@ import User from '../pages/AdminPages/User/User';
 import { OpenRoutes } from '../routing/OpenRoute';
 import { PrivateRoutes } from '../routing/PrivateRoute';
 import '../App.css';
+// import './App.css';
+import React from 'react';
+import UnitList from 'pages/AdminPages/Unit/UnitList';
+import AddUnit from 'pages/AdminPages/Unit/AddUnit';
+import AddColor from 'pages/AdminPages/Color/AddColor';
+import ColorList from 'pages/AdminPages/Color/ColorList';
 
 
 function AdminRoutes() {
@@ -53,9 +59,15 @@ function AdminRoutes() {
         <Route path="category" element={<Addcat />} />
         <Route path="category/:id" element={<Addcat />} />
         <Route path="category-list" element={<Categorylist />} />
-        <Route path="brand" element={<Addbrand />} />
-        <Route path="brand/:id" element={<Addbrand />} />
-        <Route path="brand-list" element={<Brandlist />} />
+        {/* <Route path="brand" element={<Addbrand />} />
+          <Route path="brand/:id" element={<Addbrand />} />
+          <Route path="brand-list" element={<Brandlist />} /> */}
+        <Route path="unit" element={<AddUnit />} />
+        <Route path="unit/:id" element={<AddUnit />} />
+        <Route path="unit-list" element={<UnitList />} />
+        <Route path="color" element={<AddColor />} />
+        <Route path="color/:id" element={<AddColor />} />
+        <Route path="color-list" element={<ColorList />} />
         <Route path="product-list" element={<Productlist />} />
       </Route>
     </Routes>

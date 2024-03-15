@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import categoryService from "./categoryService";
+import { toast } from "react-toastify";
 
 const initialState = {
   categorys: [],
@@ -27,6 +28,17 @@ export const getACategory = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       return await categoryService.getACategory(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const createCategory = createAsyncThunk(
+  "category/create",
+  async (dataCategories, thunkAPI) => {
+    try {
+      return await categoryService.addCategory(dataCategories);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -65,6 +77,24 @@ export const categorySlice = createSlice({
         state.categoryName = action.payload.title
       })
       .addCase(getACategory.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error
+      })     
+      .addCase(createCategory.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createCategory.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.createCategories = action.payload
+        if (state.isSuccess === true) {
+          toast.info("Collection Added Successfully!");
+        }
+      })
+      .addCase(createCategory.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
