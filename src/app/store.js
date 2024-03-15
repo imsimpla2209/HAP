@@ -10,6 +10,7 @@ import productReducer from '../features/product/productSlice';
 import colorReducer from '../features/color/colorsSlice';
 import unitReducer from '../features/unit/unitsSlice';
 import collectionsReducer from '../features/collections/collectionsSlice';
+import modelsReducer from '../features/models/modelsSlice';
 
 import blogReducer from '../features/customer/blogs/blogSlice';
 import brandReducer from '../features/customer/brand/brandSlice';
@@ -28,6 +29,7 @@ export const store = configureStore({
     color: colorReducer,
     unit: unitReducer,
     collections: collectionsReducer,
+    models: modelsReducer,
     //admin
     customer: customerReducer,
     blogcat: blogcatReducer,

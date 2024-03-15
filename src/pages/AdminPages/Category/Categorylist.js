@@ -2,12 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
-import {  Table,  } from "antd";
+import { Table, } from "antd";
 import {
   deleteCategory,
   getCategorys,
 } from "../../../features/category/categorySlice";
-
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CustomModal from "../../../components/CustomModal";
@@ -57,7 +56,7 @@ const Categorylist = () => {
   };
 
   const categoryState = useSelector((state) => state.category.categorys);
- 
+
   const data1 = [];
   for (let i = 0; i < categoryState.length; i++) {
     data1.push({
@@ -90,7 +89,7 @@ const Categorylist = () => {
         open={open}
         performAction={() => {
           deleteACategory(categoryId);
-          
+
         }}
         title="Are you sure you want to delete this category?"
       />

@@ -33,13 +33,13 @@ const Addcat = () => {
 
   useEffect(() => {
     if (isEditMode) {
-      dispatch(getACategory(getCategoryId -1));
+      dispatch(getACategory(getCategoryId - 1));
     }
   }, [isEditMode, getCategoryId, dispatch]);
- 
+
   useEffect(() => {
-    if (newCategory && newCategory[getCategoryId -1]) {
-      formik.setFieldValue("categoryName", newCategory[getCategoryId -1].categoryName);
+    if (newCategory && newCategory[getCategoryId - 1]) {
+      formik.setFieldValue("categoryName", newCategory[getCategoryId - 1].categoryName);
     }
   }, [newCategory, getCategoryId]);
 

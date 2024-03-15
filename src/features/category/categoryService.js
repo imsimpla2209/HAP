@@ -1,24 +1,24 @@
-import { Http } from "apis/http";
+import { instance } from "apis/http";
 import { config } from "../auth/authService";
 
 const getCategorys = async (userData) => {
-  const response = await Http.get("Admin/categories");
+  const response = await instance.get("Admin/categories");
   return response.data;
 };
 
 const getACategory = async (id) => {
-  const response = await Http.get(`Admin/categories/${id}`);
+  const response = await instance.get(`Admin/categories/${id}`);
   return response.data;
 };
 
 
 const createCategory = async (data) => {
-  const response = await Http.post(`Admin/categories/add`, data, config)
+  const response = await instance.post(`Admin/categories/add`, data, config)
   return response.data
 }
 
 const updateCategory = async (category) => {
-  const response = await Http.put(
+  const response = await instance.put(
     `Admin/categories/edit/${category.id}`,
     { categoryName: category.categoryData.categoryName },
     config
@@ -27,7 +27,7 @@ const updateCategory = async (category) => {
 };
 
 const deleteCategory = async (id) => {
-  const response = await Http.delete(`Admin/categories/remove/${id}`, config)
+  const response = await instance.delete(`Admin/categories/remove/${id}`, config)
   return response.data
 }
 

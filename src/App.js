@@ -9,7 +9,7 @@ function App() {
   return (
     <BrowserRouter>
       <CustomerRoutes />
-      <AdminRoutes/>
+      <AdminRoutes />
     </BrowserRouter>
   );
 }
