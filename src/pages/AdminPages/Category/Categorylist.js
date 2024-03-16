@@ -57,7 +57,8 @@ const Categorylist = () => {
   };
 
   const categoryState = useSelector((state) => state.category.categorys);
- 
+  
+  // console.log(categoryState.categoryId)
   const data1 = [];
   for (let i = 0; i < categoryState.length; i++) {
     data1.push({
@@ -90,6 +91,7 @@ const Categorylist = () => {
         open={open}
         performAction={() => {
           deleteACategory(categoryId);
+          console.log(categoryId)
           
         }}
         title="Are you sure you want to delete this category?"

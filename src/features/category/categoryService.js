@@ -27,6 +27,7 @@ const updateCategory = async (category) => {
 };
 
 const deleteCategory = async (id) => {
+  console.log(id)
   const response = await Http.delete(`Admin/categories/remove/${id}`, config)
   return response.data
 }

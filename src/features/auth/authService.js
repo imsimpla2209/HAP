@@ -1,11 +1,14 @@
 import axios from "axios";
 import { base_url } from "../../utils/base_url";
 
-const getTokenFromLocalStorage = localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user"))
+const getTokenFromLocalStorage = localStorage.getItem("customer")
+  ? JSON.parse(localStorage.getItem("customer"))
   : null;
 
+// console.log(get)
+
 export const config = {
+  
   headers: {
     Authorization: `Bearer ${
       getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
@@ -13,6 +16,8 @@ export const config = {
     Accept: "application/json",
   },
 };
+
+
 
 const getUser = async(id)=>{
   const response = await axios.get(`${base_url}user/user-info/${id}`, config);

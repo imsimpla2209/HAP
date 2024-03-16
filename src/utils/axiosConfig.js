@@ -12,3 +12,15 @@ export const config = {
     Accept: "application/json",
   },
 };
+
+// export const getConfig = () => {
+//   const token = localStorage.getItem("customer");
+//   const authToken = token ? JSON.parse(token).token : "";
+  
+//   return {
+//     headers: {
+//       Authorization: `Bearer ${authToken}`,
+//       Accept: "application/json",
+//     },
+//   };
+// };
