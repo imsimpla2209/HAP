@@ -117,8 +117,7 @@ export const blogSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.blogName = action.payload.title;
-        state.blogDesc = action.payload.description;
-        state.blogCategory = action.payload.bcategories;
+        state.blogDesc = action.payload.content;
         state.blogImages = action.payload.images;
       })
       .addCase(getABlog.rejected, (state, action) => {

@@ -5,21 +5,24 @@ import BreadCrumb from "../../components/BreadCrumb";
 import { Link, useLocation } from "react-router-dom";
 import { HiOutlineArrowLeft } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
-import { getBlog } from "../../features/customer/blogs/blogSlice";
+import { getABlog } from "features/blog/blogSlice";
+
 
 const SingleBlog = () => {
 
-  const blogState = useSelector((state) => state?.blog?.singleBlog);
+  const blogState = useSelector((state) => state?.blog);
   const location = useLocation();
   console.log(location);
   const getBlogId = location.pathname.split("/")[2];
+  console.log(getBlogId)
   const dispatch = useDispatch();
   useEffect(() => {
-    getABlog();
+    getBlog();
   }, []);
-  const getABlog = () => {
-    dispatch(getBlog(getBlogId));
+  const getBlog = () => {
+    dispatch(getABlog(getBlogId));
   };
+  console.log(blogState)
   return (
     <>
       <Meta title={blogState?.title} />
@@ -32,18 +35,18 @@ const SingleBlog = () => {
                 <Link to="/blogs" className="d-flex align-items-center gap-10">
                   <HiOutlineArrowLeft className="fs-4" /> Go back to Blogs
                 </Link>
-                <h3 className="title">{blogState?.title}</h3>
-                <img
+                <h3 className="title">{blogState?.blogName}</h3>
+                {/* <img
                   src={
                     blogState?.images[0]?.url ? blogState?.images?.[0] :"blog"
                   }
                   alt="blog"
                   className="img-fluid w-100 my-4"
-                />
+                /> */}
                 <p
                   className="desc"
                   dangerouslySetInnerHTML={{
-                    __html: blogState?.description,
+                    __html: blogState?.blogDesc,
                   }}
                 ></p>
               </div>

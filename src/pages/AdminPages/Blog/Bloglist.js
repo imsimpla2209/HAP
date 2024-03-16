@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import CustomModal from "../../../components/CustomModal";
 import { resetState } from "../../../features/blog/blogSlice";
 import { useState } from "react";
-import { getBlogcats } from "../../../features/admin/blogcat/blogcatSlice";
+// import { getBlogcats } from "../../../features/admin/blogcat/blogcatSlice";
 
 const columns = [
   {
@@ -21,11 +21,6 @@ const columns = [
     dataIndex: "title",
     sorter: (a, b) => a.title.length - b.title.length,
   },
-  {
-    title: "Category",
-    dataIndex: "bcategories",
-    sorter: (a, b) => a.bcategories.length - b.bcategories.length,
-  },
 
   {
     title: "Action",
@@ -35,6 +30,7 @@ const columns = [
 ];
 
 const Bloglist = () => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [blogId, setblogId] = useState("");
   const showModal = (e) => {
@@ -44,32 +40,41 @@ const Bloglist = () => {
   const hideModal = () => {
     setOpen(false);
   };
-  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(resetState());
+    // dispatch(resetState());
     dispatch(getBlogs());
-    dispatch(getBlogcats())
-  }, []);
+    // dispatch(getBlogcats())  
+  }, [dispatch]);
+  
+  const deleteABlog = (e) => {
+    dispatch(deleteBlog(e));
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getBlogs());
+    }, 100);
+  };
+
   const blogstate = useSelector((state) => state.blog.blogs);
-  const blogCatState = useSelector((state) => state.blogcat.blogcats);
+
+  
   const data1 = [];
+  console.log(blogstate)
   for (let i = 0; i < blogstate.length; i++) {
-    const blogcat = blogCatState.find((blogcat) => blogcat._id === blogstate[i].bcategories);
     data1.push({
       key: i + 1,
       title: blogstate[i].title,
-      bcategories: blogcat ? blogcat.title : "",
+      // bcategories: blogcat ? blogcat.title : "",
       action: (
         <>
           <Link
             className="ms-3 fs-3 text-danger"
-            to={`/admin/blog/${blogstate[i]._id}`}
+            to={`/admin/blog/${blogstate[i].postId}`}
           >
             <BiEdit />
           </Link>
           <button
             className="ms-3 fs-3 text-danger bg-transparent border-0"
-            onClick={() => showModal(blogstate[i]._id)}
+            onClick={() => showModal(blogstate[i].postId)}
           >
             <AiFillDelete />
           </button>
@@ -78,13 +83,7 @@ const Bloglist = () => {
     });
   }
 
-  const deleteABlog = (e) => {
-    dispatch(deleteBlog(e));
-    setOpen(false);
-    setTimeout(() => {
-      dispatch(getBlogs());
-    }, 100);
-  };
+
   return (
     <div>
       <h3 className="mb-4 title">blog List</h3>

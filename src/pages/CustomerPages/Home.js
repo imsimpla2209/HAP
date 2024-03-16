@@ -12,7 +12,8 @@ import SpecialProduct from "../../components/SpecialProduct";
 import ReactStars from "react-stars";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getAllBLogs } from "../../features/customer/blogs/blogSlice";
+// import { getAllBLogs } from "../../features/customer/blogs/blogSlice";
+import { getBlogs } from "features/blog/blogSlice";
 import { getAllProducts } from "../../features/customer/products/productSlice";
 import {
   addToWishlist,
@@ -22,21 +23,22 @@ import { getUserProductWishList } from "../../features/customer/user/authSlice";
 import { getCategories } from "apis";
 
 const Home = () => {
-  const blogState = useSelector((state) => state?.blog?.blog);
+  const blogState = useSelector((state) => state?.blog?.blogs);
   const productState = useSelector((state) => state.product.product);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getBlogs();
+    getAllBlogs();
     getProducts();
     getCategories();
   }, []);
 
-  const getBlogs = () => {
-    dispatch(getAllBLogs());
+  const getAllBlogs = () => {
+    dispatch(getBlogs());
   };
 
+  console.log(blogState)
   const getProducts = () => {
     dispatch(getAllProducts());
   };
@@ -461,8 +463,8 @@ const Home = () => {
                       <BlogCard
                         id={item?._id}
                         title={item?.title}
-                        description={item?.description}
-                        image={item?.images[0]?.url}
+                        content={item?.content}
+                        // image={item?.images[0]?.url}
                       />
                     </div>
                   );

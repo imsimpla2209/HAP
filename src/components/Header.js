@@ -58,9 +58,7 @@ const Header = ({ history }) => {
         <div className="container-xxl">
           <div className="row">
             <div className="col-6">
-              <p className="text-white mb-0">
-                Copyright © 2021. All rights reserved.
-              </p>
+              <p className="text-white mb-0">Ha An Phat</p>
             </div>
             <div className="col-6">
               <p className="text-end text-white mb-0">
@@ -77,14 +75,15 @@ const Header = ({ history }) => {
       <header className="header-upper py-3">
         <div className="container-xxl">
           <div className="row align-items-center">
-            <div className="col-2">
+            <div className="col-3">
               <h2>
-                <Link className="text-white" to="/">
-                  Hien Shop
+                <Link className="mw-100" to="/">
+                  <img src="images/logo.png" alt="logo" />
                 </Link>
               </h2>
             </div>
-            <div className="col-5">
+
+            <div className="col-3">
               <div className="input-group">
                 <Typeahead
                   id="pagination-example"

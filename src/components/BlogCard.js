@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const BlogCard = (props) => {
-  const { id, title, description, date, image } = props;
+  const { postId, title, content, date, image } = props;
   return (
     <div className="blog-card">
       <div className="card-image">
@@ -18,10 +18,10 @@ const BlogCard = (props) => {
         <p
           className="desc"
           dangerouslySetInnerHTML={{
-            __html: description.substr(0, 170) + "...",
+            __html: content.substr(0, 170) + "...",
           }}
         ></p>
-        <Link to={"/blog/" + id} className="button read-more">
+        <Link to={"/blog/" + postId} className="button read-more">
           Read More
         </Link>
       </div>

@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { React, useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { ColorPicker } from "antd";
 import CustomInput from "../../../components/CustomInput";
 import "react-quill/dist/quill.snow.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,9 +14,11 @@ import {
   resetState,
   updateColor,
 } from "../../../features/color/colorsSlice";
-// "../../../features/customer/color/colorSlice"
-let schema = yup.object().shape({
-  colorName: yup.string().required("ColorName Product is Required"),
+import tinycolor from "tinycolor2"; // Import tinycolor2 library
+
+const schema = yup.object().shape({
+  colorName: yup.string().required("Color Name is required"),
+  image: yup.string(),
 });
 
 const AddColor = () => {
@@ -29,45 +31,52 @@ const AddColor = () => {
 
   const newColor = useSelector((state) => state.color.colors);
 
-  const { colorName } = newColor;
-
   useEffect(() => {
     if (isEditMode) {
-      dispatch(getAColor(getColorId -1));
+      dispatch(getAColor(getColorId));
     }
   }, [isEditMode, getColorId, dispatch]);
- 
+
   useEffect(() => {
-    if (newColor && newColor[getColorId -1]) {
-      formik.setFieldValue("colorName", newColor[getColorId -1].colorName);
+    if (getColorId !== undefined) {
+      dispatch(getAColor(getColorId));
+    } else {
+      dispatch(resetState());
     }
-  }, [newColor, getColorId]);
+  }, [getColorId]);
+
+  const colorState = useSelector((state) => state.color);
+  const { colorName, image } = colorState;
+  useEffect(() => {
+    formik.setValues({
+      ...formik.values,
+      colorName: colorState.colorName || "",
+      image: colorState.image || "#D8DD78",
+    });
+  }, [colorState]);
 
   const formik = useFormik({
     initialValues: {
-      colorName: "",
+      colorName: colorName|| "",
+      image: image || "#D8DD78", // Set initial value for image field
     },
     validationSchema: schema,
 
     onSubmit: (values) => {
       console.log("Input data:", values); // Logging the input data
+      const data = { id: getColorId, colorData: values };
+      console.log("Data to be sent:", data); // Logging the data to be sent
+
       if (getColorId !== undefined) {
-        const data = { id: getColorId, colorData: values };
-        console.log("Data to be sent:", data); // Logging the data to be sent
         dispatch(updateColor(data));
-        setTimeout(() => {
-          navigate("/admin/color-list");
-          dispatch(resetState());
-        }, 1000);
       } else {
-        console.log("Input data:", values); // Logging the input data
         dispatch(createColor(values));
-        formik.resetForm();
-        setTimeout(() => {
-          navigate("/admin/color-list");
-          dispatch(resetState());
-        }, 1000);
       }
+
+      setTimeout(() => {
+        navigate("/admin/color-list");
+        dispatch(resetState());
+      }, 1000);
     },
   });
 
@@ -79,7 +88,7 @@ const AddColor = () => {
       <div className="form-group">
         <form onSubmit={formik.handleSubmit} className="add-blog-form">
           <label htmlFor="colorName">Color Name</label>
-          <CustomInput
+          <CustomInput  
             type="text"
             id="colorName"
             name="colorName"
@@ -90,6 +99,13 @@ const AddColor = () => {
           <div className="error">
             {formik.touched.colorName && formik.errors.colorName}
           </div>
+          <ColorPicker
+            value={formik.values.image} // Set the value to reflect the picked color
+            onChange={(color) => {
+              const hexColor = color.toHexString();
+              formik.setFieldValue("image", hexColor); // Set hex value to image field
+            }}
+          />
           <button
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"

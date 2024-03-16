@@ -27,7 +27,7 @@ const updateUnit = async (unit) => {
 
   return response.data;
 };
-const deleteColor = async (id) => {
+const deleteUnit = async (id) => {
   const response = await instance.delete(`Admin/units/remove/${id}`, config)
   return response.data
 }
@@ -37,6 +37,6 @@ const unitService = {
   createUnit,
   getAUnit,
   updateUnit,
-  deleteColor
+  deleteUnit
 }
 export default unitService

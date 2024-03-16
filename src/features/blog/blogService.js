@@ -4,26 +4,26 @@ import { config } from "../auth/authService"
 import { instance } from "apis/http"
 
 const getBlogs = async (userData) => {
-  const response = await instance.get(`Admin/blog`, userData)
+  const response = await instance.get(`Admin/blogs?page=1`, userData)
   return response.data
 }
 
 const createBlog = async (data) => {
-  const response = await instance.post(`Admin/blog`, data, config)
+  const response = await instance.post(`Admin/blogs/add`, data, config)
   return response.data
 }
 
 const getABlog = async (id) => {
-  const response = await instance.get(`Admin/blog/${id}`, config);
+  const response = await instance.get(`Admin/blogs/${id}`, config);
   return response.data;
 };
 
 const updateBlog = async (blog) => {
   const response = await instance.put(
-    `Admin/blog/${blog.id}`,
+    `Admin/blogs/edit/${blog.id}`,
     {
-      Title: blog.blogData.Title,
-      Content: blog.blogData.Content,
+      Title: blog.blogData.title,
+      Description: blog.blogData.description,
       CreationDate: blog.blogData.CreationDate,
       LatestUpdate: blog.blogData.LatestUpdate,
     },
@@ -33,7 +33,7 @@ const updateBlog = async (blog) => {
   return response.data;
 };
 const deleteBlog = async (id) => {
-  const response = await axios.delete(`${base_url}blog/${id}`, config)
+  const response = await axios.delete(`${base_url}blogs/${id}`, config)
   return response.data
 }
 

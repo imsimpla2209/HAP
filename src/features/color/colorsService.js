@@ -20,8 +20,8 @@ const updateColor = async (color) => {
   const response = await instance.put(
     `Admin/colors/edit/${color?.id}`,
     {
-      colorName: color.colorData.name,
-      code: color.colorData.code,
+      colorName: color.colorData.colorName,
+      image: color.colorData.image,
     },
     config
   );
