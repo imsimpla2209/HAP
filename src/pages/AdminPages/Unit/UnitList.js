@@ -15,7 +15,7 @@ import CustomModal from "../../../components/CustomModal";
 const columns = [
   {
     width: 100,
-    title: "SNo",
+    title: "Thứ tự",
     dataIndex: "key",
   },
   {
@@ -88,7 +88,7 @@ const UnitList = () => {
 
   return (
     <div>
-      <h3 className="mb-4 title">Unit List</h3>
+      <h3 className="mb-4 title">Danh sách đơn vị</h3>
       <Table columns={columns} dataSource={data1} />
       <CustomModal
         hideModal={hideModal}
@@ -96,7 +96,7 @@ const UnitList = () => {
         performAction={() => {
           deleteAUnit(unitId);
         }}
-        title="Are you sure you want to delete this unit?"
+        title="Bạn có chắc chắn khi xoá không?"
       />
     </div>
   );

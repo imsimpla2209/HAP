@@ -82,7 +82,7 @@ const Categorylist = () => {
   }
   return (
     <div>
-      <h3 className="mb-4 title">category List</h3>
+      <h3 className="mb-4 title">Danh sách danh mục sản phẩm</h3>
       <Table columns={columns} dataSource={data1} />
       <CustomModal
         hideModal={hideModal}
@@ -91,7 +91,7 @@ const Categorylist = () => {
           deleteACategory(categoryId);
           
         }}
-        title="Are you sure you want to delete this category?"
+        title="Bạn có chắc chắn khi xoá không?"
       />
     </div>
   );

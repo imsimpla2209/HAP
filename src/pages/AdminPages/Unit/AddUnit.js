@@ -17,7 +17,7 @@ import {
 import CustomModal from "../../../components/CustomModal";
 // "../../../features/customer/unit/unitSlice"
 let schema = yup.object().shape({
-  unitName: yup.string().required("UnitName Product is Required"),
+  unitName: yup.string().required("Nhập tên đơn vị"),
 });
 
 const Addcat = () => {
@@ -75,11 +75,11 @@ const Addcat = () => {
   return (
     <div>
       <h3 className="mb-4 unitname">
-        {getUnitId !== undefined ? "Edit" : "Add"} Unit
+        {getUnitId !== undefined ? "Sửa" : "Thêm"} Đơn vị
       </h3>
       <div className="form-group">
         <form onSubmit={formik.handleSubmit} className="add-blog-form">
-          <label htmlFor="unitName">Unit Name</label>
+          <label htmlFor="unitName">Tên Đơn vị</label>
           <CustomInput
             type="text"
             id="unitName"
@@ -95,7 +95,7 @@ const Addcat = () => {
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            {getUnitId !== undefined ? "Edit" : "Add"} Unit
+            {getUnitId !== undefined ? "Sửa" : "Thêm"} Đơn vị
           </button>
         </form>
       </div>

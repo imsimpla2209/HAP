@@ -1,18 +1,18 @@
 import axios from "axios";
 import { base_url, config } from "../../../utils/axiosConfig";
-import { Http } from "apis/http";
+import { Http, instance } from "apis/http";
 
 
 
 const register = async (userData) => {
-  const response = await Http.post(`authentication/sign-up`, userData)
+  const response = await instance.post(`authentication/sign-up`, userData)
     if (response.data) {
     localStorage.setItem("customer", JSON.stringify(response.data));
   }
 };
 
 const login = async (userData) => {
-  const response = await Http.post(`authentication/login`, userData, config);
+  const response = await instance.post(`authentication/login`, userData, config);
   
   if (response.data) {
     localStorage.setItem("customer", JSON.stringify(response.data));
@@ -26,14 +26,21 @@ const logout = async () => {
 };
 
 const updateUser = async (data) => {
-  const response = await axios.put(`${base_url}user/edit-user`, data, config);
+  const response = await instance.put(`/Admin/users/edit`, data, config);
   if (response.data) {
     return response.data;
   }
 };
 
-const getUser = async () => {
-  const response = await axios.get(`${base_url}user/use-info`, config);
+const updateUserPassword  = async (data) => {
+  const response = await instance.put(`/Admin/users/change-password`, data, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
+const getUser = async (id) => {
+  const response = await instance.get(`/Admin/users/${id}`, config);
   if (response.data) {
     return response.data;
   }
@@ -162,4 +169,5 @@ export const authService = {
   logout,
   getOrder,
   updateOrder,
+  updateUserPassword
 };

@@ -201,7 +201,7 @@ const Home = () => {
         <div className="container-xxl">
           <div className="row ">
             <div className="col-12">
-              <h3 className="section-heading">Featured Products</h3>
+              <h3 className="section-heading">Sản phẩm nổi bật</h3>
             </div>
             {productState &&
               productState
@@ -291,7 +291,7 @@ const Home = () => {
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
-              <h3 className="section-heading">Special Products</h3>
+              <h3 className="section-heading">Sản phẩm đặc biệt</h3>
             </div>
           </div>
           <div className="row ">
@@ -450,7 +450,7 @@ const Home = () => {
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
-              <h3 className="section-heading">Our Latest Blogs</h3>
+              <h3 className="section-heading">Tin tức mới nhất</h3>
             </div>
           </div>
           <div className="row">
@@ -461,10 +461,10 @@ const Home = () => {
                   return (
                     <div className="col-3 " key={index}>
                       <BlogCard
-                        id={item?._id}
+                        postId={item?.postId}
                         title={item?.title}
                         content={item?.content}
-                        // image={item?.images[0]?.url}
+                        image="https://img.freepik.com/premium-vector/global-network-connection-world-map-point-line-composition-concept-global-business-internet-technology-social-network-vector-illustration_230610-458.jpg"
                       />
                     </div>
                   );

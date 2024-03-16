@@ -2,10 +2,14 @@
 import React, { useEffect, useState } from "react";
 import BreadCrumb from "../../components/BreadCrumb";
 import Container from "../../components/Container";
+import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { getAUser, updateUserProf } from "../../features/customer/user/authSlice";
+import {
+  getAUser,
+  updateUserProf,
+} from "../../features/customer/user/authSlice";
 import { FiEdit } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -30,8 +34,9 @@ const Profile = () => {
   const dispatch = useDispatch();
   const [edit, setEdit] = useState(true);
   const location = useLocation();
-  const userState = useSelector((state) => state?.auth?.info?.getaUser);
+  const userState = useSelector((state) => state?.auth?.user);
   const getUsertId = location.pathname.split("/")[2];
+
 
   useEffect(() => {
     getUser();
@@ -40,6 +45,8 @@ const Profile = () => {
   const getUser = () => {
     dispatch(getAUser(getUsertId));
   };
+
+  console.log(userState)
 
   console.log(getUsertId);
   const formik = useFormik({
@@ -62,11 +69,16 @@ const Profile = () => {
   return (
     <>
       <BreadCrumb title="Profile" />
-      <Container class1="cart-wrapper home-wrapper-2 py-5">
+      <Container class1="cart-wrapper home-wrapper-2 ">
+        <div>
+          <Link to="/update-password" className="btn btn-secondary">
+            Cập nhật mật khẩu
+          </Link>
+        </div>
         <div className="row">
           <div className="col-12">
             <div className="d-flex justify-content-between align-items-center">
-              <h3 className="my-3">Update Profile</h3>
+              <h3 className="my-3">Cập nhật hồ sơ</h3>
               <FiEdit className="fs-3" onClick={() => setEdit(false)} />
             </div>
           </div>
@@ -74,7 +86,7 @@ const Profile = () => {
             <form onSubmit={formik.handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="ex1" className="form-label">
-                  First Name
+                  Họ
                 </label>
                 <input
                   type="text"
@@ -92,7 +104,7 @@ const Profile = () => {
               </div>
               <div className="mb-3">
                 <label htmlFor="ex2" className="form-label">
-                  Last Name
+                  Tên
                 </label>
                 <input
                   type="text"
@@ -110,7 +122,7 @@ const Profile = () => {
               </div>
               <div className="mb-3">
                 <label htmlFor="ex3" className="form-label">
-                  Phone Number
+                  Số điện thoại
                 </label>
                 <input
                   type="number"
@@ -128,7 +140,7 @@ const Profile = () => {
               </div>
               <div className="mb-3">
                 <label htmlFor="ex2" className="form-label">
-                  Country
+                  Quốc gia
                 </label>
                 <select
                   name="country"
@@ -147,7 +159,7 @@ const Profile = () => {
               </div>
               <div className="mb-3">
                 <label htmlFor="ex2" className="form-label">
-                  address
+                  Địa chỉ
                 </label>
                 <input
                   type="text"
@@ -162,7 +174,7 @@ const Profile = () => {
               </div>
               <div className="mb-3">
                 <label htmlFor="ex2" className="form-label">
-                  City
+                  Thành phố
                 </label>
                 <input
                   type="text"
@@ -176,9 +188,11 @@ const Profile = () => {
                 />
               </div>
               {edit === false && (
-                <button type="submit" className="btn btn-primary">
-                  Save
-                </button>
+                <>
+                  <button type="submit" className="btn btn-primary me-3">
+                    Lưu
+                  </button>
+                </>
               )}
             </form>
           </div>
