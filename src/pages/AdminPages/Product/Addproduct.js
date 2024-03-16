@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import Dropzone from "react-dropzone";
@@ -11,7 +11,6 @@ import CustomInput from "../../../components/CustomInput1";
 import { getBrands } from "../../../features/customer/brand/brandSlice";
 import { getCategorys } from "../../../features/customer/category/categorySlice";
 import {
-  createProduct,
   getAProduct,
   resetImgProductState,
   resetState,
@@ -24,6 +23,12 @@ import {
 } from "../../../features/upload/uploadSlice";
 import "./addproduct.css";
 import { getCollections } from "features/collections/collectionsSlice";
+import { PlusOutlined } from '@ant-design/icons';
+import { AddModel } from "../Model/AddModel";
+import { SelectedModelList } from "./SelectedModelList";
+import { getModels } from "features/models/modelsSlice";
+import productService from "features/product/productService";
+import modelService from "features/models/modelsService";
 
 let schema = yup.object().shape({
   productName: yup.string().required("Hãy điền tên cho sản phẩm"),
@@ -42,9 +47,15 @@ const Addproduct = () => {
   const getProductId = location.pathname.split("/")[3];
   const collectionState = useSelector((state) => state.collections.collections);
   const categoryState = useSelector((state) => state.category.categorys);
+  const modelsState = useSelector((state) => state.models.models);
   const imgProductState = useSelector((state) => state.product.productImages);
   const imgState = useSelector((state) => state.upload.images);
   const [images, setImages] = useState([]);
+  const [models, setModels] = useState([]);
+
+  const [selectedModel, setSelectedModel] = useState({});
+
+  const [addModelModal, setAddModelModal] = useState(false);
 
   const productState = useSelector((state) => state.product);
   const {
@@ -70,10 +81,18 @@ const Addproduct = () => {
     if (getProductId !== undefined) {
       dispatch(getAProduct(getProductId));
       img.push(productImages);
+      dispatch(getModels(getProductId));
+
     } else {
       dispatch(resetState());
     }
   }, [getProductId]);
+
+  useEffect(() => {
+    if (modelsState && getProductId !== undefined) {
+      setModels(modelsState);
+    }
+  }, [modelsState])
 
   const img = [];
   useEffect(() => {
@@ -116,7 +135,7 @@ const Addproduct = () => {
     },
     validationSchema: schema,
 
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const productData = {
         productCode: values.productCode,
         productName: values.productName,
@@ -137,16 +156,55 @@ const Addproduct = () => {
           dispatch(resetState());
         }, 300);
       } else {
-        dispatch(createProduct(productData));
-        formik.resetForm();
-        setTimeout(() => {
-          navigate("/admin/product-list");
-          dispatch(resetUploadState());
-          dispatch(resetState());
-        }, 1000);
+        const data = await productService.createProduct(productData)
+        if (models?.length) {
+          try {
+            const uploadModels = await Promise.all(models.map(async (model) => {
+              delete model.modelId;
+              const res = await modelService.createModel(data?.productId, { ...model, attachments: [] });
+              return res?.modelId;
+            }));
+            console.log("Upload successful:", uploadModels);
+            dispatch(updateProduct({ ...data, modelIdList: uploadModels }));
+            formik.resetForm();
+            setTimeout(() => {
+              navigate("/admin/product-list");
+              dispatch(resetUploadState());
+              dispatch(resetState());
+            }, 1000);
+          } catch (error) {
+            console.error("Error uploading models:", error);
+          }
+        }
       }
     },
   });
+
+  const handleAddModel = (modelData) => {
+    setModels([...models, modelData]);
+    setAddModelModal(false);
+  };
+
+  const handleDeleteModel = (index) => {
+    const newModels = [...models];
+    newModels.splice(index, 1);
+    setModels(newModels);
+  };
+
+  const handleEditModel = (idx, modelData) => {
+    const newModels = [...models];
+    newModels[idx] = modelData;
+    setModels(newModels);
+    setAddModelModal(false);
+  };
+
+  const handlePressEditModel = (index) => {
+    const model = models?.[index];
+    if (model) {
+      setSelectedModel({ idx: index, model });
+      setAddModelModal(true);
+    }
+  }
 
   return (
     <div className="">
@@ -214,24 +272,6 @@ const Addproduct = () => {
               <div className="error">{formik.errors.collectionId}</div>
             )}
           </div>
-          {/* <div className="form-group">
-            <label htmlFor="tag">Tag</label>
-            <select
-              name="tags"
-              onChange={formik.handleChange("tags")}
-              onBlur={formik.handleBlur("tags")}
-              value={formik.values.tags}
-              className="form-select"
-              id=""
-            >
-              <option value="" disabled>
-                Select Tag
-              </option>
-              <option value="featured">Featured</option>
-              <option value="popular">Popular</option>
-              <option value="special">Special</option>
-            </select>
-          </div> */}
           <div className="form-group">
             <label htmlFor="categoryId">Danh mục sản phẩm</label>
             <select
@@ -266,7 +306,7 @@ const Addproduct = () => {
               {formik.touched.quantity && formik.errors.quantity}
             </div>
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <div className="upload-form bg-white border-1 p-5 text-center">
               <Dropzone onDrop={handleDrop}>
                 {({ getRootProps, getInputProps }) => (
@@ -332,8 +372,25 @@ const Addproduct = () => {
                 </div>
               )
             )}
+          </div> */}
+          <div className="form-group">
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <label htmlFor="productName">Mẫu</label>
+              <Button
+                type="primary"
+                shape="round"
+                icon={<PlusOutlined />}
+                onClick={() => {
+                  setAddModelModal(true);
+                }}
+              >
+                Thêm mẫu
+              </Button>
+            </div>
+            {
+              models?.length ? <SelectedModelList data={models} onDelete={handleDeleteModel} onEdit={handlePressEditModel} /> : null
+            }
           </div>
-
           <Button
             className="border-0 rounded-3 my-5"
             type="primary"
@@ -345,6 +402,24 @@ const Addproduct = () => {
             {getProductId !== undefined ? "Sửa" : "Thêm"} Sản Phẩm
           </Button>
         </form>
+        <Modal
+          style={{ top: 20 }}
+          open={addModelModal}
+          footer={null}
+          onCancel={() => {
+            setAddModelModal(false)
+            setSelectedModel(null)
+
+          }
+          }>
+          <AddModel
+            onAddModel={handleAddModel}
+            isModal={true}
+            editedModal={selectedModel?.model}
+            onEditModel={handleEditModel}
+            idx={selectedModel?.idx}
+          />
+        </Modal>
       </div>
     </div>
   );
