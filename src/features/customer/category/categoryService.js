@@ -10,7 +10,9 @@ const getACategory = async (id) => {
     return response.data;
 };
 
+
 const addCategory = async(dataCategories)=>{
+
     const response = await instance.post(`Admin/categories/add?categoryName=${dataCategories}`)
     return response.data;
 }

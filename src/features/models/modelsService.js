@@ -20,8 +20,9 @@ const updateModel = async (productId, model) => {
   const response = await instance.put(
     `Admin/products/${productId}/models/edit/${model?.id}`,
     {
+      productId: model.modelData.productId,
+      modelName: model.modelData.modelName,
       modelId: model.modelData.modelId,
-      ProductId: model.modelData.ProductId,
       unitId: model.modelData.unitId,
       colorId: model.modelData.colorId,
       specification: model.modelData.specification,
@@ -40,11 +41,11 @@ const deleteModel = async (productId, id) => {
   return response.data
 }
 
-const collectionService = {
+const modelsServices = {
   getModels,
   createModel,
   getAModel,
   updateModel,
   deleteModel
 }
-export default collectionService
+export default modelsServices

@@ -22,7 +22,6 @@ const { Header, Sider, Content } = Layout;
 
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
-  console.log(theme)
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -35,8 +34,8 @@ const MainLayout = () => {
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo">
           <h2 className="text-white fs-5 text-center py-3 mb-0">
-            <span className="sm-logo">MS</span>
-            <span className="lg-logo">Music Store</span>
+            <span className="sm-logo">HAP</span>
+            <span className="lg-logo"></span>
           </h2>
         </div>
         <Menu
@@ -60,89 +59,89 @@ const MainLayout = () => {
             {
               key: "customers",
               icon: <AiOutlineUser className="fs-4" />,
-              label: "Customers",
+              label: "Khách Hàng",
             },
             {
               key: "users",
               icon: <AiOutlineUser className="fs-4" />,
-              label: "User",
+              label: "Người Dùng",
             },
             {
               key: "catalog",
               icon: <AiOutlineShoppingCart className="fs-4" />,
-              label: "Catalog",
+              label: "Mục Lục",
               children: [
                 {
                   key: "product",
                   icon: <AiOutlineShoppingCart className="fs-4" />,
-                  label: "Add Product",
+                  label: "Thêm Sản Phẩm",
                 },
                 {
                   key: "product-list",
                   icon: <AiOutlineShoppingCart className="fs-4" />,
-                  label: "Product List",
+                  label: "Danh sách sản phẩm",
                 },
                 {
                   key: "unit",
                   icon: <TbBrandBootstrap className="fs-4" />,
-                  label: "Unit",
+                  label: "Đơn Vị",
                 },
                 {
                   key: "unit-list",
                   icon: <TbBrandBootstrap className="fs-4" />,
-                  label: "Unit List",
+                  label: "Danh Sách Đơn Vị",
                 },
                 {
                   key: "category",
                   icon: <TbCategory className="fs-4" />,
-                  label: "Category",
+                  label: "Thêm Danh Mục Sản Phẩm",
                 },
                 {
                   key: "category-list",
                   icon: <TbCategory className="fs-4" />,
-                  label: "Category List",
+                  label: "Danh Mục Sản Phẩm",
                 },
                 {
                   key: "color",
                   icon: <TbCategory className="fs-4" />,
-                  label: "Color",
+                  label: "Màu Sắc",
                 },
                 {
                   key: "color-list",
                   icon: <TbCategory className="fs-4" />,
-                  label: "Color List",
+                  label: "Danh Sách Màu Sắc",
                 },
               ],
             },
             {
               key: "order",
               icon: <LuClipboardList className="fs-4" />,
-              label: "Order",
+              label: "Đơn hàng",
             },
             {
               key: "blog",
               icon: <TbBrandBlogger className="fs-4" />,
-              label: "Blog",
+              label: "Bài Đăng",
               children: [
                 {
                   key: "blog",
                   icon: <ImBlog className="fs-4" />,
-                  label: "Add Blog",
+                  label: "Đăng tải Blog",
                 },
                 {
                   key: "blog-list",
                   icon: <TbBrandBlogger className="fs-4" />,
-                  label: "Blog List",
+                  label: "Danh Sách Blog",
                 },
                 {
                   key: "blog-category",
                   icon: <ImBlog className="fs-4" />,
-                  label: "Add Blog Category",
+                  label: "Thêm Danh Mục Blog",
                 },
                 {
                   key: "blog-category-list",
                   icon: <TbBrandBlogger className="fs-4" />,
-                  label: "Blog Category List",
+                  label: "Danh Sách Danh Mục Bài Đăng",
                 },
               ],
             },
@@ -154,12 +153,12 @@ const MainLayout = () => {
                 {
                   key: "coupon",
                   icon: <ImBlog className="fs-4" />,
-                  label: "Add Coupon",
+                  label: "Thêm Mã Giảm Giá",
                 },
                 {
                   key: "coupon-list",
                   icon: <RiCouponLine className="fs-4" />,
-                  label: "Coupon List",
+                  label: "Danh Sách Mã",
                 },
               ],
             },
@@ -170,7 +169,7 @@ const MainLayout = () => {
             }, {
               key: "signout",
               icon: <AiOutlineLogout className="fs-4" />,
-              label: "Sign out",
+              label: "Đăng Xuất",
             },
           ]}
         />

@@ -7,43 +7,53 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, getProducts, resetState } from "../../../features/product/productSlice";
 import { Link } from "react-router-dom";
 import CustomModal from "../../../components/CustomModal";
-import { getBrands } from "../../../features/customer/brand/brandSlice";
-import { getCategorys } from "../../../features/customer/category/categorySlice";
+import { getCollections } from "../../../features/collections/collectionsSlice";
+import { getCategorys } from "../../../features/category/categorySlice";
+import { getUnits } from "../../../features/unit/unitsSlice";
+import { formatCurrencyVND } from "utils/formator";
+import { getModels } from "features/models/modelsSlice";
+import modelsServices from "features/models/modelsService";
 
 const columns = [
   {
-    title: "SNo",
+    title: "No.",
     dataIndex: "key",
+    width: 80,
+    sorter: (a, b) => a.key - b.key,
+    fixed: 'left',
   },
   {
-    title: "Title",
-    dataIndex: "title",
-    sorter: (a, b) => a.title.length - b.title.length,
+    title: "Tên",
+    dataIndex: "productName",
+    sorter: (a, b) => a.productName.length - b.productName.length,
+    fixed: 'left',
+    width: 180,
   },
   {
-    title: "Brand",
-    dataIndex: "brands",
-    sorter: (a, b) => a.brands.length - b.brands.length,
+    title: "Bộ",
+    dataIndex: "collections",
+    sorter: (a, b) => a.collections.length - b.collections.length,
   },
   {
-    title: "Category",
+    title: "Danh Mục",
     dataIndex: "pcategories",
     sorter: (a, b) => a.pcategories.length - b.pcategories.length,
   },
   {
-    title: "Price",
-    dataIndex: "price",
-    sorter: (a, b) => a.price - b.price,
+    title: "Đánh giá",
+    dataIndex: "voteStar",
+    sorter: (a, b) => a.voteStar - b.voteStar,
   },
   {
-    title: "Quantity",
-    dataIndex: "quantity",
-    sorter: (a, b) => a.quantity - b.quantity,
+    title: "Đã Bán",
+    dataIndex: "sold",
+    sorter: (a, b) => a.sold - b.sold,
   },
   {
     title: 'Action',
     dataIndex: "action",
     width: 150,
+    fixed: 'right',
   },
 ];
 
@@ -60,9 +70,10 @@ const Productlist = () => {
   };
   useEffect(() => {
     dispatch(resetState())
-    dispatch(getProducts());
-    dispatch(getBrands())
+    dispatch(getProducts(1));
+    dispatch(getCollections())
     dispatch(getCategorys())
+    dispatch(getUnits())
   }, [dispatch]);
 
   const deleteAProduct = (e) => {
@@ -74,33 +85,34 @@ const Productlist = () => {
   };
 
   const productstate = useSelector((state) => state.product.products);
-  const brandState = useSelector((state) => state.brand.brands);
+  const collectionsState = useSelector((state) => state.collections.collections);
   const categoryState = useSelector((state) => state.category.categorys);
+  const unitsState = useSelector((state) => state.unit.units);
 
   console.log(productstate)
   const data1 = [];
   for (let i = 0; i < productstate.length; i++) {
-    const brand = brandState.find((brand) => brand._id === productstate[i].brands);
-    const category = categoryState.find((category) => category._id === productstate[i].pcategories);
+    const collections = collectionsState?.filter((collections) => productstate?.[i].collection?.include?.(collections.collectionId));
 
     data1.push({
       key: i + 1,
-      title: productstate[i].title,
-      brands: brand ? brand.title : "",
-      pcategories: category ? category.title : "",
+      productId: productstate[i].productId,
+      productName: productstate[i].productName,
+      collections: collections?.length ? collections?.map((c) => c?.collectionName).join(", ") : "",
+      pcategories: productstate?.[i]?.category?.categoryName || "",
       price: `${productstate[i].price}`,
       quantity: `${productstate[i].quantity}`,
       action: (
         <>
           <Link
             className="ms-3 fs-3 text-danger"
-            to={`/admin/product/${productstate[i]._id}`}
+            to={`/admin/product/${productstate[i]?.productId}`}
           >
             <BiEdit />
           </Link>
           <button
             className="ms-3 fs-3 text-danger bg-transparent border-0"
-            onClick={() => showModal(productstate[i]._id)}
+            onClick={() => showModal(productstate[i].productId)}
           >
             <AiFillDelete />
           </button>
@@ -108,19 +120,85 @@ const Productlist = () => {
       ),
     });
   }
+
   return (
     <div>
-      <h3 className="mb-4 title">Product List</h3>
-      <Table columns={columns} dataSource={data1} />
+      <h3 className="mb-4 title">Danh Sách Sản Phẩm</h3>
+      <Table columns={columns} dataSource={data1} scroll={{ x: 1350, y: 1500 }} expandable={{ expandedRowRender: (record, index) => <ExpandedRowRenderModels productId={record.productId} unitsState={unitsState} /> }} />
       <CustomModal
         hideModal={hideModal}
         open={open}
         performAction={() => {
           deleteAProduct(productId);
         }}
-        title="Are you sure you want to delete this product?"
+        heading="Xóa sản phẩm"
+        title="Bạn có chắc chắn khi xoá sản phẩm này?"
+        cancelText="Huỷ"
       />
     </div>
   );
 };
 export default Productlist;
+
+
+const ExpandedRowRenderModels = ({ productId, unitsState }) => {
+  const columns = [
+    {
+      title: 'Mẫu',
+      dataIndex: 'modelName',
+      key: 'modelName',
+      render: (text) => <>{text}</>,
+    },
+    {
+      title: 'Đơn vị',
+      dataIndex: 'unitId',
+      key: 'unitId',
+      render: (text) => <>{unitsState?.find((u) => u.unitId === text)?.unitName || text}</>,
+    },
+    {
+      title: 'Thông số',
+      dataIndex: 'specification',
+      key: 'specification',
+      render: (text) => <>{text}</>,
+    },
+    {
+      title: 'Giá Bán Lẻ',
+      dataIndex: 'primaryPrice',
+      key: 'primaryPrice',
+      render: (text) => <>{formatCurrencyVND(text)}</>,
+    },
+    {
+      title: 'Giá Bán Buôn',
+      dataIndex: 'secondaryPrice',
+      key: 'secondaryPrice',
+      render: (text) => <>{formatCurrencyVND(text)}</>,
+    },
+    // {
+    //   title: '',
+    //   dataIndex: 'key',
+    //   key: 'action',
+    //   render: (text) => (
+    //     <Space size="middle">
+    //       <Button
+    //         type="text"
+    //         icon={<EditTwoTone twoToneColor={'#2954e3'} />}
+    //         onClick={() => onEdit(text)}
+    //       />
+    //       <Button
+    //         type="text"
+    //         icon={<DeleteTwoTone twoToneColor={'#e62e4d'} />}
+    //         onClick={() => onDelete(text)}
+    //       />
+    //     </Space>
+    //   ),
+    // },
+  ];
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    modelsServices.getModels(productId).then((res) => setData(res));
+  }, [productId]);
+
+
+
+  return <Table columns={columns} dataSource={data} pagination={false} />;
+};
