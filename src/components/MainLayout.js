@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { LuClipboardList } from "react-icons/lu";
 import { ImBlog } from "react-icons/im";
-import {RiCouponLine} from "react-icons/ri"
+import { RiCouponLine } from "react-icons/ri"
 import { FaClipboardList } from "react-icons/fa";
 import { TbBrandBlogger, TbBrandBootstrap, TbCategory } from "react-icons/tb";
 import {
@@ -22,9 +22,11 @@ const { Header, Sider, Content } = Layout;
 
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
+  console.log(theme)
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
 
   const userState = useSelector((state) => state?.auth?.user);
   const navigate = useNavigate();
@@ -165,7 +167,7 @@ const MainLayout = () => {
               key: "enquiries",
               icon: <FaClipboardList className="fs-4" />,
               label: "Enquiries",
-            },{
+            }, {
               key: "signout",
               icon: <AiOutlineLogout className="fs-4" />,
               label: "Sign out",

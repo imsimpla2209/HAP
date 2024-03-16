@@ -10,8 +10,9 @@ import productReducer from '../features/product/productSlice';
 import colorReducer from '../features/color/colorsSlice';
 import unitReducer from '../features/unit/unitsSlice';
 import collectionsReducer from '../features/collections/collectionsSlice';
+import modelsReducer from '../features/models/modelsSlice';
 
-import blogReducer from '../features/customer/blogs/blogSlice';
+import blogReducer from '../features/blog/blogSlice';
 import brandReducer from '../features/customer/brand/brandSlice';
 import contactReducer from '../features/customer/contact/contactSlice';
 import authReducer from '../features/customer/user/authSlice';
@@ -28,13 +29,14 @@ export const store = configureStore({
     color: colorReducer,
     unit: unitReducer,
     collections: collectionsReducer,
+    models: modelsReducer,
     //admin
     customer: customerReducer,
     blogcat: blogcatReducer,
     adminBrand: adminBrandReducer,
     category: categoryReducer,
     enquiry: enquiryReducer,
-    blog: blogReducer,
+    // blog: blogReducer,
     upload: uploadReducer,
     coupon: couponReducer
   },

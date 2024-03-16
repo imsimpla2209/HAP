@@ -67,7 +67,7 @@ const ColorList = () => {
         <>
           <Link
             className="ms-3 fs-3 text-danger"
-            to={`/admin/color/${colorState[i].colorId}`}
+            to={`/admin/color/${colorState[i].colorId }`}
           >
             <BiEdit />
           </Link>

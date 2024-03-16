@@ -1,33 +1,31 @@
-import { Http } from "apis/http"
 import { config } from "../auth/authService"
+import { instance } from "apis/http"
 
 const getProducts = async () => {
-  const response = await Http.get("Admin/products")
+  const response = await instance.get("Admin/products")
   return response.data
 }
 
 const createProduct = async (dataProduct) => {
-  const response = await Http.post("Admin/products/add", dataProduct, config)
+  const response = await instance.post("Admin/products/add", dataProduct, config)
   return response.data
 }
 
 const getAProduct = async (id) => {
-  const response = await Http.get(`Admin/products/${id}`, config);
+  const response = await instance.get(`Admin/products/${id}`, config);
   return response.data;
 };
 
 const updateProduct = async (product) => {
-  const response = await Http.put(
+  const response = await instance.put(
     `Admin/products/edit/${product?.id}`,
     {
-      title: product.productData.title,
-      description: product.productData.description,
-      pcategories: product.productData.pcategories,
-      brands: product.productData.brands,
-      images: product.productData.images,
-      price: product.productData.price,
-      tag: product.productData.tag,
-      quantity: product.productData.quantity,
+      productCode: product.productData.productCode,
+      productName: product.productData.productName,
+      categoryId: product.productData.categoryId,
+      collectionId: product.productData.collectionId,
+      voteStar: product.productData.voteStar,
+      sold: product.productData.sold,
     },
     config
   );
@@ -35,7 +33,7 @@ const updateProduct = async (product) => {
   return response.data;
 };
 const deleteProduct = async (id) => {
-  const response = await Http.delete(`Admin/products/remove/${id}`, config)
+  const response = await instance.delete(`Admin/products/remove/${id}`, config)
   return response.data
 }
 

@@ -46,6 +46,18 @@ const UnitList = () => {
     dispatch(resetState());
     dispatch(getUnits());
   }, []);
+
+
+  const deleteAUnit = (e) => {
+    console.log(e)
+    dispatch(deleteUnit(e));
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getUnits());
+    }, 100);
+  };
+
+  
   const unitState = useSelector((state) => state.unit.units);
   console.log(unitState)
   const data1 = [];
@@ -73,13 +85,7 @@ const UnitList = () => {
     });
   }
 
-  const deleteUnit = (e) => {
-    dispatch(deleteUnit(e));
-    setOpen(false);
-    setTimeout(() => {
-      dispatch(getUnits());
-    }, 100);
-  };
+
   return (
     <div>
       <h3 className="mb-4 title">Unit List</h3>
@@ -88,7 +94,7 @@ const UnitList = () => {
         hideModal={hideModal}
         open={open}
         performAction={() => {
-          deleteUnit(unitId);
+          deleteAUnit(unitId);
         }}
         title="Are you sure you want to delete this unit?"
       />

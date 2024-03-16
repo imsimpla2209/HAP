@@ -1,23 +1,23 @@
-import { Http } from "apis/http"
+import { instance } from "apis/http"
 import { config } from "../auth/authService"
 
 const getUnits = async () => {
-  const response = await Http.get("Admin/units")
+  const response = await instance.get("Admin/units")
   return response.data
 }
 
 const createUnit = async (dataUnit) => {
-  const response = await Http.post("Admin/units/add", dataUnit, config)
+  const response = await instance.post("Admin/units/add", dataUnit, config)
   return response.data
 }
 
 const getAUnit = async (id) => {
-  const response = await Http.get(`Admin/units/${id}`, config);
+  const response = await instance.get(`Admin/units/${id}`, config);
   return response.data;
 };
 
 const updateUnit = async (unit) => {
-  const response = await Http.put(
+  const response = await instance.put(
     `Admin/units/edit/${unit?.id}`,
     {
       unitName: unit.unitData.unitName, // corrected property name
@@ -27,8 +27,8 @@ const updateUnit = async (unit) => {
 
   return response.data;
 };
-const deleteColor = async (id) => {
-  const response = await Http.delete(`Admin/units/remove/${id}`, config)
+const deleteUnit = async (id) => {
+  const response = await instance.delete(`Admin/units/remove/${id}`, config)
   return response.data
 }
 
@@ -37,6 +37,6 @@ const unitService = {
   createUnit,
   getAUnit,
   updateUnit,
-  deleteColor
+  deleteUnit
 }
 export default unitService

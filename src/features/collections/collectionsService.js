@@ -1,27 +1,27 @@
-import { Http } from "apis/http"
+import { instance } from "apis/http"
 import { config } from "../auth/authService"
 
 const getCollections = async () => {
-  const response = await Http.get("Admin/collections")
+  const response = await instance.get("Admin/collections")
   return response.data
 }
 
 const createCollection = async (dataProduct) => {
-  const response = await Http.post("Admin/collections/add", dataProduct, config)
+  const response = await instance.post("Admin/collections/add", dataProduct, config)
   return response.data
 }
 
 const getACollection = async (id) => {
-  const response = await Http.get(`Admin/collections/${id}`, config);
+  const response = await instance.get(`Admin/collections/${id}`, config);
   return response.data;
 };
 
 const updateCollection = async (product) => {
-  const response = await Http.put(
+  const response = await instance.put(
     `Admin/collections/edit/${product?.id}`,
     {
-      CollectionName: product.productData.name,
-      Description: product.productData.description,
+      collectionName: product.productData.name,
+      description: product.productData.description,
       collectionImages: product.productData.images,
     },
     config
@@ -30,7 +30,7 @@ const updateCollection = async (product) => {
   return response.data;
 };
 const deleteCollection = async (id) => {
-  const response = await Http.delete(`Admin/collections/remove/${id}`, config)
+  const response = await instance.delete(`Admin/collections/remove/${id}`, config)
   return response.data
 }
 

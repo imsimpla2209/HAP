@@ -1,7 +1,6 @@
 import axios, { AxiosError } from 'axios'
 
 export const instance = axios.create({
-  credentials: true,
   baseURL: 'http://haanphat.somee.com/api/',
 });
 

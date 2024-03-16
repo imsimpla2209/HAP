@@ -21,7 +21,7 @@ import {
   resetImgBlogState,
   resetState,
   updateBlog,
-} from "../../../features/admin/blog/blogSlice";
+} from "../../../features/blog/blogSlice";
 
 // import { getBlogcats } from "../../../features/admin/blogcat/blogcatSlice";
 import { resetImgProductState } from "../../../features/product/productSlice";
@@ -34,9 +34,11 @@ const Addblog = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const getBlogId = location.pathname.split("/")[3];
+  console.log(getBlogId)
   const imgState = useSelector((state) => state.upload.images);
   // const bCatState = useSelector((state) => state.blogcat.blogcats);
   const blogState = useSelector((state) => state.blog);
+  console.log(blogState)
   const imgBlogState = useSelector((state) => state.blog.blogImages);
   const { blogName, blogDesc, blogImages } = blogState;
 
@@ -53,6 +55,9 @@ const Addblog = () => {
       dispatch(resetState());
     }
   }, [getBlogId]);
+
+
+  
 
   const img = [];
 
@@ -81,6 +86,9 @@ const Addblog = () => {
       images: [...formik.values.images],
     });
   };
+
+  console.log(blogName)
+  console.log(blogDesc)
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -135,6 +143,7 @@ const Addblog = () => {
           <label htmlFor="description">Description</label>
           <ReactQuill
             theme="snow"
+            id="description"
             name="description"
             onChange={(value) => formik.setFieldValue("description", value)}
             value={formik.values.description}

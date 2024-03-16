@@ -4,20 +4,23 @@ import BreadCrumb from "../../components/BreadCrumb";
 import Meta from "../../components/Meta";
 import BlogCard from "../../components/BlogCard";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllBLogs } from "../../features/customer/blogs/blogSlice";
+import { getBlogs } from "features/blog/blogSlice";
+
 
 
 const Blog = () => {
-  const blogState = useSelector((state) => state?.blog?.blog);
+  const blogState = useSelector((state) => state?.blog?.blogs);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getBlogs();
+    getAllBlogs();
   }, []);
 
-  const getBlogs = () => {
-    dispatch(getAllBLogs());
+  const getAllBlogs = () => {
+    dispatch(getBlogs());
   };
+
+  console.log(blogState)
 
   return (
     <>
@@ -34,10 +37,10 @@ const Blog = () => {
                   blogState.map((item, index) => (
                     <div className="col-6 mb-3" key={index}>
                       <BlogCard
-                        id={item?._id}
+                        postId={item?.postId}
                         title={item?.title}
-                        description={item?.description}
-                        image={item?.images[0]?.url}
+                        content={item?.content}
+                        // image={item?.images[0]?.url}
                       />
                     </div>
                   ))}

@@ -3,11 +3,11 @@ import React, { useEffect } from "react";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { Segmented, Space, Switch, Table, Typography } from "antd";
-import { deleteBlog, getBlogs } from "../../../features/admin/blog/blogSlice";
+import { deleteBlog, getBlogs } from "../../../features/blog/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CustomModal from "../../../components/CustomModal";
-import { resetState } from "../../../features/admin/blog/blogSlice";
+import { resetState } from "../../../features/blog/blogSlice";
 import { useState } from "react";
 // import { getBlogcats } from "../../../features/admin/blogcat/blogcatSlice";
 
@@ -21,11 +21,6 @@ const columns = [
     dataIndex: "title",
     sorter: (a, b) => a.title.length - b.title.length,
   },
-  {
-    title: "Category",
-    dataIndex: "bcategories",
-    sorter: (a, b) => a.bcategories.length - b.bcategories.length,
-  },
 
   {
     title: "Action",
@@ -35,6 +30,7 @@ const columns = [
 ];
 
 const Bloglist = () => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [blogId, setblogId] = useState("");
   const showModal = (e) => {
@@ -44,41 +40,12 @@ const Bloglist = () => {
   const hideModal = () => {
     setOpen(false);
   };
-  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(resetState());
+    // dispatch(resetState());
     dispatch(getBlogs());
-    // dispatch(getBlogcats())
-  }, []);
-  const blogstate = useSelector((state) => state.blog);
-  const blogCatState = useSelector((state) => state.blogcat.blogcats);
-  const data1 = [];
-  console.log(blogstate)
-  // for (let i = 0; i < blogstate.length; i++) {
-  //   const blogcat = blogCatState.find((blogcat) => blogcat._id === blogstate[i].bcategories);
-  //   data1.push({
-  //     key: i + 1,
-  //     title: blogstate[i].title,
-  //     bcategories: blogcat ? blogcat.title : "",
-  //     action: (
-  //       <>
-  //         <Link
-  //           className="ms-3 fs-3 text-danger"
-  //           to={`/admin/blog/${blogstate[i]._id}`}
-  //         >
-  //           <BiEdit />
-  //         </Link>
-  //         <button
-  //           className="ms-3 fs-3 text-danger bg-transparent border-0"
-  //           onClick={() => showModal(blogstate[i]._id)}
-  //         >
-  //           <AiFillDelete />
-  //         </button>
-  //       </>
-  //     ),
-  //   });
-  // }
-
+    // dispatch(getBlogcats())  
+  }, [dispatch]);
+  
   const deleteABlog = (e) => {
     dispatch(deleteBlog(e));
     setOpen(false);
@@ -86,6 +53,37 @@ const Bloglist = () => {
       dispatch(getBlogs());
     }, 100);
   };
+
+  const blogstate = useSelector((state) => state.blog.blogs);
+
+  
+  const data1 = [];
+  console.log(blogstate)
+  for (let i = 0; i < blogstate.length; i++) {
+    data1.push({
+      key: i + 1,
+      title: blogstate[i].title,
+      // bcategories: blogcat ? blogcat.title : "",
+      action: (
+        <>
+          <Link
+            className="ms-3 fs-3 text-danger"
+            to={`/admin/blog/${blogstate[i].postId}`}
+          >
+            <BiEdit />
+          </Link>
+          <button
+            className="ms-3 fs-3 text-danger bg-transparent border-0"
+            onClick={() => showModal(blogstate[i].postId)}
+          >
+            <AiFillDelete />
+          </button>
+        </>
+      ),
+    });
+  }
+
+
   return (
     <div>
       <h3 className="mb-4 title">blog List</h3>

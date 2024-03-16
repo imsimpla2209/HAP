@@ -1,23 +1,23 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
-import productService from "./productService";
+import modelsService from "./modelsService";
 import { toast } from "react-toastify";
 
-export const getProducts = createAsyncThunk(
-  "product/get-products",
+export const getModels = createAsyncThunk(
+  "model/get-models",
   async (thunkAPI) => {
     try {
-      return await productService.getProducts();
+      return await modelsService.getModels();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-export const createProduct = createAsyncThunk(
-  "product/create-products",
-  async (proudctData, thunkAPI) => {
+export const createModel = createAsyncThunk(
+  "model/create-models",
+  async (colData, thunkAPI) => {
     try {
-      return await productService.createProduct(proudctData);
+      return await modelsService.createModel(colData);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -25,33 +25,33 @@ export const createProduct = createAsyncThunk(
 );
 
 
-export const getAProduct = createAsyncThunk(
-  "product/get-product",
+export const getAModel = createAsyncThunk(
+  "model/get-model",
   async (id, thunkAPI) => {
     try {
-      return await productService.getAProduct(id);
+      return await modelsService.getAModel(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-export const updateProduct = createAsyncThunk(
-  "product/update-product",
-  async (productData, thunkAPI) => {
+export const updateModel = createAsyncThunk(
+  "model/update-model",
+  async (colData, thunkAPI) => {
     try {
-      return await productService.updateProduct(productData);
+      return await modelsService.updateModel(colData);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-export const deleteProduct = createAsyncThunk(
-  "product/delete-product",
+export const deleteCollection = createAsyncThunk(
+  "model/delete-model",
   async (id, thunkAPI) => {
     try {
-      return await productService.deleteProduct(id)
+      return await modelsService.deleteCollection(id)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
     }
@@ -61,12 +61,12 @@ export const deleteProduct = createAsyncThunk(
 
 export const resetState = createAction("Reset_all");
 
-export const resetImgProductState = createAction("Reset_img_product_state");
+export const resetImgModelState = createAction("Reset_img_model_state");
 
 
 const initialState = {
-  products: [],
-  productImages: [],
+  models: [],
+  modelImages: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -74,39 +74,39 @@ const initialState = {
 };
 
 
-export const productSlice = createSlice({
-  name: "products",
+export const collectionSlice = createSlice({
+  name: "models",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getProducts.pending, (state) => {
+      .addCase(getModels.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getProducts.fulfilled, (state, action) => {
+      .addCase(getModels.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.products = action.payload
+        state.models = action.payload
       })
-      .addCase(getProducts.rejected, (state, action) => {
+      .addCase(getModels.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error
       })
-      .addCase(createProduct.pending, (state) => {
+      .addCase(createModel.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createProduct.fulfilled, (state, action) => {
+      .addCase(createModel.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.createProducts = action.payload
+        state.createCollections = action.payload
         if (state.isSuccess === true) {
-          toast.info("Product Added Successfully!");
+          toast.info("Model Added Successfully!");
         }
       })
-      .addCase(createProduct.rejected, (state, action) => {
+      .addCase(createModel.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
@@ -114,40 +114,42 @@ export const productSlice = createSlice({
         if (state.isError === true) {
           toast.info("Something error");
         }
-      }).addCase(getAProduct.pending, (state) => {
+      }).addCase(getAModel.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAProduct.fulfilled, (state, action) => {
+      .addCase(getAModel.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.productId = action.payload.productId;
-        state.productCode = action.payload.productCode;
-        state.productName = action.payload.productName;
-        state.categoryId = action.payload.categoryId;
-        state.collectionId = action.payload.collectionId;
-        state.voteStar = action.payload.voteStar;
-        state.sold = action.payload.sold;
+        state.ModelId = action.payload.ModelId;
+        state.ProductId = action.payload.ProductId;
+        state.UnitId = action.payload.UnitId;
+        state.ColorId = action.payload.ColorId;
+        state.Specification = action.payload.Specification;
+        state.PrimaryPrice = action.payload.PrimaryPrice;
+        state.SecondaryPrice = action.payload.SecondaryPrice;
+        state.Available = action.payload.Available;
+        state.Description = action.payload.Description;
       })
-      .addCase(getAProduct.rejected, (state, action) => {
+      .addCase(getAModel.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error
       })
-      .addCase(updateProduct.pending, (state) => {
+      .addCase(updateModel.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(updateProduct.fulfilled, (state, action) => {
+      .addCase(updateModel.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         if (state.isSuccess === true) {
-          toast.info("Product Updated Successfully!");
+          toast.info("Model Updated Successfully!");
         }
         state.updatedProduct = action.payload
       })
-      .addCase(updateProduct.rejected, (state, action) => {
+      .addCase(updateModel.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
@@ -157,19 +159,19 @@ export const productSlice = createSlice({
         }
 
       })
-      .addCase(deleteProduct.pending, (state) => {
+      .addCase(deleteCollection.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteProduct.fulfilled, (state, action) => {
+      .addCase(deleteCollection.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.deletedProduct = action.payload;
+        state.deletedCollection = action.payload;
         if (state.isSuccess === true) {
-          toast.info("Delete Product Successfully!");
+          toast.info("Delete Model Successfully!");
         }
       })
-      .addCase(deleteProduct.rejected, (state, action) => {
+      .addCase(deleteCollection.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
@@ -179,11 +181,11 @@ export const productSlice = createSlice({
         }
       })
       .addCase(resetState, () => initialState)
-      .addCase(resetImgProductState, (state) => {
-        state.productImages = []; // Reset imgProductState to an empty array
+      .addCase(resetImgModelState, (state) => {
+        state.modelImages = []; // Reset imgProductState to an empty array
       });
   },
 
 });
 
-export default productSlice.reducer;
+export default collectionSlice.reducer;

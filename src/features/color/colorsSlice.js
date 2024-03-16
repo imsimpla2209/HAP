@@ -64,7 +64,6 @@ export const resetState = createAction("Reset_all");
 
 const initialState = {
   colors: [],
-  collectionImages: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -119,8 +118,8 @@ export const colorSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.colorName = action.payload.name;
-        state.code = action.payload.code;
+        state.colorName = action.payload.colorName;
+        state.image = action.payload.image;
       })
       .addCase(getAColor.rejected, (state, action) => {
         state.isLoading = false;

@@ -1,17 +1,17 @@
-import { Http } from "apis/http";
+import { instance } from "apis/http";
 
 const getCategorys = async (userData) => {
-    const response = await Http.get("Admin/categories");
+    const response = await instance.get("Admin/categories");
     return response.data;
 };
 
 const getACategory = async (id) => {
-    const response = await Http.get(`Admin/categories/${id}`);
+    const response = await instance.get(`Admin/categories/${id}`);
     return response.data;
 };
 
 const addCategory = async(dataCategories)=>{
-    const response = await Http.post(`Admin/categories/add?categoryName=${dataCategories}`)
+    const response = await instance.post(`Admin/categories/add?categoryName=${dataCategories}`)
     return response.data;
 }
 
