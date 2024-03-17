@@ -30,6 +30,11 @@ a {
   font-size: 12px !important;
 }
 
+.logo-header {
+  width: 65px;
+  height: 65px;
+}
+
 .green{
     color: green;
     font-size: 14px;

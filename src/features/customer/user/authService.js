@@ -26,7 +26,7 @@ const logout = async () => {
 };
 
 const updateUser = async (data) => {
-  const response = await instance.put(`/Admin/users/edit`, data, config);
+  const response = await instance.put(`/Customer/my/edit`, data, config);
   if (response.data) {
     return response.data;
   }
@@ -41,6 +41,13 @@ const updateUserPassword  = async (data) => {
 
 const getUser = async (id) => {
   const response = await instance.get(`/Admin/users/${id}`, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
+const getUserProf = async () => {
+  const response = await instance.get(`/Customer/my`, config);
   if (response.data) {
     return response.data;
   }
@@ -169,5 +176,6 @@ export const authService = {
   logout,
   getOrder,
   updateOrder,
-  updateUserPassword
+  updateUserPassword,
+  getUserProf
 };

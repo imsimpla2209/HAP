@@ -10,7 +10,6 @@ import CustomInput from "../../components/CustomInput";
 import {
   getAUser,
   updateUserPass,
-  updateUserProf,
 } from "../../features/customer/user/authSlice";
 import { FiEdit } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
