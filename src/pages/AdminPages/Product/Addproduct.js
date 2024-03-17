@@ -29,6 +29,7 @@ import { SelectedModelList } from "./SelectedModelList";
 import { getModels } from "features/models/modelsSlice";
 import productService from "features/product/productService";
 import modelService from "features/models/modelsService";
+import { fetchAllToCL } from "utils/upload";
 
 let schema = yup.object().shape({
   productName: yup.string().required("Hãy điền tên cho sản phẩm"),
@@ -160,8 +161,16 @@ const Addproduct = () => {
         if (models?.length) {
           try {
             const uploadModels = await Promise.all(models.map(async (model) => {
-              delete model.modelId;
-              const res = await modelService.createModel(data?.productId, { ...model, attachments: [] });
+              if (model?.attachments?.length) {
+                await fetchAllToCL(model?.attachments, false)
+                  .then(res => {
+                    model.attachments = res?.filter(url => !!url) || []
+                  })
+                  .catch(err => {
+                    model.attachments = []
+                  })
+              }
+              const res = await modelService.createModel(data?.productId, { ...model });
               return res?.modelId;
             }));
             console.log("Upload successful:", uploadModels);
