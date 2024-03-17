@@ -78,7 +78,7 @@ const Header = ({ history }) => {
             <div className="col-3">
               <h2>
                 <Link className="mw-100" to="/">
-                  <img src="images/logo.png" alt="logo" />
+                <img src="images/logo.png" alt="logo" style={{ width: '70px', height: '70px' }} />
                 </Link>
               </h2>
             </div>
@@ -96,7 +96,7 @@ const Header = ({ history }) => {
                   labelKey={"name"}
                   minLength={2}
                   paginate={paginate}
-                  placeholder="Search for Products here..."
+                  placeholder="Tìm kiếm sản phẩm tại đây..."
                 />
                 <span className="input-group-text p-3" id="basic-addon2">
                   <BsSearch className="fs-8" />
@@ -192,7 +192,7 @@ const Header = ({ history }) => {
                         className="border border-0 bg-transparent text-white text-uppercase justify-content-end"
                         type="button"
                       >
-                        Log Out
+                        Thoát
                       </button>
                     )}
                   </div>

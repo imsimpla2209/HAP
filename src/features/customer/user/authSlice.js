@@ -141,6 +141,17 @@ export const getAUser = createAsyncThunk(
   }
 );
 
+export const getUserProfile = createAsyncThunk(
+  "user/profile/user-infor",
+  async (thunkAPI) => {
+    try {
+      return await authService.getUserProf();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const createAnOrder = createAsyncThunk(
   "user/cart/product/checkout/create-order",
   async (orderDetail, thunkAPI) => {
@@ -514,9 +525,23 @@ export const authSlice = createSlice({
           state.user = action.payload; 
           toast.info("Mật khẩu cũ không đúng");  
         }
+      })
+      .addCase(getUserProfile.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUserProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.userInfor = action.payload;
+      })
+      .addCase(getUserProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error;      
       });
   },
-  
 });
 
 export default authSlice.reducer;

@@ -6,64 +6,66 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
+import { DatePicker } from "react-rainbow-components";
+import CustomInput from "../../components/CustomInput";
 import {
   getAUser,
+  updateUserPass,
   updateUserProf,
+  getUserProfile,
 } from "../../features/customer/user/authSlice";
 import { FiEdit } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const phoneRegExp =
-  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+// const phoneRegExp =
+//   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const profileSchema = yup.object({
-  firstname: yup.string().required("First Name is required"),
-  lastname: yup.string().required("Last Name is required"),
-  mobile: yup
-    .string()
-    .required("required")
-    .matches(phoneRegExp, "Phone number is not valid")
-    .min(10, "too short")
-    .max(10, "too long"),
-
+  firstName: yup.string().required("Nhập họ"),
+  lastName: yup.string().required("Nhập tên"),
+  phoneNumber: yup.string(),
   address: yup.string(),
-  city: yup.string(),
-  country: yup.string(),
+  dob: yup.string(),
+  gender: yup.string(),
 });
 const Profile = () => {
   const dispatch = useDispatch();
   const [edit, setEdit] = useState(true);
   const location = useLocation();
-  const userState = useSelector((state) => state?.auth?.user);
+  const userState = useSelector((state) => state?.auth?.userInfor);
   const getUsertId = location.pathname.split("/")[2];
-
+  const [dob, setDob] = useState(userState?.dob || "");
 
   useEffect(() => {
     getUser();
   }, []);
 
   const getUser = () => {
-    dispatch(getAUser(getUsertId));
+    dispatch(getUserProfile());
+  };
+
+  const handleDobChange = (value) => {
+    setDob(value);
+    formik.setFieldValue("dob", value);
   };
 
   console.log(userState)
 
-  console.log(getUsertId);
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      firstname: userState?.firstname,
-      lastname: userState?.lastname,
-      mobile: userState?.mobile,
+      firstName: userState?.firstName,
+      lastName: userState?.lastName,
+      phoneNumber: userState?.phoneNumber,
       address: userState?.address,
-      city: userState?.city,
-      country: userState?.country,
+      dob: dob,
+      gender: userState?.gender,
     },
     validationSchema: profileSchema,
     onSubmit: (values) => {
       dispatch(updateUserProf(values));
       setEdit(true);
-      toast.info("Update Profile Successfully");
+      // toast.info("Update Password Successfully");
     },
   });
   return (
@@ -78,7 +80,7 @@ const Profile = () => {
         <div className="row">
           <div className="col-12">
             <div className="d-flex justify-content-between align-items-center">
-              <h3 className="my-3">Cập nhật hồ sơ</h3>
+              <h3 className="my-3"> Cập nhật mật khẩu</h3>
               <FiEdit className="fs-3" onClick={() => setEdit(false)} />
             </div>
           </div>
@@ -88,36 +90,32 @@ const Profile = () => {
                 <label htmlFor="ex1" className="form-label">
                   Họ
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="firstname"
-                  id="ex1"
-                  value={formik.values.firstname}
-                  onChange={formik.handleChange("firstname")}
-                  onBlur={formik.handleBlur("firstname")}
-                  disable={edit}
+                <CustomInput
+                  type="firstName"
+                  name="firstName"
+                  // placeholder="Password"
+                  value={formik.values.firstName}
+                  onChange={formik.handleChange("firstName")}
+                  onBlur={formik.handleBlur("firstName")}
                 />
                 <div className="errors">
-                  {formik.touched.firstname && formik.errors.firstname}
+                  {formik.touched.firstName && formik.errors.firstName}
                 </div>
               </div>
               <div className="mb-3">
                 <label htmlFor="ex2" className="form-label">
                   Tên
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="ex2"
-                  name="lastname"
-                  value={formik.values.lastname}
-                  onChange={formik.handleChange("lastname")}
-                  onBlur={formik.handleBlur("lastname")}
-                  disable={edit}
+                <CustomInput
+                  type="lastName"
+                  name="lastName"
+                  // placeholder="Password"
+                  value={formik.values.lastName}
+                  onChange={formik.handleChange("lastName")}
+                  onBlur={formik.handleBlur("lastName")}
                 />
                 <div className="errors">
-                  {formik.touched.lastname && formik.errors.lastname}
+                  {formik.touched.lastName && formik.errors.lastName}
                 </div>
               </div>
               <div className="mb-3">
@@ -128,33 +126,47 @@ const Profile = () => {
                   type="number"
                   className="form-control"
                   id="ex3"
-                  name="mobile"
-                  value={formik.values.mobile}
-                  onChange={formik.handleChange("mobile")}
-                  onBlur={formik.handleBlur("mobile")}
-                  disable={edit}
+                  name="phoneNumber"
+                  value={formik.values.phoneNumber}
+                  onChange={formik.handleChange("phoneNumber")}
+                  onBlur={formik.handleBlur("phoneNumber")}
+                  disabled={edit}
                 />
-                <div className="errors">
-                  {formik.touched.mobile && formik.errors.mobile}
-                </div>
               </div>
               <div className="mb-3">
                 <label htmlFor="ex2" className="form-label">
-                  Quốc gia
+                  Ngày sinh
+                </label>
+                <div className="rainbow-align-content_center rainbow-m-vertical_large rainbow-p-horizontal_small rainbow-m_auto">
+                  <DatePicker
+                    id="datePicker-1"
+                    value={dob}
+                    onChange={handleDobChange}
+                    formatStyle="large"
+                    disabled={edit}
+                  />
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="ex2" className="form-label">
+                  Giới tính
                 </label>
                 <select
-                  name="country"
-                  value={formik.values.country}
-                  onChange={formik.handleChange("country")}
-                  onBlur={formik.handleBlur("country")}
+                  name="gender"
+                  value={formik.values.gender}
+                  onChange={formik.handleChange("gender")}
+                  onBlur={formik.handleBlur("gender")}
                   className="form-control form-select"
-                  id="country"
-                  disable={edit}
+                  id="gender"
+                  disabled={edit}
                 >
                   <option value="" selected disabled>
-                    Select Country
+                    Chọn giới tính
                   </option>
-                  <option value="Vietnam">Viet nam</option>
+                  <option value="Male">Nam</option>
+                  <option value="Female">Nữ</option>
+                  <option value="Other">Khác</option>
                 </select>
               </div>
               <div className="mb-3">
@@ -169,24 +181,10 @@ const Profile = () => {
                   value={formik.values.address}
                   onChange={formik.handleChange("address")}
                   onBlur={formik.handleBlur("address")}
-                  disable={edit}
+                  disabled={edit}
                 />
               </div>
-              <div className="mb-3">
-                <label htmlFor="ex2" className="form-label">
-                  Thành phố
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="city"
-                  name="city"
-                  value={formik.values.city}
-                  onChange={formik.handleChange("city")}
-                  onBlur={formik.handleBlur("city")}
-                  disable={edit}
-                />
-              </div>
+
               {edit === false && (
                 <>
                   <button type="submit" className="btn btn-primary me-3">
@@ -194,6 +192,7 @@ const Profile = () => {
                   </button>
                 </>
               )}
+              <div className="py-2"></div>
             </form>
           </div>
         </div>
