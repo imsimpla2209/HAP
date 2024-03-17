@@ -94,7 +94,7 @@ const Bloglist = () => {
         performAction={() => {
           deleteABlog(blogId);
         }}
-        title="Are you sure you want to delete this blog?"
+        title="Bạn có chắc chắn khi xoá không?"
       />
     </div>
   );

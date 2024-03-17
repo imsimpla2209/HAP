@@ -17,7 +17,7 @@ import {
 import tinycolor from "tinycolor2"; // Import tinycolor2 library
 
 const schema = yup.object().shape({
-  colorName: yup.string().required("Color Name is required"),
+  colorName: yup.string().required("Nhập tên Màu"),
   image: yup.string(),
 });
 
@@ -83,11 +83,11 @@ const AddColor = () => {
   return (
     <div>
       <h3 className="mb-4 colorname">
-        {getColorId !== undefined ? "Edit" : "Add"} Color
+        {getColorId !== undefined ? "Sửa" : "Thêm"} Màu
       </h3>
       <div className="form-group">
         <form onSubmit={formik.handleSubmit} className="add-blog-form">
-          <label htmlFor="colorName">Color Name</label>
+          <label htmlFor="colorName">Tên Màu</label>
           <CustomInput  
             type="text"
             id="colorName"
@@ -99,6 +99,8 @@ const AddColor = () => {
           <div className="error">
             {formik.touched.colorName && formik.errors.colorName}
           </div>
+          <div className="py-2">
+          <label htmlFor="colorName">Màu</label>
           <ColorPicker
             value={formik.values.image} // Set the value to reflect the picked color
             onChange={(color) => {
@@ -106,11 +108,13 @@ const AddColor = () => {
               formik.setFieldValue("image", hexColor); // Set hex value to image field
             }}
           />
+          </div>
+          
           <button
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            {getColorId !== undefined ? "Edit" : "Add"} Color
+            {getColorId !== undefined ? "Sửa" : "Thêm"} Màu
           </button>
         </form>
       </div>

@@ -108,6 +108,17 @@ export const updateUserProf = createAsyncThunk(
   }
 );
 
+export const updateUserPass = createAsyncThunk(
+  "user/profile/update-password",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.updateUserPassword(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const emptyUserCart = createAsyncThunk(
   "user/cart/delete",
   async ( thunkAPI) => {
@@ -380,6 +391,10 @@ export const authSlice = createSlice({
         state.isError = true;
         state.message = action.error;
       })
+      
+
+
+
       .addCase(updateUserProf.pending, (state) => {
         state.isLoading = true;
       })
@@ -476,7 +491,30 @@ export const authSlice = createSlice({
         if (state.isError === true) {
           toast.info("Something Error");  
         }
-      }).addCase(resetState, () => initialState);
+      }).addCase(resetState, () => initialState)
+      .addCase(updateUserPass.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUserPass.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.updatedPass = action.payload;
+        if (state.isSuccess === true) {
+          state.user = action.payload; 
+          toast.info("Cập nhật mật khẩu thành công");  
+        }
+      })
+      .addCase(updateUserPass.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error;
+        if (state.isError === true) {
+          state.user = action.payload; 
+          toast.info("Mật khẩu cũ không đúng");  
+        }
+      });
   },
   
 });

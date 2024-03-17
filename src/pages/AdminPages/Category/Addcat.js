@@ -16,7 +16,7 @@ import {
 } from "../../../features/category/categorySlice";
 // "../../../features/customer/category/categorySlice"
 let schema = yup.object().shape({
-  categoryName: yup.string().required("CategoryName Product is Required"),
+  categoryName: yup.string().required("Nhập tên danh mục sản phẩm"),
 });
 
 const Addcat = () => {
@@ -74,11 +74,11 @@ const Addcat = () => {
   return (
     <div>
       <h3 className="mb-4 categoryname">
-        {getCategoryId !== undefined ? "Edit" : "Add"} Category
+        {getCategoryId !== undefined ? "Sửa" : "Thêm"} Danh mục sản phẩm
       </h3>
       <div className="form-group">
         <form onSubmit={formik.handleSubmit} className="add-blog-form">
-          <label htmlFor="categoryName">Category Name</label>
+          <label htmlFor="categoryName">Tên danh mục sản phẩm </label>
           <CustomInput
             type="text"
             id="categoryName"
@@ -94,7 +94,7 @@ const Addcat = () => {
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            {getCategoryId !== undefined ? "Edit" : "Add"} Category
+            {getCategoryId !== undefined ? "Sửa" : "Thêm"} Danh mục sản phẩm
           </button>
         </form>
       </div>

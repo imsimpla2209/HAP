@@ -83,7 +83,7 @@ const ColorList = () => {
   }
   return (
     <div>
-      <h3 className="mb-4 title">color List</h3>
+      <h3 className="mb-4 title">Danh sách màu</h3>
       <Table columns={columns} dataSource={data1} />
       <CustomModal
         hideModal={hideModal}
@@ -92,7 +92,7 @@ const ColorList = () => {
           deleteAColor(colorId);
           
         }}
-        title="Are you sure you want to delete this color?"
+        title="Bạn có chắc chắn khi xoá không?"
       />
     </div>
   );

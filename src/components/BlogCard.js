@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 
 const BlogCard = (props) => {
   const { postId, title, content, date, image } = props;
+  // console.log(postId)
   return (
     <div className="blog-card">
       <div className="card-image">
         <img
-          src={image}
+          src="https://img.freepik.com/premium-vector/global-network-connection-world-map-point-line-composition-concept-global-business-internet-technology-social-network-vector-illustration_230610-458.jpg"
           className="img-fluid "
           alt="blog"
         />
@@ -22,7 +23,7 @@ const BlogCard = (props) => {
           }}
         ></p>
         <Link to={"/blog/" + postId} className="button read-more">
-          Read More
+          Đọc thêm
         </Link>
       </div>
     </div>

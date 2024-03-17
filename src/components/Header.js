@@ -123,7 +123,7 @@ const Header = ({ history }) => {
                   >
                     <img src="images\wishlist.svg" alt="wishlist" />
                     <p className="mb-0">
-                      Favourite <br /> Wishlist
+                      Danh sách <br /> Yêu thích
                     </p>
                   </Link>
                 </div>
@@ -135,11 +135,11 @@ const Header = ({ history }) => {
                     <img src="images\user.svg" alt="user" />
                     {authState?.user === null ? (
                       <p className="mb-0">
-                        Login <br /> MyAccount
+                        Đăng nhập <br /> Tài khoản
                       </p>
                     ) : (
                       <p className="mb-0">
-                        Welcome {authState?.user?.firstname}
+                        Chào mừng {authState?.user?.firstname}
                       </p>
                     )}
                   </Link>
@@ -169,14 +169,14 @@ const Header = ({ history }) => {
                 <div className="col-sm-10">
                   <div className="menu-links">
                     <div className="d-flex align-items-center gap-15">
-                      <NavLink to="/">Home</NavLink>
-                      <NavLink to="/product">Our Store</NavLink>
-                      <NavLink to="/blogs">Blogs</NavLink>
-                      <NavLink to="/contact">Contact</NavLink>
+                      <NavLink to="/">Trang chủ</NavLink>
+                      <NavLink to="/product">Sản phẩm</NavLink>
+                      <NavLink to="/blogs">Tin tức</NavLink>
+                      <NavLink to="/contact">Liên hệ</NavLink>
                       {authState?.user === null ? (
                         <p className="mb-0"></p>
                       ) : (
-                        <NavLink to="/my-orders">My Order</NavLink>
+                        <NavLink to="/my-orders">Lịch sử mua</NavLink>
                       )}
                     </div>
                   </div>

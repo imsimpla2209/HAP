@@ -20,6 +20,7 @@ import { OpenRoutes } from "../routing/OpenRoute";
 import { PrivateRoutes } from "../routing/PrivateRoute";
 import ResetPassword from "../pages/CustomerPages/resetpassword";
 import Layout from "../components/Layout";
+import UpdatePassword from "pages/CustomerPages/updatePassword";
 
 
 function CustomerRoutes() {
@@ -91,6 +92,14 @@ function CustomerRoutes() {
             element={
               <PrivateRoutes>
                 <Profile />
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="update-password"
+            element={
+              <PrivateRoutes>
+                <UpdatePassword />
               </PrivateRoutes>
             }
           />

@@ -34,9 +34,9 @@ const Footer = () => {
         <div className="container-xxl">
           <div className="row">
             <div className="col-4">
-              <h4 className='text-white mb-4'>Contact Us</h4>
+              <h4 className='text-white mb-4'>Liên hệ Us</h4>
               <div >
-                <a className="text-white fs-6">Shop guitar </a>
+                <a className="text-white fs-6">Cửa hàng </a>
                 <address className="text-white py-2 mb-1"><br />Address: 102 Vũ Phạm Hàm</address>
                 <a href="tel: +84345532150"
                   className="mt-4 d-block mb-2 text-white">Phone: +84345532150</a>

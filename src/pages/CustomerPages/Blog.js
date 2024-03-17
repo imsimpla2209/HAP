@@ -40,7 +40,7 @@ const Blog = () => {
                         postId={item?.postId}
                         title={item?.title}
                         content={item?.content}
-                        // image={item?.images[0]?.url}
+                        image = "https://img.freepik.com/premium-vector/global-network-connection-world-map-point-line-composition-concept-global-business-internet-technology-social-network-vector-illustration_230610-458.jpg"
                       />
                     </div>
                   ))}

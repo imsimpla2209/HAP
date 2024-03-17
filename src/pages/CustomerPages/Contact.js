@@ -12,10 +12,10 @@ import { toast } from "react-toastify";
 
 
 const contactSchema = yup.object({
-  name: yup.string().required("Name is required"),
-  email: yup.string().nullable().email("Email should be valid").required("Email is required"),
-  mobile: yup.number().default('').nullable().required("Mobile Number is required"),
-  comment: yup.string().default('').nullable().required("Comment is required"),
+  name: yup.string().required("Yêu cầu nhập tên"),
+  email: yup.string().nullable().email("Email should be valid").required("Yêu cầu nhập Email "),
+  mobile: yup.number().default('').nullable().required("Yêu cầu nhập số điện thoại "),
+  comment: yup.string().default('').nullable().required("Yêu cầu nhập bình luận"),
 })
 
 const Contact = () => {
@@ -60,12 +60,12 @@ const Contact = () => {
             <div className="col-12 mt-5">
               <div className="contact-inner-wrapper d-flex justify-content-between">
                 <div>
-                  <h3 className="contact-title">Contact</h3>
+                  <h3 className="contact-title">Liên hệ</h3>
                   <form action="" onSubmit={formik.handleSubmit} className="d-flex flex-column gap-15">
                     <div>
                       <input
                         type="text"
-                        placeholder="Name"
+                        placeholder="Tên"
                         className="form-control"
                         name="name"
                         onChange={formik.handleChange("name")}
@@ -93,7 +93,7 @@ const Contact = () => {
                     <div>
                       <input
                         type="tel"
-                        placeholder="Moblie Number"
+                        placeholder="số điện thoại"
                         className="form-control"
                         name="mobile"
                         onChange={formik.handleChange("mobile")}
@@ -110,7 +110,7 @@ const Contact = () => {
                         className="w-100 form-control"
                         cols="30"
                         row="10"
-                        placeholder="Comments"
+                        placeholder="Bình luận"
                         name="comment"
                         onChange={formik.handleChange("comment")}
                         onBlur={formik.handleBlur("comment")}
@@ -121,7 +121,7 @@ const Contact = () => {
                       </div>
                     </div>
                     <div>
-                      <button className="button border-0">Submit</button>
+                      <button className="button border-0">Gửi</button>
                     </div>
                   </form>
                 </div>
