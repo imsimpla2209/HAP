@@ -131,6 +131,7 @@ export const collectionSlice = createSlice({
         state.secondaryPrice = action.payload.secondaryPrice;
         state.available = action.payload.available;
         state.description = action.payload.description;
+        state.attachments = action.payload.attachments;
       })
       .addCase(getAModel.rejected, (state, action) => {
         state.isLoading = false;

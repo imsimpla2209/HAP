@@ -23,6 +23,7 @@ import {
   uploadImg
 } from "../../../features/upload/uploadSlice";
 import "../Product/addproduct.css";
+import { DefaultUpload } from "components/Upload";
 
 let schema = yup.object().shape({
   modelName: yup.string().required("Hãy điền tên cho mẫu"),
@@ -53,6 +54,7 @@ const AddModel = (
   const imgProductState = useSelector((state) => state.product.productImages);
   const imgState = useSelector((state) => state.upload.images);
   const [images, setImages] = useState([]);
+  const [files, setFiles] = useState([])
 
   const modelState = useSelector((state) => state.model);
   const {
@@ -66,6 +68,7 @@ const AddModel = (
     modelImages,
     productId,
     available,
+    attachments
   } = modelState || editedModal || {};
 
   useEffect(() => {
@@ -77,10 +80,19 @@ const AddModel = (
     if (getModelId !== undefined) {
       dispatch(getAModel(getModelId));
       img.push(modelImages);
+      setFiles(attachments || [])
     } else {
       dispatch(resetState());
     }
   }, [getModelId]);
+
+  const normFile = (e) => {
+    // handle event file changes in upload and dragger components
+    const fileList = e
+    console.log('file', e)
+    setFiles(fileList)
+    return e
+  }
 
   const img = [];
   useEffect(() => {
@@ -135,6 +147,7 @@ const AddModel = (
         secondaryPrice: Number(values.secondaryPrice),
         colorId: Number(values.colorId),
         available: Number(values.available),
+        attachments: files || [],
       }
       if (isModal) {
         formik.resetForm();
@@ -167,6 +180,8 @@ const AddModel = (
       }
     },
   });
+
+  console.log("modelData", files);
 
   useEffect(() => {
     return () => {
@@ -299,6 +314,23 @@ const AddModel = (
             <div className="error">
               {formik.touched.available && formik.errors.available}
             </div>
+          </div>
+          <div className="mt-3 py-2 pb-4">
+            <p className="fw-bold">Đính kèm</p>
+
+            <div className="attachments-cn">
+              <p className="pt-2 px-5 text-center">
+                Thả hoặc{' '}
+                <label htmlFor="file" className="upw-c-cn me-1" style={{ cursor: 'pointer' }}>
+                  Đăng tải
+                </label>
+                Tệp hoặc hình ảnh (tuỳ chọn)
+                <DefaultUpload normFile={normFile} files={files?.map(f => f?.path || f)}></DefaultUpload>
+              </p>
+            </div>
+            <p className="my-3 mx-4 ">
+              Bạn có thể đính kèm tối đa 10 tệp có kích thước bằng <strong>25MB</strong>{' '}
+            </p>
           </div>
           <div className="form-group">
             <div className="upload-form bg-white border-1 p-5 text-center">
