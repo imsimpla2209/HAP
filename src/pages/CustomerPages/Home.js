@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import { getAllBLogs } from "../../features/customer/blogs/blogSlice";
 import { getBlogs } from "features/blog/blogSlice";
 import { getAllProducts } from "../../features/customer/products/productSlice";
+import { getProducts } from "features/product/productSlice";
 import {
   addToWishlist,
   removeFromWishlist,
@@ -24,7 +25,8 @@ import { getCategories } from "apis";
 
 const Home = () => {
   const blogState = useSelector((state) => state?.blog?.blogs);
-  const productState = useSelector((state) => state.product.product);
+  const productState = useSelector((state) => state.product.products);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -38,10 +40,16 @@ const Home = () => {
     dispatch(getBlogs());
   };
 
-  console.log(blogState)
-  const getProducts = () => {
-    dispatch(getAllProducts());
-  };
+  console.log(blogState);
+  // const getAllProducts = () => {
+  //   dispatch(getProducts(1));
+  // };
+
+  console.log(productState);
+
+  useEffect(() => {
+    dispatch(getProducts(1));
+  }, [dispatch]);
 
   let location = useLocation();
 
@@ -81,7 +89,107 @@ const Home = () => {
         <div className="container-xxl">
           <div className="row">
             <div className="col-6">
-              <div className="main-banner position-relative p-3">
+              <div
+                id="carouselExampleIndicators"
+                class="carousel slide"
+                // className="main-banner position-relative p-3"
+                data-bs-ride="carousel"
+              >
+                <div class="carousel-indicators">
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="0"
+                    class="active"
+                    aria-current="true"
+                    aria-label="Slide 1"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="1"
+                    aria-label="Slide 2"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="2"
+                    aria-label="Slide 3"
+                  ></button>
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img
+                      src="images\main-banner-2.jpg"
+                      class="img-fluid rounded-3"
+                      alt="main banner"
+                    />
+                    <div className="main-banner-content position-absolute">
+                      <h4>SUPERCHANGED FOR PROS</h4>
+                      <h5>Guitars LakeWood</h5>
+                      <p></p>
+                      <Link to={"/product"} className="button">
+                        BUY NOW
+                      </Link>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <img
+                      src="images\main-banner-2.jpg"
+                      class="img-fluid rounded-3"
+                      alt="main banner"
+                    />
+                    <div className="main-banner-content position-absolute">
+                      <h4>SUPERCHANGED FOR PROS</h4>
+                      <h5>Guitars LakeWood</h5>
+                      <p></p>
+                      <Link to={"/product"} className="button">
+                        BUY NOW
+                      </Link>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <img
+                      src="images\main-banner-2.jpg"
+                      class="img-fluid rounded-3"
+                      alt="main banner"
+                    />
+                    <div className="main-banner-content position-absolute">
+                      <h4>SUPERCHANGED FOR PROS</h4>
+                      <h5>Guitars LakeWood</h5>
+                      <p></p>
+                      <Link to={"/product"} className="button">
+                        BUY NOW
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    class="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button
+                  class="carousel-control-next"
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide="next"
+                >
+                  <span
+                    class="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+              {/* <div className="main-banner position-relative p-3">
                 <img
                   src="images\main-banner-2.jpg"
                   class="img-fluid rounded-3"
@@ -91,9 +199,11 @@ const Home = () => {
                   <h4>SUPERCHANGED FOR PROS</h4>
                   <h5>Guitars LakeWood</h5>
                   <p></p>
-                  <Link  to={"/product" } className="button">BUY NOW</Link>
+                  <Link to={"/product"} className="button">
+                    BUY NOW
+                  </Link>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="col-6">
               <div className="d-flex flex-wrap gap-10 justify-content-between align-items">
@@ -104,7 +214,6 @@ const Home = () => {
                     alt="main banner"
                   />
                   <div className="small-banner-content position-absolute">
-                   
                     <h5>Coupon: SPECIAL</h5> <h5>Discount: 15%</h5>
                     <h4>Time Expired: 12/20/2023</h4>
                   </div>
@@ -116,7 +225,6 @@ const Home = () => {
                     alt="main banner"
                   />
                   <div className="small-banner-content position-absolute">
-                    
                     <h5>Coupon: HOT007</h5> <h5>Discount: 20%</h5>
                     <h4>Time Expired: 12/15/2023</h4>
                   </div>
@@ -204,85 +312,83 @@ const Home = () => {
               <h3 className="section-heading">Sản phẩm nổi bật</h3>
             </div>
             {productState &&
-              productState
-                .filter((item) => item.tags === "featured")
-                .slice(0, 4)
-                .map((item, index) => {
-                  if (item.tags === "featured") {
-                    return (
-                      <div key={index} className={`${"col-3"}`}>
-                        <Link className="product-card position-relative">
-                          <div className="wishlist-icon position-absolute">
-                            <button
-                              className="border-0 bg-transparent"
-                              onClick={(e) => {
-                                addToWish(item?._id);
-                              }}
-                            >
-                              <img src="images/wish.svg" alt="wishlist" />
-                            </button>
-                          </div>
-                          <Link to={"/product/" + item?._id} className="product-card position-relative">
-                          <div className="product-image">
-                            {item?.images?.length > 0 && (
-                              <>
+              productState.slice(0, 4).map((item, index) => {
+                return (
+                  <div key={index} className={`${"col-3"}`}>
+                    <Link className="product-card position-relative">
+                      <div className="wishlist-icon position-absolute">
+                        <button
+                          className="border-0 bg-transparent"
+                          onClick={(e) => {
+                            addToWish(item?.productId);
+                          }}
+                        >
+                          <img src="images/wish.svg" alt="wishlist" />
+                        </button>
+                      </div>
+                      <Link
+                        to={"/product/" + item?.productId}
+                        className="product-card position-relative"
+                      >
+                        <div className="product-image">
+                          {item?.image?.length > 0 && (
+                            <>
+                              <img
+                                width={400}
+                                height={400}
+                                src={item?.images?.[0]?.url}
+                                className="img-fluid mx-auto"
+                                alt="product-image"
+                              />
+                              {item?.image?.length > 1 && (
+                                <img
+                                  width={400}
+                                  height={400}
+                                  src={item?.images?.[1]?.url}
+                                  className="img-fluid mx-auto"
+                                  alt="product image"
+                                />
+                              )}
+                              {item?.image?.length === 1 && (
                                 <img
                                   width={400}
                                   height={400}
                                   src={item?.images?.[0]?.url}
                                   className="img-fluid mx-auto"
-                                  alt="product-image"
+                                  alt="product image"
                                 />
-                                {item?.images?.length > 1 && (
-                                  <img
-                                    width={400}
-                                    height={400}
-                                    src={item?.images?.[1]?.url}
-                                    className="img-fluid mx-auto"
-                                    alt="product image"
-                                  />
-                                )}
-                                {item?.images?.length === 1 && (
-                                  <img
-                                    width={400}
-                                    height={400}
-                                    src={item?.images?.[0]?.url}
-                                    className="img-fluid mx-auto"
-                                    alt="product image"
-                                  />
-                                )}
-                              </>
-                            )}
-                          </div>
-                          </Link>
+                              )}
+                            </>
+                          )}
+                        </div>
+                      </Link>
 
-                          <div className="product-details">
-                            <h6 className="brand">{item?.brand}</h6>
-                            <h5 className="product-title">{item?.title}</h5>
-                            <ReactStars
-                              count={5}
-                              size={24}
-                              value={item?.totalrating?.toString()}
-                              edit={false}
-                              activeColor="#ffd700"
-                            />
-                            <p className="price">$ {item?.price}</p>
-                          </div>
-                          <div className="action-bar position-absolute">
-                            <div className="d-flex flex-column gap-15">
-                              <Link
-                                to={"/product/" + item?._id}
-                                className="border-0 bg-transparent"
-                              >
-                                <img src="images/view.svg" alt="view" />
-                              </Link>
-                            </div>
-                          </div>
-                        </Link>
+                      <div className="product-details">
+                        <h6 className="brand">{item?.brand}</h6>
+                        <h5 className="product-title">{item?.productName}</h5>
+                        <ReactStars
+                          count={5}
+                          size={24}
+                          value={item?.voteStar?.toString()}
+                          edit={false}
+                          activeColor="#ffd700"
+                        />
+                        <p className="price">$ {item?.price}</p>
                       </div>
-                    );
-                  }
-                })}
+                      <div className="action-bar position-absolute">
+                        <div className="d-flex flex-column gap-15">
+                          <Link
+                            to={"/product/" + item?.productId}
+                            className="border-0 bg-transparent"
+                          >
+                            <img src="images/view.svg" alt="view" />
+                          </Link>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </section>
@@ -343,38 +449,41 @@ const Home = () => {
                               <img src="images/wish.svg" alt="wishlist" />
                             </button>
                           </div>
-                          <Link to={"/product/" + item?._id} className="product-card position-relative">
-                          <div className="product-image">
-                            {item?.images?.length > 0 && (
-                              <>
-                                <img
-                                  width={400}
-                                  height={400}
-                                  src={item?.images?.[0]?.url}
-                                  className="img-fluid mx-auto"
-                                  alt="product-image"
-                                />
-                                {item?.images?.length > 1 && (
-                                  <img
-                                    width={400}
-                                    height={400}
-                                    src={item?.images?.[1]?.url}
-                                    className="img-fluid mx-auto"
-                                    alt="product image"
-                                  />
-                                )}
-                                {item?.images?.length === 1 && (
+                          <Link
+                            to={"/product/" + item?._id}
+                            className="product-card position-relative"
+                          >
+                            <div className="product-image">
+                              {item?.images?.length > 0 && (
+                                <>
                                   <img
                                     width={400}
                                     height={400}
                                     src={item?.images?.[0]?.url}
                                     className="img-fluid mx-auto"
-                                    alt="product image"
+                                    alt="product-image"
                                   />
-                                )}
-                              </>
-                            )}
-                          </div>
+                                  {item?.images?.length > 1 && (
+                                    <img
+                                      width={400}
+                                      height={400}
+                                      src={item?.images?.[1]?.url}
+                                      className="img-fluid mx-auto"
+                                      alt="product image"
+                                    />
+                                  )}
+                                  {item?.images?.length === 1 && (
+                                    <img
+                                      width={400}
+                                      height={400}
+                                      src={item?.images?.[0]?.url}
+                                      className="img-fluid mx-auto"
+                                      alt="product image"
+                                    />
+                                  )}
+                                </>
+                              )}
+                            </div>
                           </Link>
 
                           <div className="product-details">

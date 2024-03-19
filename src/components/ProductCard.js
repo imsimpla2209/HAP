@@ -25,7 +25,7 @@ const ProductCard = (props) => {
     (state) => state?.auth?.wishlist?.findUser?.wishlist
   );
   useEffect(() => {
-    setalready(wishlistState?.map((item) => item._id));
+    setalready(wishlistState?.map((item) => item.productId));
   }, [wishlistState]);
 
   const addToWish = (id) => {
@@ -60,14 +60,14 @@ const ProductCard = (props) => {
                   <button
                     className="border-0 bg-transparent"
                     onClick={(e) => {
-                      addToWish(item?._id);
+                      addToWish(item?.productId);
                     }}
                   >
                     <img src="images/wish.svg" alt="wishlist" />
                   </button>
                 </div>
                 {/* <div className="container"> */}
-                <Link to={"/product/" + item?._id} className="product-card position-relative">
+                <Link to={"/product/" + item?.productId} className="product-card position-relative">
                   <div className="product-image">
                     {item?.images?.length > 0 && (
                       <>
@@ -127,7 +127,7 @@ const ProductCard = (props) => {
                       <img src="images/prodcompare.svg" alt="compare" />
                     </Link> */}
                     <Link
-                      to={"/product/" + item?._id}
+                      to={"/product/" + item?.productId}
                       className="border-0 bg-transparent"
                     >
                       <img src="images/view.svg" alt="view" />

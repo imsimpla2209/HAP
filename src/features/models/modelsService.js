@@ -2,6 +2,7 @@ import { instance } from "apis/http"
 import { config } from "../auth/authService"
 
 const getModels = async (productId) => {
+  console.log(productId)
   const response = await instance.get(`Admin/products/${productId}/models`)
   return response.data
 }

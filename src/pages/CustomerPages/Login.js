@@ -70,7 +70,7 @@ function Login() {
                     <CustomInput
                       type="password"
                       name="password"
-                      placeholder="Password"
+                      placeholder="Mật khẩu"
                       value={formik.values.password}
                       onChange={formik.handleChange("password")}
                       onBlur={formik.handleBlur("password")}

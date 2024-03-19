@@ -14,11 +14,18 @@ import ReactImageMagnify from "react-image-magnify";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addRating, getProduct } from "../../features/customer/products/productSlice";
-import { addProdToCart, getUserCart } from "../../features/customer/user/authSlice";
+import {
+  addRating,
+  getProduct,
+} from "../../features/customer/products/productSlice";
+import {
+  addProdToCart,
+  getUserCart,
+} from "../../features/customer/user/authSlice";
 import { toast } from "react-toastify";
 import { getBrands } from "../../features/customer/brand/brandSlice";
 import { getCategorys } from "../../features/customer/category/categorySlice";
+import { getModels } from "features/models/modelsSlice";
 
 const SingleProduct = () => {
   const [orderProduct, setorderedProduct] = useState(true);
@@ -34,12 +41,10 @@ const SingleProduct = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [currentImage, setCurrentImage] = useState("");
-
+  const [selectedModelId, setSelectedModelId] = useState(null);
   const userState = useSelector((state) => state?.auth.user);
   const fullname = userState?.firstname + " " + userState?.lastname;
-
-  const brandState = useSelector((state) => state.brand.brands);
-  const categoryState = useSelector((state) => state.category.categorys)
+  const modelState = useSelector((state) => state.models.models);
 
   useEffect(() => {
     getAProduct(getProductId);
@@ -52,15 +57,14 @@ const SingleProduct = () => {
       }
     }
   });
+  console.log(getProductId);
   const getAProduct = () => {
     dispatch(getProduct(getProductId));
-    dispatch(getBrands())
-    dispatch(getCategorys())
     dispatch(getUserCart());
+    dispatch(getModels(getProductId));
   };
 
-  const brandTitle = brandState.find((brand) => brand._id === productState?.brands)?.title;
-  const categoryTitle = categoryState.find((category) => category._id === productState?.pcategories)?.title;
+  console.log(modelState);
 
   const uploadCart = () => {
     dispatch(
@@ -170,96 +174,120 @@ const SingleProduct = () => {
               </div>
             </div>
             <div className="col-6">
-              <div className="main-product-details">
-                <div className="border-bottom">
-                  <h3 className="title">{productState?.title}</h3>
-                </div>
-                <div className="border-bottom py-3">
-                  <p className="price"> $ {productState?.price}</p>
-                  <div className="d-flex align-items-ceter gap-10">
-                    <ReactStars
-                      count={5}
-                      size={24}
-                      value={productState?.totalrating?.toString()}
-                      edit={false}
-                      activeColor="#ffd700"
-                    />
-                    {/* <p className="mb-0 t-review">(2 Reviews)</p> */}
-                  </div>
-                  <a className="review-btn" href="#review">
-                    Write a Review
-                  </a>
-                </div>
-                <div className="border-bottom py-3">
-                  <div className="d-flex gap-10 align-items-center my-2 mb-3">
-                    <h3 className="product-heading">Brand: </h3>
-                    <p class="product-data">{brandTitle}</p>
-                  </div>
-                  <div className="d-flex gap-10 align-items-center my-2 mb-3">
-                    <h3 className="product-heading">Category: </h3>
-                    <p class="product-data">{categoryTitle}</p>
-                  </div>
-                  <div className="d-flex gap-10 align-items-center my-2 mb-3">
-                    <h3 className="product-heading">Tags: </h3>
-                    <p class="product-data">{productState?.tags}</p>
-                  </div>
-                  <div className="d-flex gap-10 align-items-center my-2 mb-3">
-                    <h3 className="product-heading">Quantity: </h3>
-                    <p class="product-data">{productState?.quantity}</p>
-                  </div>
-                  <div className="d-flex gap-10 align-items-center my-2 mb-3">
-                    <h3 className="product-heading">Available: </h3>
-                    {productState?.quantity > 0 ? (
-                      <p class="product-data">In Stock</p>
-                    ) : (
-                      <p class="product-data">Out of Stock</p>
-                    )}
-                  </div>
-                  <div className="d-flex gap-15 align-items-center flex-row my-2 mb-3">
-                    {alreadyAddCart === false && productState?.quantity > 0 && (
-                      <>
-                        <h3 className="product-heading">Quantity: </h3>
-                        <div>
-                          <input
-                            type="number"
-                            name=""
-                            min={1}
-                            max={Math.min(productState?.quantity, 5)}
-                            className="form-control"
-                            style={{ width: "60px", height: "35px" }}
-                            onChange={(e) => setQuantity(e.target.value)}
-                            value={quantity}
-                          />
+              {modelState.map((model) => (
+                <button
+                  key={model.modelId}
+                  onClick={() => setSelectedModelId(model.modelId)}
+                >
+                  View Model {model.modelId} Details
+                </button>
+              ))}
+              {selectedModelId && (
+                <div>
+                  <h2>Details of Model {selectedModelId}</h2>
+                  {/* Render the details based on the selected modelId */}
+                  {modelState
+                    .filter((model) => model.modelId === selectedModelId)
+                    .map((model) => (
+                      <div key={model.modelId} className="main-product-details">
+                        <div className="border-bottom">
+                          <h3 className="title">{productState?.title}</h3>
                         </div>
-                      </>
-                    )}
+                        <div className="border-bottom py-3">
+                          <p className="price"> $ {productState?.price}</p>
+                          <div className="d-flex align-items-ceter gap-10">
+                            <ReactStars
+                              count={5}
+                              size={24}
+                              value={productState?.totalrating?.toString()}
+                              edit={false}
+                              activeColor="#ffd700"
+                            />
+                            {/* <p className="mb-0 t-review">(2 Reviews)</p> */}
+                          </div>
+                          <a className="review-btn" href="#review">
+                            Write a Review
+                          </a>
+                        </div>
+                        <div className="border-bottom py-3">
+                          <div className="d-flex gap-10 align-items-center my-2 mb-3">
+                            <h3 className="product-heading">Brand: </h3>
+                            <p class="product-data">{model.primaryPrice}</p>
+                          </div>
+                          <div className="d-flex gap-10 align-items-center my-2 mb-3">
+                            <h3 className="product-heading">Category: </h3>
+                            {/* <p class="product-data">{categoryTitle}</p> */}
+                          </div>
+                          <div className="d-flex gap-10 align-items-center my-2 mb-3">
+                            <h3 className="product-heading">Tags: </h3>
+                            <p class="product-data">{productState?.tags}</p>
+                          </div>
+                          <div className="d-flex gap-10 align-items-center my-2 mb-3">
+                            <h3 className="product-heading">Quantity: </h3>
+                            <p class="product-data">{productState?.quantity}</p>
+                          </div>
+                          <div className="d-flex gap-10 align-items-center my-2 mb-3">
+                            <h3 className="product-heading">Available: </h3>
+                            {productState?.quantity > 0 ? (
+                              <p class="product-data">In Stock</p>
+                            ) : (
+                              <p class="product-data">Out of Stock</p>
+                            )}
+                          </div>
+                          <div className="d-flex gap-15 align-items-center flex-row my-2 mb-3">
+                            {alreadyAddCart === false &&
+                              productState?.quantity > 0 && (
+                                <>
+                                  <h3 className="product-heading">
+                                    Quantity:{" "}
+                                  </h3>
+                                  <div>
+                                    <input
+                                      type="number"
+                                      name=""
+                                      min={1}
+                                      max={Math.min(productState?.quantity, 5)}
+                                      className="form-control"
+                                      style={{ width: "60px", height: "35px" }}
+                                      onChange={(e) =>
+                                        setQuantity(e.target.value)
+                                      }
+                                      value={quantity}
+                                    />
+                                  </div>
+                                </>
+                              )}
 
-                    <div
-                      className={
-                        alreadyAddCart || productState?.quantity === 0
-                          ? "mb-0"
-                          : "d-flex align-item-center gap-15 ms-2"
-                      }
-                    >
-                      {productState?.quantity > 0 && (
-                        <button
-                          className="button border-0"
-                          type="button"
-                          onClick={() => {
-                            alreadyAddCart ? navigate("/cart") : uploadCart();
-                          }}
-                        >
-                          {alreadyAddCart ? "Go to cart" : "Add to cart"}
-                        </button>
-                      )}
-                      {productState?.quantity === 0 && (
-                        <a className="button border-0" type="button">
-                          This product is not available
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                  {/* <div className="d-flex align-items-center gap-15">
+                            <div
+                              className={
+                                alreadyAddCart || productState?.quantity === 0
+                                  ? "mb-0"
+                                  : "d-flex align-item-center gap-15 ms-2"
+                              }
+                            >
+                              {productState?.quantity > 0 && (
+                                <button
+                                  className="button border-0"
+                                  type="button"
+                                  onClick={() => {
+                                    alreadyAddCart
+                                      ? navigate("/cart")
+                                      : uploadCart();
+                                  }}
+                                >
+                                  {alreadyAddCart
+                                    ? "Go to cart"
+                                    : "Add to cart"}
+                                </button>
+                              )}
+                              {productState?.quantity === 0 && (
+                                <a className="button border-0" type="button">
+                                  This product is not available
+                                </a>
+                              )}
+                            </div>
+                          </div>
+                          {/* <div className="d-flex align-items-center gap-15">
                     <div>
                       <a href="">
                         <AiOutlineHeart className="fs-5 me-2" />
@@ -267,13 +295,15 @@ const SingleProduct = () => {
                       </a>
                     </div>
                   </div> */}
-                  <div className="d-flex gap-10 flex-column my-3">
-                    <h3 className="product-heading">Shipping & Returns:</h3>
-                    <p class="product-data">
-                      Free Shipping and returns available on all orders!
-                    </p>
-                  </div>
-                  {/* <div className="d-flex gap-10 align-items-center my-3">
+                          <div className="d-flex gap-10 flex-column my-3">
+                            <h3 className="product-heading">
+                              Shipping & Returns:
+                            </h3>
+                            <p class="product-data">
+                              Free Shipping and returns available on all orders!
+                            </p>
+                          </div>
+                          {/* <div className="d-flex gap-10 align-items-center my-3">
                     <h3 className="product-heading">Copy Product Link </h3>
                     <p class="product-data">
                       <a
@@ -288,8 +318,11 @@ const SingleProduct = () => {
                       </a>
                     </p>
                   </div> */}
+                        </div>
+                      </div>
+                    ))}
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
