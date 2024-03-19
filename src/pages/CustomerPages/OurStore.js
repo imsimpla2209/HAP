@@ -5,16 +5,22 @@ import React, { useEffect, useState } from "react";
 import BreadCrumb from "../../components/BreadCrumb";
 import Meta from "../../components/Meta";
 import ProductCard from "../../components/ProductCard";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../../features/customer/products/productSlice";
 import { getBrands } from "../../features/customer/brand/brandSlice";
 import { getCategorys } from "../../features/customer/category/categorySlice";
+import { getProducts } from "features/product/productSlice";
+
+
 
 const OurStore = () => {
   const [grid, setGrid] = useState(4);
-  const productState = useSelector((state) => state?.product?.product);
+  // const productState = useSelector((state) => state?.product?.product);
   const brandState = useSelector((state) => state.brand.brands);
   const categoryState = useSelector((state) => state.category.categorys);
+  const productState = useSelector((state) => state.product.products);
+  const dispatch = useDispatch();
 
   const [brand, setBrand] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -34,7 +40,13 @@ const OurStore = () => {
   useEffect(() => {
     dispatch(getBrands());
     dispatch(getCategorys());
+    getProducts();
   }, []);
+
+  useEffect(() => {
+    dispatch(getProducts(1));
+  }, [dispatch]);
+
   const totalProducts = productState ? productState.length : 0;
   useEffect(() => {
     let newBrand = [];
@@ -60,24 +72,15 @@ const OurStore = () => {
     setBrand(newBrand);
   }, [productState]);
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    getProducts();
-  }, [sort, tag, brands, pcategories, minPrice, maxPrice, currentPage]);
+  // useEffect(() => {
+  //   getProducts();
+  // }, [sort, tag, brands, pcategories, minPrice, maxPrice, currentPage]);
 
-  const getProducts = () => {
-    dispatch(
-      getAllProducts({
-        sort,
-        tag,
-        brands,
-        pcategories,
-        minPrice,
-        maxPrice,
-        page: currentPage,
-      })
-    );
-  };
+  // const getProducts = () => {
+  //   dispatch(
+  //     getAllProducts(1)
+  //   );
+  // };
 
   const handlePrevPage = () => {
     if (currentPage > 1) {

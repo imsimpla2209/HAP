@@ -71,9 +71,9 @@ const UpdatePassword = () => {
                   Mật khẩu cũ
                 </label>
                 <CustomInput
-                  type="oldPassword"
+                  type="password"
                   name="oldPassword"
-                  // placeholder="Password"
+                  placeholder="Mật khẩu cũ"
                   value={formik.values.oldPassword}
                   onChange={formik.handleChange("oldPassword")}
                   onBlur={formik.handleBlur("oldPassword")}
@@ -87,9 +87,9 @@ const UpdatePassword = () => {
                   Mật khẩu mới
                 </label>
                 <CustomInput
-                  type="newPassword"
+                  type="password"
                   name="newPassword"
-                  // placeholder="Password"
+                  placeholder="Mật khẩu mới"
                   value={formik.values.newPassword}
                   onChange={formik.handleChange("newPassword")}
                   onBlur={formik.handleBlur("newPassword")}

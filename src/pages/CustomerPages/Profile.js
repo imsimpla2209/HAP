@@ -18,12 +18,16 @@ import { FiEdit } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
-// const phoneRegExp =
-//   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const profileSchema = yup.object({
   firstName: yup.string().required("Nhập họ"),
   lastName: yup.string().required("Nhập tên"),
-  phoneNumber: yup.string(),
+  mobile: yup
+  .string()
+  .matches(phoneRegExp, "Phone number is not valid")
+  .min(10, "too short")
+  .max(10, "too long"),
   address: yup.string(),
   dob: yup.string(),
   gender: yup.string(),
@@ -56,7 +60,7 @@ const Profile = () => {
     initialValues: {
       firstName: userState?.firstName,
       lastName: userState?.lastName,
-      phoneNumber: userState?.phoneNumber,
+      phoneNumber: String(userState?.phoneNumber) || "",
       address: userState?.address,
       dob: dob,
       gender: userState?.gender,
@@ -93,10 +97,10 @@ const Profile = () => {
                 <CustomInput
                   type="firstName"
                   name="firstName"
-                  // placeholder="Password"
                   value={formik.values.firstName}
                   onChange={formik.handleChange("firstName")}
                   onBlur={formik.handleBlur("firstName")}
+                  disabled={edit}
                 />
                 <div className="errors">
                   {formik.touched.firstName && formik.errors.firstName}
@@ -109,10 +113,10 @@ const Profile = () => {
                 <CustomInput
                   type="lastName"
                   name="lastName"
-                  // placeholder="Password"
                   value={formik.values.lastName}
                   onChange={formik.handleChange("lastName")}
                   onBlur={formik.handleBlur("lastName")}
+                  disabled={edit}
                 />
                 <div className="errors">
                   {formik.touched.lastName && formik.errors.lastName}
@@ -123,7 +127,7 @@ const Profile = () => {
                   Số điện thoại
                 </label>
                 <input
-                  type="number"
+                  type="phoneNumber"
                   className="form-control"
                   id="ex3"
                   name="phoneNumber"

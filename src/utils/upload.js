@@ -1,8 +1,10 @@
-import { Http } from "apis/http"
+import { instance } from "apis/http"
+import { config } from "features/auth/authService"
+
 
 export const fetchPresignedUrl = async (url, file) => {
   try {
-    const uploadConfig = (await Http.get(url))?.data
+    const uploadConfig = (await instance.get(url, config))?.data
     // const sigedUrl = `https://api.cloudinary.com/v1_1/${uploadConfig?.cloudName}/image/upload?api_key=${uploadConfig?.apiKey}&timestamp=${uploadConfig?.timestamp}&signature=${uploadConfig?.signature}`
     const sigedUrl = `https://api.cloudinary.com/v1_1/${uploadConfig?.cloudName}/upload`
     const formData = new FormData()
@@ -31,7 +33,7 @@ export const fetchPresignedUrl = async (url, file) => {
 }
 
 export const fetchAllToCL = async (files, useOriginFile = true) => {
-  const url = 'data/preSignCLUrl'
+  const url = 'customer/upload'
   const requests = files.map(async (file) => {
     if (typeof file === 'string') return file
     if (file?.path && file?.type) {

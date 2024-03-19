@@ -9,9 +9,9 @@ import { registerUser } from "../../features/customer/user/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const signUpSchema = yup.object({
-  firstname: yup.string().required("First name is required"),
-  lastname: yup.string().required("Last name should be required"),
-  email: yup.string().nullable().email("Email not valid").required("Email is required"),
+  firstname: yup.string().required("Yêu cầu nhập tên"),
+  lastname: yup.string().required("Yêu cầu nập họ"),
+  email: yup.string().nullable().email("Email nhập không đúng định dạng").required("Yêu cầu nhập email"),
   password: yup
     .string()
     .required("Password is requird")
@@ -59,7 +59,7 @@ function Signup() {
                     <CustomInput
                       type="text"
                       name="firstname"
-                      placeholder="First Name"
+                      placeholder="Tên"
                       className="form-control"
                       value={formik.values.firstname}
                       onChange={formik.handleChange("firstname")}
@@ -73,7 +73,7 @@ function Signup() {
                     <CustomInput
                       type="text"
                       name="lastname"
-                      placeholder="Last Name"
+                      placeholder="Họ"
                       value={formik.values.lastname}
                       onChange={formik.handleChange("lastname")}
                       onBlur={formik.handleBlur("lastname")}
@@ -99,7 +99,7 @@ function Signup() {
                     <CustomInput
                       type="password"
                       name="password"
-                      placeholder="Password"
+                      placeholder="Mật khẩu"
                       value={formik.values.password}
                       onChange={formik.handleChange("password")}
                       onBlur={formik.handleBlur("password")}
