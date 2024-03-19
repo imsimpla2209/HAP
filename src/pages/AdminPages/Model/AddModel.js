@@ -1,8 +1,8 @@
 import { Button } from "antd";
+import { DefaultUpload } from "components/Upload";
 import { getUnits } from "features/unit/unitsSlice";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import Dropzone from "react-dropzone";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,12 +18,12 @@ import {
   updateModel
 } from "../../../features/models/modelsSlice";
 import {
-  delImg,
   resetUploadState,
   uploadImg
 } from "../../../features/upload/uploadSlice";
 import "../Product/addproduct.css";
-import { DefaultUpload } from "components/Upload";
+import unitService from "features/unit/unitsService";
+import colorService from "features/color/colorsService";
 
 let schema = yup.object().shape({
   modelName: yup.string().required("Hãy điền tên cho mẫu"),
@@ -48,12 +48,11 @@ const AddModel = (
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const getModelId = location.pathname.split("/")[3];
-  const unitsState = useSelector((state) => state.unit.units);
-  const colorsState = useSelector((state) => state.color.colors);
+  const getModelId = location.pathname.split("/")[5];
+  const [unitsState, setUnits] = useState([]);
+  const [colorsState, setColors] = useState([]);
   const imgProductState = useSelector((state) => state.product.productImages);
   const imgState = useSelector((state) => state.upload.images);
-  const [images, setImages] = useState([]);
   const [files, setFiles] = useState([])
 
   const modelState = useSelector((state) => state.model);
@@ -68,13 +67,23 @@ const AddModel = (
     modelImages,
     productId,
     available,
-    attachments
+    attachments,
+    modelId,
   } = modelState || editedModal || {};
 
   useEffect(() => {
-    dispatch(getColors());
-    dispatch(getUnits());
+    (async () => {
+      const unitData = await unitService.getUnits();
+      const colorData = await colorService.getColors();
+
+      setUnits(unitData);
+      setColors(colorData);
+    })();
   }, []);
+
+  useEffect(() => {
+    setFiles(attachments || [])
+  }, [attachments])
 
   useEffect(() => {
     if (getModelId !== undefined) {
@@ -146,13 +155,15 @@ const AddModel = (
         primaryPrice: Number(values.primaryPrice),
         secondaryPrice: Number(values.secondaryPrice),
         colorId: Number(values.colorId),
-        available: Number(values.available),
+        // available: Number(values.available),
         attachments: files || [],
       }
+      setFiles([])
+
       if (isModal) {
         formik.resetForm();
         if (editedModal) {
-          onEditModel && onEditModel(idx, { modelData, modelId: editedModal?.modelId });
+          onEditModel && onEditModel(idx, { ...modelData, modelId });
         }
         else onAddModel && onAddModel(modelData);
       }
@@ -167,7 +178,7 @@ const AddModel = (
             onAddModel ? onAddModel(modelData) : navigate("/admin/product-list");
             dispatch(resetUploadState());
             dispatch(resetState());
-          }, 300);
+          }, 500);
         } else {
           dispatch(createModel(modelData));
           formik.resetForm();
@@ -175,7 +186,7 @@ const AddModel = (
             onAddModel ? onAddModel(modelData) : navigate("/admin/product-list");
             dispatch(resetUploadState());
             dispatch(resetState());
-          }, 1000);
+          }, 5000);
         }
       }
     },
@@ -187,9 +198,12 @@ const AddModel = (
     return () => {
       dispatch(resetState());
       dispatch(resetImgModelState());
+      setFiles([])
       formik.resetForm();
     }
   }, []);
+
+
 
   return (
     <div className="">
@@ -302,7 +316,7 @@ const AddModel = (
               <div className="error">{formik.errors.colorId}</div>
             )}
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label htmlFor="available">Số lượng hàng</label>
             <CustomInput
               type="number"
@@ -314,7 +328,7 @@ const AddModel = (
             <div className="error">
               {formik.touched.available && formik.errors.available}
             </div>
-          </div>
+          </div> */}
           <div className="mt-3 py-2 pb-4">
             <p className="fw-bold">Đính kèm</p>
 
@@ -325,14 +339,14 @@ const AddModel = (
                   Đăng tải
                 </label>
                 Tệp hoặc hình ảnh (tuỳ chọn)
-                <DefaultUpload normFile={normFile} files={files?.map(f => f?.path || f)}></DefaultUpload>
+                <DefaultUpload normFile={normFile} files={files}></DefaultUpload>
               </p>
             </div>
             <p className="my-3 mx-4 ">
               Bạn có thể đính kèm tối đa 10 tệp có kích thước bằng <strong>25MB</strong>{' '}
             </p>
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <div className="upload-form bg-white border-1 p-5 text-center">
               <Dropzone onDrop={handleDrop}>
                 {({ getRootProps, getInputProps }) => (
@@ -398,7 +412,7 @@ const AddModel = (
                 </div>
               )
             )}
-          </div>
+          </div> */}
 
           <Button
             className="border-0 rounded-3 my-5"
@@ -408,7 +422,7 @@ const AddModel = (
             }}
           // disabled={!!formik.errors}
           >
-            {getModelId !== undefined || editedModal ? "Sửa" : "Thêm"} Mẫu
+            {getModelId !== undefined || !!editedModal ? "Sửa" : "Thêm"} Mẫu
           </Button>
         </form>
       </div>

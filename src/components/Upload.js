@@ -27,6 +27,9 @@ const validFileType = [
 ]
 
 export const checkFileFunc = (file) => {
+  if (file?.path) {
+    return true
+  }
   const checkType = validFileType.includes(file.type)
   const checkSize = file.size <= 50000000
   console.log('size', checkSize, file.size)
@@ -45,6 +48,10 @@ export const handleValidateFile = (e) => {
     if (!checkFile) {
       return []
     } else {
+      if (file.path) {
+        file.thumbUrl = file.path
+        file.url = file.path
+      }
       return file
     }
   })
@@ -66,8 +73,13 @@ export const onChangeUpload = file => {
 }
 
 export const previewFile = file => {
+  console.log('s', file)
+
   if (typeof file === 'string') {
     return file
+  }
+  if (file?.path) {
+    return file?.path
   }
   const checkFile = checkFileFunc(file)
 
@@ -79,34 +91,41 @@ export const previewFile = file => {
 
 export function DefaultUpload({ normFile, files, text }) {
   return (
-    <Form.Item
-      name="upload"
-      valuePropName="fileList"
-      getValueFromEvent={e => {
+    // <Form.Item
+    //   name="upload"
+    //   valuePropName="fileList"
+    //   getValueFromEvent={e => {
+    //     const validFiles = handleValidateFile(e)
+    //     normFile(validFiles)
+    //   }}
+    //   fileList={files}
+    //   data={files}
+    //   style={{
+    //     marginBottom: '20px',
+    //     marginTop: '8px',
+    //   }}
+    // >
+    <Upload
+      name="logo"
+      listType="picture"
+      onPreview={previewFile}
+      fileList={files}
+      onChange={e => {
         const validFiles = handleValidateFile(e)
         normFile(validFiles)
       }}
-      style={{
-        marginBottom: '20px',
-        marginTop: '8px',
-      }}
-    >
-      <Upload
-        name="logo"
-        listType="picture"
-        onPreview={previewFile}
-        accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+      accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
 text/plain, application/pdf, image/*, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, 
 application/vnd.ms-excel, .xlsx, .xls"
-        beforeUpload={file => onChangeUpload(file)}
-        maxCount={10}
-      >
-        <Button icon={<UploadOutlined />}>{text || 'Đăng Tải'}</Button>
-        <Typography.Text disabled style={{ marginLeft: '10px' }}>
-          Maximum Files: 10
-        </Typography.Text>
-      </Upload>
-    </Form.Item>
+      beforeUpload={file => onChangeUpload(file)}
+      maxCount={10}
+    >
+      <Button icon={<UploadOutlined />}>{text || 'Đăng Tải'}</Button>
+      <Typography.Text disabled style={{ marginLeft: '10px' }}>
+        Số lượng tối đa: 10
+      </Typography.Text>
+    </Upload>
+    // </Form.Item>
   )
 }
 

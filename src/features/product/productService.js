@@ -23,7 +23,7 @@ const updateProduct = async (product) => {
       productCode: product.productData.productCode,
       productName: product.productData.productName,
       categoryId: product.productData.categoryId,
-      collectionId: product.productData.collectionId,
+      collectionIdList: product.productData.collectionIdList,
       voteStar: product.productData.voteStar,
       sold: product.productData.sold,
     },

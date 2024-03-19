@@ -49,9 +49,10 @@ export const updateProduct = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk(
   "product/delete-product",
-  async (id, thunkAPI) => {
+  async (data, thunkAPI) => {
     try {
-      return await productService.deleteProduct(id)
+      await productService.deleteProduct(data.id)
+      return await productService.getProducts(data?.page || 1)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
     }
@@ -124,8 +125,8 @@ export const productSlice = createSlice({
         state.productId = action.payload.productId;
         state.productCode = action.payload.productCode;
         state.productName = action.payload.productName;
-        state.categoryId = action.payload.categoryId;
-        state.collectionId = action.payload.collectionId;
+        state.category = action.payload.category;
+        state.collection = action.payload.collection;
         state.voteStar = action.payload.voteStar;
         state.sold = action.payload.sold;
       })
@@ -165,6 +166,7 @@ export const productSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.deletedProduct = action.payload;
+        state.products = action.payload
         if (state.isSuccess === true) {
           toast.info("Delete Product Successfully!");
         }
