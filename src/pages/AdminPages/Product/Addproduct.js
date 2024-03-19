@@ -1,44 +1,40 @@
+import { PlusOutlined } from '@ant-design/icons';
 import { Button, Modal } from "antd";
+import adminCategoryService from "features/category/categoryService";
+import collectionService from "features/collections/collectionsService";
+import modelService from "features/models/modelsService";
+import { getModels } from "features/models/modelsSlice";
+import productService from "features/product/productService";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import Dropzone from "react-dropzone";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { fetchAllToCL } from "utils/upload";
 import * as yup from "yup";
 import CustomInput from "../../../components/CustomInput1";
-import { getBrands } from "../../../features/customer/brand/brandSlice";
-import { getCategorys } from "../../../features/customer/category/categorySlice";
 import {
   getAProduct,
-  resetImgProductState,
   resetState,
-  updateProduct,
+  updateProduct
 } from "../../../features/product/productSlice";
 import {
-  delImg,
   resetUploadState,
-  uploadImg,
+  uploadImg
 } from "../../../features/upload/uploadSlice";
-import "./addproduct.css";
-import { getCollections } from "features/collections/collectionsSlice";
-import { PlusOutlined } from '@ant-design/icons';
 import { AddModel } from "../Model/AddModel";
 import { SelectedModelList } from "./SelectedModelList";
-import { getModels } from "features/models/modelsSlice";
-import productService from "features/product/productService";
-import modelService from "features/models/modelsService";
-import { fetchAllToCL } from "utils/upload";
+import "./addproduct.css";
 
 let schema = yup.object().shape({
   productName: yup.string().required("Hãy điền tên cho sản phẩm"),
-  description: yup.string().required("Hãy điền mô tả cho sản phẩm"),
+  description: yup.string(),
   productCode: yup.string().required("Mã sản phẩm là cần thiết"),
   collectionId: yup.string(),
   categoryId: yup.string(),
   tags: yup.string(),
-  quantity: yup.number(),
+  // quantity: yup.number(),
 });
 
 const Addproduct = () => {
@@ -46,44 +42,47 @@ const Addproduct = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const getProductId = location.pathname.split("/")[3];
-  const collectionState = useSelector((state) => state.collections.collections);
-  const categoryState = useSelector((state) => state.category.categorys);
+  const [categoryState, setCategoryState] = useState([]);
+  const [collectionState, setCollectionState] = useState([]);
   const modelsState = useSelector((state) => state.models.models);
   const imgProductState = useSelector((state) => state.product.productImages);
   const imgState = useSelector((state) => state.upload.images);
-  const [images, setImages] = useState([]);
   const [models, setModels] = useState([]);
 
   const [selectedModel, setSelectedModel] = useState({});
 
   const [addModelModal, setAddModelModal] = useState(false);
 
-  const productState = useSelector((state) => state.product);
+  const [productState, setProductState] = useState({});
   const {
     productName,
     productDesc,
-    categoryId,
-    productPrice,
+    productCode,
+    category,
     productTag,
-    collectionId,
+    collection,
     productImages,
     productQuantity,
   } = productState;
 
-  console.log(categoryState);
-  console.log(collectionState);
   useEffect(() => {
-    dispatch(getBrands());
-    dispatch(getCategorys());
-    dispatch(getCollections());
+    (async () => {
+      const catData = await adminCategoryService.getCategorys();
+      const collectionData = await collectionService.getCollections();
+      setCategoryState(catData);
+      setCollectionState(collectionData);
+    })();
   }, []);
 
   useEffect(() => {
     if (getProductId !== undefined) {
-      dispatch(getAProduct(getProductId));
       img.push(productImages);
-      dispatch(getModels(getProductId));
-
+      (async () => {
+        const product = await productService.getAProduct(getProductId);
+        setProductState(product);
+        const models = await modelService.getModels(getProductId);
+        setModels(models);
+      })()
     } else {
       dispatch(resetState());
     }
@@ -122,14 +121,15 @@ const Addproduct = () => {
     });
   };
 
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       productName: productName || "",
       description: productDesc || "",
-      productCode: productPrice || "",
-      collectionId: collectionId || "",
-      categoryId: categoryId || "",
+      productCode: productCode || "",
+      collectionId: collection?.collectionId || "",
+      categoryId: category?.categoryId || "",
       quantity: productQuantity || "",
       tags: productTag || "",
       images: productImages || "",
@@ -142,9 +142,10 @@ const Addproduct = () => {
         productName: values.productName,
         categoryId: Number(values.categoryId),
         collectionIdList: [
-          1, 2
+          Number(values.collectionId),
         ]
       }
+      let productId = getProductId;
       if (getProductId !== undefined) {
         const data = {
           id: getProductId,
@@ -158,32 +159,33 @@ const Addproduct = () => {
         }, 300);
       } else {
         const data = await productService.createProduct(productData)
-        if (models?.length) {
-          try {
-            const uploadModels = await Promise.all(models.map(async (model) => {
-              if (model?.attachments?.length) {
-                await fetchAllToCL(model?.attachments, false)
-                  .then(res => {
-                    model.attachments = res?.filter(url => !!url) || []
-                  })
-                  .catch(err => {
-                    model.attachments = []
-                  })
-              }
-              const res = await modelService.createModel(data?.productId, { ...model });
-              return res?.modelId;
-            }));
-            console.log("Upload successful:", uploadModels);
-            dispatch(updateProduct({ ...data, modelIdList: uploadModels }));
-            formik.resetForm();
-            setTimeout(() => {
-              navigate("/admin/product-list");
-              dispatch(resetUploadState());
-              dispatch(resetState());
-            }, 1000);
-          } catch (error) {
-            console.error("Error uploading models:", error);
-          }
+        productId = data?.productId
+      }
+      if (models?.length) {
+        console.log("models", models);
+        try {
+          const uploadModels = await Promise.all(models.map(async (model) => {
+            if (model?.attachments?.length) {
+              await fetchAllToCL(model?.attachments, false)
+                .then(res => {
+                  model.attachments = res?.filter(url => !!url) || []
+                })
+                .catch(err => {
+                  model.attachments = []
+                })
+            }
+            const res = model?.modelId ? await modelService.updateModel(productId, { ...model }) : await modelService.createModel(productId, { ...model });
+            return res?.modelId;
+          }));
+          console.log("Upload successful:", uploadModels);
+          formik.resetForm();
+          setTimeout(() => {
+            navigate("/admin/product-list");
+            dispatch(resetUploadState());
+            dispatch(resetState());
+          }, 1000);
+        } catch (error) {
+          console.error("Error uploading models:", error);
         }
       }
     },
@@ -205,6 +207,7 @@ const Addproduct = () => {
     newModels[idx] = modelData;
     setModels(newModels);
     setAddModelModal(false);
+    setSelectedModel({});
   };
 
   const handlePressEditModel = (index) => {
@@ -302,7 +305,7 @@ const Addproduct = () => {
               <div className="error">{formik.errors.categoryId}</div>
             )}
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label htmlFor="quantity">Số lượng sản phẩm</label>
             <CustomInput
               type="number"
@@ -314,7 +317,7 @@ const Addproduct = () => {
             <div className="error">
               {formik.touched.quantity && formik.errors.quantity}
             </div>
-          </div>
+          </div> */}
           {/* <div className="form-group">
             <div className="upload-form bg-white border-1 p-5 text-center">
               <Dropzone onDrop={handleDrop}>

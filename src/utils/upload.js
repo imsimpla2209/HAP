@@ -31,7 +31,7 @@ export const fetchPresignedUrl = async (url, file) => {
 }
 
 export const fetchAllToCL = async (files, useOriginFile = true) => {
-  const url = 'data/preSignCLUrl'
+  const url = 'customer/upload'
   const requests = files.map(async (file) => {
     if (typeof file === 'string') return file
     if (file?.path && file?.type) {

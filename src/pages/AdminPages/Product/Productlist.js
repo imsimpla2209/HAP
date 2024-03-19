@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
-import { Table, } from 'antd';
+import { Pagination, Table, } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, getProducts, resetState } from "../../../features/product/productSlice";
 import { Link } from "react-router-dom";
@@ -61,6 +61,7 @@ const Productlist = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [productId, setPoductId] = useState("");
+  const [page, setPage] = useState(1);
   const showModal = (e) => {
     setOpen(true);
     setPoductId(e);
@@ -70,18 +71,18 @@ const Productlist = () => {
   };
   useEffect(() => {
     dispatch(resetState())
-    dispatch(getProducts(1));
     dispatch(getCollections())
     dispatch(getCategorys())
     dispatch(getUnits())
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(getProducts(page));
+  }, [page]);
+
   const deleteAProduct = (e) => {
-    dispatch(deleteProduct(e));
+    dispatch(deleteProduct({ id: e, page }));
     setOpen(false);
-    setTimeout(() => {
-      dispatch(getProducts());
-    }, 100);
   };
 
   const productstate = useSelector((state) => state.product.products);
@@ -124,7 +125,17 @@ const Productlist = () => {
   return (
     <div>
       <h3 className="mb-4 title">Danh Sách Sản Phẩm</h3>
-      <Table columns={columns} dataSource={data1} scroll={{ x: 1350, y: 1500 }} expandable={{ expandedRowRender: (record, index) => <ExpandedRowRenderModels productId={record.productId} unitsState={unitsState} /> }} />
+      <Table
+        columns={columns}
+        dataSource={data1}
+        scroll={{ x: 1350, y: 1500 }}
+        pagination={false}
+        expandable={{
+          expandedRowRender: (record, index) => <ExpandedRowRenderModels
+            productId={record.productId}
+            unitsState={unitsState} />
+        }} />
+      <Pagination defaultCurrent={1} pageSize={20} onChange={(page) => setPage(page)} total={100} />
       <CustomModal
         hideModal={hideModal}
         open={open}
@@ -200,5 +211,7 @@ const ExpandedRowRenderModels = ({ productId, unitsState }) => {
 
 
 
-  return <Table columns={columns} dataSource={data} pagination={false} />;
+  return <>
+    {data?.length ? <Table columns={columns} dataSource={data} pagination={false} /> : <>Không có mẫu nào</>}
+  </>
 };

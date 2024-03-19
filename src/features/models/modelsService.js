@@ -18,18 +18,18 @@ const getAModel = async (productId, id) => {
 
 const updateModel = async (productId, model) => {
   const response = await instance.put(
-    `Admin/products/${productId}/models/edit/${model?.id}`,
+    `Admin/products/${productId}/models/edit/${model?.modelId}`,
     {
-      productId: model.modelData.productId,
-      modelName: model.modelData.modelName,
-      modelId: model.modelData.modelId,
-      unitId: model.modelData.unitId,
-      colorId: model.modelData.colorId,
-      specification: model.modelData.specification,
-      primaryPrice: model.modelData.primaryPrice,
-      secondaryPrice: model.modelData.secondaryPrice,
-      available: model.modelData.available,
-      description: model.modelData.description,
+      productId: productId,
+      modelName: model.modelData?.modelName || model?.modelName,
+      unitId: model.modelData?.unitId || model?.unitId,
+      colorId: model.modelData?.colorId || model?.colorId,
+      specification: model.modelData?.specification || model?.specification,
+      primaryPrice: model.modelData?.primaryPrice || model?.primaryPrice,
+      secondaryPrice: model.modelData?.secondaryPrice || model?.secondaryPrice,
+      available: model.modelData?.available || model?.available,
+      description: model.modelData?.description || model?.description,
+      attachments: model.modelData?.attachments || model?.attachments,
     },
     config
   );
