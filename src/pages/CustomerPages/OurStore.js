@@ -72,9 +72,9 @@ const OurStore = () => {
     setBrand(newBrand);
   }, [productState]);
 
-  // useEffect(() => {
-  //   getProducts();
-  // }, [sort, tag, brands, pcategories, minPrice, maxPrice, currentPage]);
+  useEffect(() => {
+    getProducts();
+  }, [sort, tag, brands, pcategories, minPrice, maxPrice, currentPage]);
 
   // const getProducts = () => {
   //   dispatch(

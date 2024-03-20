@@ -16,19 +16,24 @@ const getACollection = async (id) => {
   return response.data;
 };
 
-const updateCollection = async (product) => {
+const updateCollection = async (collection) => {
+  if (!collection || !collection.colData) {
+    throw new Error("Product data is missing or invalid");
+  }
+
   const response = await instance.put(
-    `Admin/collections/edit/${product?.id}`,
+    `Admin/collections/edit/${collection?.id}`,
     {
-      collectionName: product.productData.name,
-      description: product.productData.description,
-      collectionImages: product.productData.images,
+      collectionName: collection.colData.collectionName,
+      description: collection.colData.description,
+      // collectionImages: product.productData.images,
     },
     config
   );
 
   return response.data;
 };
+
 const deleteCollection = async (id) => {
   const response = await instance.delete(`Admin/collections/remove/${id}`, config)
   return response.data

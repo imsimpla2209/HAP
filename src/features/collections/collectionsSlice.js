@@ -36,7 +36,7 @@ export const getACollection = createAsyncThunk(
   }
 );
 
-export const updateCollection = createAsyncThunk(
+export const updateCol = createAsyncThunk(
   "collection/update-collection",
   async (colData, thunkAPI) => {
     try {
@@ -121,9 +121,9 @@ export const collectionSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.CollectionName = action.payload.name;
+        state.collectionName = action.payload.collectionName;
         state.Description = action.payload.description;
-        state.collectionImages = action.payload.images;
+        // state.collectionImages = action.payload.images;
       })
       .addCase(getACollection.rejected, (state, action) => {
         state.isLoading = false;
@@ -131,10 +131,10 @@ export const collectionSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error
       })
-      .addCase(updateCollection.pending, (state) => {
+      .addCase(updateCol.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(updateCollection.fulfilled, (state, action) => {
+      .addCase(updateCol.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
@@ -143,7 +143,7 @@ export const collectionSlice = createSlice({
         }
         state.updatedProduct = action.payload
       })
-      .addCase(updateCollection.rejected, (state, action) => {
+      .addCase(updateCol.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

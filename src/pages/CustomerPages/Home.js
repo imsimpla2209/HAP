@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getBlogs } from "features/blog/blogSlice";
 import { getAllProducts } from "../../features/customer/products/productSlice";
 import { getProducts } from "features/product/productSlice";
+import { getCollections } from "features/collections/collectionsSlice";
 import {
   addToWishlist,
   removeFromWishlist,
@@ -26,7 +27,7 @@ import { getCategories } from "apis";
 const Home = () => {
   const blogState = useSelector((state) => state?.blog?.blogs);
   const productState = useSelector((state) => state.product.products);
-
+  const collectionState = useSelector((state) => state.collections.collections);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -34,7 +35,12 @@ const Home = () => {
     getAllBlogs();
     getProducts();
     getCategories();
+    getCollections();
   }, []);
+
+  useEffect(() => {
+    dispatch(getCollections());
+  }, [dispatch]);
 
   const getAllBlogs = () => {
     dispatch(getBlogs());
@@ -45,6 +51,7 @@ const Home = () => {
   //   dispatch(getProducts(1));
   // };
 
+  console.log(collectionState);
   console.log(productState);
 
   useEffect(() => {
@@ -397,29 +404,26 @@ const Home = () => {
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
-              <h3 className="section-heading">Sản phẩm đặc biệt</h3>
+              <h3 className="section-heading">Bộ sản phẩm</h3>
             </div>
           </div>
           <div className="row ">
-            {productState &&
-              productState
-                .filter((item) => item.tags === "special")
-                .slice(0, 2)
-                .map((item, index) => {
-                  return (
-                    <SpecialProduct
-                      key={index}
-                      id={item?._id}
-                      brand={item?.brand}
-                      title={item?.title}
-                      quantity={item?.quantity}
-                      sold={item?.sold}
-                      price={item?.price}
-                      image={item?.images[0]?.url}
-                      totalrating={item?.totalrating.toString()}
-                    />
-                  );
-                })}
+            {collectionState &&
+              collectionState?.slice(0, 2)?.map((item, index) => {
+                return (
+                  <SpecialProduct
+                    key={index}
+                    collectionId={item?.collectionId}
+                    description={item?.description}
+                    collectionName={item?.collectionName}
+                    quantity={10}
+                    // sold={3}
+                    // price={200}
+                    // image="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/307773363_500749115391640_3906085054103576647_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFWrlNaYkQUo1Pk0ZnwCdwz10djKjD-dFrXR2MqMP50Wk-rHiPTsE-YhYCE3kOkIkJ6TnOi8yVQwmLYY_Z604U3&_nc_ohc=pDdhRtfhiBIAX_bZsaY&_nc_ht=scontent.fhan2-3.fna&oh=00_AfBEv8jcaxN7_uL0fCztGywUuGG9ZLBwVWkZScLAsGK9Cg&oe=65FEF101"
+                    // totalrating={3}
+                  />
+                );
+              })}
           </div>
         </div>
       </section>
