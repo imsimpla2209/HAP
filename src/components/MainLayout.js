@@ -82,6 +82,16 @@ const MainLayout = () => {
                   label: "Danh sách sản phẩm",
                 },
                 {
+                  key: "collection",
+                  icon: <AiOutlineShoppingCart className="fs-4" />,
+                  label: "Thêm Bộ Sản Phẩm",
+                },
+                {
+                  key: "collection-list",
+                  icon: <AiOutlineShoppingCart className="fs-4" />,
+                  label: "Danh sách bộ sản phẩm",
+                },
+                {
                   key: "unit",
                   icon: <TbBrandBootstrap className="fs-4" />,
                   label: "Đơn Vị",

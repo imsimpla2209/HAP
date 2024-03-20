@@ -30,6 +30,8 @@ import UnitList from 'pages/AdminPages/Unit/UnitList';
 import AddUnit from 'pages/AdminPages/Unit/AddUnit';
 import AddColor from 'pages/AdminPages/Color/AddColor';
 import ColorList from 'pages/AdminPages/Color/ColorList';
+import CollectionList from 'pages/AdminPages/Collections/CollectionList';
+import AddCollection from 'pages/AdminPages/Collections/AddCollection';
 
 
 function AdminRoutes() {
@@ -69,6 +71,10 @@ function AdminRoutes() {
         <Route path="color/:id" element={<AddColor />} />
         <Route path="color-list" element={<ColorList />} />
         <Route path="product-list" element={<Productlist />} />
+        <Route path="collection" element={<AddCollection />} />
+        <Route path="collection/:id" element={<AddCollection />} />
+        <Route path="collection-list" element={<CollectionList />} />
+        
       </Route>
     </Routes>
   );

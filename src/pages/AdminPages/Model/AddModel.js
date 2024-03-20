@@ -346,82 +346,14 @@ const AddModel = (
               Bạn có thể đính kèm tối đa 10 tệp có kích thước bằng <strong>25MB</strong>{' '}
             </p>
           </div>
-          {/* <div className="form-group">
-            <div className="upload-form bg-white border-1 p-5 text-center">
-              <Dropzone onDrop={handleDrop}>
-                {({ getRootProps, getInputProps }) => (
-                  <section>
-                    <div {...getRootProps()}>
-                      <input {...getInputProps()} />
-                      <p>
-                        Kéo và thả một số tệp vào đây hoặc nhấp để chọn tệp
-                      </p>
-                    </div>
-                  </section>
-                )}
-              </Dropzone>
-            </div>
-            {getModelId === undefined ? (
-              <div className="showimages d-flex flex-wrap gap-3">
-                {imgState?.map((i, j) => {
-                  return (
-                    <div className=" position-relative" key={j}>
-                      <button
-                        type="button"
-                        onClick={() => dispatch(delImg(i.public_id))}
-                        className="btn-close position-absolute"
-                        style={{ top: "10px", right: "10px" }}
-                      ></button>
-                      <img src={i.url} alt="" width={200} height={200} />
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              imgProductState === null || (
-                <div className="showimages d-flex flex-wrap gap-3">
-                  {imgProductState?.map((i, j) => {
-                    return (
-                      <div className=" position-relative" key={j}>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            dispatch(resetImgModelState());
-                            dispatch(delImg(i.public_id));
-                          }}
-                          className="btn-close position-absolute"
-                          style={{ top: "10px", right: "10px" }}
-                        ></button>
-                        <img src={i.url} alt="" width={200} height={200} />
-                      </div>
-                    );
-                  })}
-                  {imgState?.map((i, j) => {
-                    return (
-                      <div className=" position-relative" key={j}>
-                        <button
-                          type="button"
-                          onClick={() => dispatch(delImg(i.public_id))}
-                          className="btn-close position-absolute"
-                          style={{ top: "10px", right: "10px" }}
-                        ></button>
-                        <img src={i.url} alt="" width={200} height={200} />
-                      </div>
-                    );
-                  })}
-                </div>
-              )
-            )}
-          </div> */}
+
 
           <Button
             className="border-0 rounded-3 my-5"
             type="primary"
             onClick={() => {
               formik.submitForm();
-            }}
-          // disabled={!!formik.errors}
-          >
+            }}          >
             {getModelId !== undefined || !!editedModal ? "Sửa" : "Thêm"} Mẫu
           </Button>
         </form>
