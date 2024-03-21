@@ -7,8 +7,10 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { LuClipboardList } from "react-icons/lu";
 import { ImBlog } from "react-icons/im";
 import { RiCouponLine } from "react-icons/ri"
-import { FaClipboardList } from "react-icons/fa";
+import { FaClipboardList, FaWarehouse } from "react-icons/fa";
 import { TbBrandBlogger, TbBrandBootstrap, TbCategory } from "react-icons/tb";
+import { BiSolidCollection } from "react-icons/bi";
+
 import {
   AiOutlineDashboard,
   AiOutlineLogout,
@@ -83,12 +85,12 @@ const MainLayout = () => {
                 },
                 {
                   key: "collection",
-                  icon: <AiOutlineShoppingCart className="fs-4" />,
+                  icon: <BiSolidCollection className="fs-4" />,
                   label: "Thêm Bộ Sản Phẩm",
                 },
                 {
                   key: "collection-list",
-                  icon: <AiOutlineShoppingCart className="fs-4" />,
+                  icon: <BiSolidCollection className="fs-4" />,
                   label: "Danh sách bộ sản phẩm",
                 },
                 {
@@ -120,6 +122,16 @@ const MainLayout = () => {
                   key: "color-list",
                   icon: <TbCategory className="fs-4" />,
                   label: "Danh Sách Màu Sắc",
+                },
+                {
+                  key: "warehouse",
+                  icon: <FaWarehouse className="fs-4" />,
+                  label: "Thêm Nhật Ký Kho",
+                },
+                {
+                  key: "color-list",
+                  icon: <FaWarehouse className="fs-4" />,
+                  label: "Danh Sách Nhật Ký Kho",
                 },
               ],
             },

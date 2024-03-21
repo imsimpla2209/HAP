@@ -13,6 +13,17 @@ export const getModels = createAsyncThunk(
   }
 );
 
+export const getAllModels = createAsyncThunk(
+  "model/get-all-models",
+  async (page, thunkAPI) => {
+    try {
+      return await modelsService.getAllModels(page);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const createModel = createAsyncThunk(
   "model/create-models",
   async (colData, thunkAPI) => {
@@ -89,6 +100,20 @@ export const collectionSlice = createSlice({
         state.models = action.payload
       })
       .addCase(getModels.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error
+      })
+      .addCase(getAllModels.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllModels.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.models = action.payload
+      })
+      .addCase(getAllModels.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

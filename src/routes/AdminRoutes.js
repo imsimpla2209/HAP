@@ -32,6 +32,7 @@ import AddColor from 'pages/AdminPages/Color/AddColor';
 import ColorList from 'pages/AdminPages/Color/ColorList';
 import CollectionList from 'pages/AdminPages/Collections/CollectionList';
 import AddCollection from 'pages/AdminPages/Collections/AddCollection';
+import AddWarehouse from 'pages/AdminPages/Warehouse/AddWarehouse';
 
 
 function AdminRoutes() {
@@ -60,6 +61,8 @@ function AdminRoutes() {
         <Route path="user/:id" element={<EditUser />} />
         <Route path="category" element={<Addcat />} />
         <Route path="category/:id" element={<Addcat />} />
+        <Route path="warehouse" element={<AddWarehouse />} />
+        <Route path="warehouse/:id" element={<AddWarehouse />} />
         <Route path="category-list" element={<Categorylist />} />
         {/* <Route path="brand" element={<Addbrand />} />
           <Route path="brand/:id" element={<Addbrand />} />
@@ -74,7 +77,7 @@ function AdminRoutes() {
         <Route path="collection" element={<AddCollection />} />
         <Route path="collection/:id" element={<AddCollection />} />
         <Route path="collection-list" element={<CollectionList />} />
-        
+
       </Route>
     </Routes>
   );
