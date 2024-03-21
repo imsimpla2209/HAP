@@ -54,7 +54,7 @@ const getUserProf = async () => {
 };
 
 const getUserWishList = async () => {
-  const response = await axios.get(`${base_url}user/wishlist`, config);
+  const response = await instance.get(`/Customer/wishlist`, config);
   if (response.data) {
     return response.data;
   }

@@ -45,8 +45,6 @@ const Home = () => {
   const getAllBlogs = () => {
     dispatch(getBlogs());
   };
-
-  console.log(blogState);
   // const getAllProducts = () => {
   //   dispatch(getProducts(1));
   // };

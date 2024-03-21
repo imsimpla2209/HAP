@@ -1,6 +1,7 @@
 import axios from "axios";
 import { base_url, config } from "../../../utils/axiosConfig";
 import { getProductById } from "apis";
+import { instance } from "apis/http";
 
 const getProducts = async (data) => {
   const response = await axios.get(
@@ -25,16 +26,21 @@ const getProduct = async (id) => {
   }
 };
 
-const addToWishlist = async (prodId) => {
-  const response = await axios.put(
-    `${base_url}product/wishlist`,
-    { prodId },
-    config
-  );
+const addToWishlist = async (productId) => {
+  const response = await instance.post(`/Customer/wishlist/add`, { productId }, config);
   if (response.data) {
     return response.data;
   }
 };
+
+const removeToWish = async (productId) => {
+  const response = await instance.delete(`/Customer/wishlist/remove/${ productId }`, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
+
 
 const rateProduct = async (data) => {
   const response = await axios.put(`${base_url}product/rating`, data, config);
@@ -47,5 +53,6 @@ export const productService = {
   getProducts,
   getProduct,
   addToWishlist,
+  removeToWish,
   rateProduct,
 };
