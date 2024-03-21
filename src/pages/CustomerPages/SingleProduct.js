@@ -137,8 +137,16 @@ const SingleProduct = () => {
   };
 
   useEffect(() => {
-    setCurrentImage(modelState[0]?.attachments[0]?.path || "");
-  }, [productState]);
+    // Tìm model có ID tương ứng trong danh sách các model
+    const selectedModel = modelState.find(
+      (model) => model.modelId === selectedModelId
+    );
+    // Nếu tìm thấy model, cập nhật ảnh hiện tại với ảnh đầu tiên của model đó
+    if (selectedModel) {
+      setCurrentImage(selectedModel.attachments[0]?.path || "");
+    }
+  }, [selectedModelId]);
+  
   console.log(currentImage);
 
   const props = {
