@@ -137,8 +137,14 @@ const SingleProduct = () => {
   };
 
   useEffect(() => {
-    setCurrentImage(modelState[0]?.attachments[0]?.path || "");
-  }, [productState]);
+    const selectedModel = modelState.find(
+      (model) => model.modelId === selectedModelId
+    );
+    if (selectedModel) {
+      setCurrentImage(selectedModel.attachments[0]?.path || "");
+    }
+  }, [selectedModelId]);
+  
   console.log(currentImage);
 
   const props = {
@@ -166,7 +172,7 @@ const SingleProduct = () => {
                     width: "500px",
                     height: "500px",
                     position: "relative",
-                    zIndex: 1, // Set the z-index to make sure it's above other elements
+                    zIndex: 1,
                   }}
                 >
                   <ReactImageMagnify

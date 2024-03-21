@@ -3,7 +3,16 @@ import { Link } from "react-router-dom";
 import ReactStars from "react-stars";
 
 const SpecialProduct = (props) => {
-  const { collectionName, description, totalrating, price, sold, quantity, collectionId, image } = props;
+  const {
+    collectionName,
+    description,
+    totalrating,
+    price,
+    sold,
+    quantity,
+    collectionId,
+    image,
+  } = props;
   // console.log(quantity)
   // console.log("sold",sold)
   return (
@@ -54,10 +63,9 @@ const SpecialProduct = (props) => {
                   aria-valuemax={3 + 10}
                 ></div>
               </div> */}
-
             </div>
             <Link className="button" to={"/product/" + collectionId}>
-              View to Detail
+              Xem chi tiết
             </Link>
           </div>
         </div>
