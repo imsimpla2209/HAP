@@ -17,7 +17,7 @@ const Header = ({ history }) => {
   const [total, setTotal] = useState(null);
   const [productOpt, setProductOpt] = useState([]);
   const cartState = useSelector((state) => state?.auth?.cartProducts);
-  const productState = useSelector((state) => state?.product?.product);
+  const productState = useSelector((state) => state?.product?.products);
 
   useEffect(() => {
     let sum = 0;
@@ -41,9 +41,10 @@ const Header = ({ history }) => {
     let data = [];
     for (let index = 0; index < productState?.length; index++) {
       const element = productState[index];
-      data.push({ id: index, prod: element?._id, name: element?.title });
+      data.push({ id: index, prod: element?.productId, name: element?.productName });
     }
     setProductOpt(data);
+    console.log(productState)
   }, [productState]);
 
   const handleLogout = () => {
