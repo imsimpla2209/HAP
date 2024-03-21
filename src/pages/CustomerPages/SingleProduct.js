@@ -137,11 +137,9 @@ const SingleProduct = () => {
   };
 
   useEffect(() => {
-    // Tìm model có ID tương ứng trong danh sách các model
     const selectedModel = modelState.find(
       (model) => model.modelId === selectedModelId
     );
-    // Nếu tìm thấy model, cập nhật ảnh hiện tại với ảnh đầu tiên của model đó
     if (selectedModel) {
       setCurrentImage(selectedModel.attachments[0]?.path || "");
     }
@@ -174,7 +172,7 @@ const SingleProduct = () => {
                     width: "500px",
                     height: "500px",
                     position: "relative",
-                    zIndex: 1, // Set the z-index to make sure it's above other elements
+                    zIndex: 1,
                   }}
                 >
                   <ReactImageMagnify

@@ -61,7 +61,9 @@ const Wishlist = () => {
                         />
                       </div>
                       <div className="wishlist-details">
-                        <h5 className="title">{item?.title.substr(0, 30) + "..."}</h5>
+                        <h5 className="title">
+                          {item?.title.substr(0, 30) + "..."}
+                        </h5>
                         <h6 className="price mb-3 mt-3">$ {item?.price}</h6>
                         <div className="wishlist-detail">
                           <div className="availability">
@@ -69,7 +71,7 @@ const Wishlist = () => {
                             <p>In Stock</p>
                           </div>
                           <Link className="button" to={"/product/" + item?._id}>
-                            View to Detail
+                            Xem chi tiết
                           </Link>
                         </div>
                       </div>
