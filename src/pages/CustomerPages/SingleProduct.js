@@ -189,25 +189,25 @@ const SingleProduct = () => {
                 </div>
               </div>
               <div className="other-product-images gap-30">
-                <div>
-                  {productState &&
-                    productState?.images.map((item, index) => {
-                      return (
-                        <img
-                          src={item?.url}
-                          className="img-fluid"
-                          alt=""
-                          onClick={() => setCurrentImage(item?.url)}
-                        />
-                      );
-                    })}
-                </div>
+                {modelState.map((model) =>
+                  model.attachments.map((attachment, index) => (
+                    <img
+                      key={index}
+                      src={attachment.path}
+                      className="img-fluid"
+                      alt=""
+                      onClick={() => {
+                        setCurrentImage(attachment.path);
+                        setSelectedModelId(model.modelId);
+                      }}
+                    />
+                  ))
+                )}
               </div>
             </div>
             <div className="col-6">
               {selectedModelId && (
                 <div>
-                  <h2>Details of Model {selectedModelId}</h2>
                   {modelState
                     .filter((model) => model.modelId === selectedModelId)
                     .map((model) => (
