@@ -26,6 +26,7 @@ import { toast } from "react-toastify";
 import { getBrands } from "../../features/customer/brand/brandSlice";
 import { getCategorys } from "../../features/customer/category/categorySlice";
 import { getModels } from "features/models/modelsSlice";
+import Color from "components/Color";
 
 const SingleProduct = () => {
   const [orderProduct, setorderedProduct] = useState(true);
@@ -46,6 +47,27 @@ const SingleProduct = () => {
   const fullname = userState?.firstname + " " + userState?.lastname;
   const modelState = useSelector((state) => state.models.models);
 
+  const [selectedModelColor, setSelectedModelColor] = useState("");
+
+  useEffect(() => {
+    const selectedModel = modelState.find(
+      (model) => model.modelId === selectedModelId
+    );
+    if (selectedModel) {
+      setSelectedModelColor(selectedModel.color.image);
+    }
+  }, [selectedModelId]);
+
+  useEffect(() => {
+    if (modelState.length > 0) {
+      setSelectedModelId(modelState[0]?.modelId);
+    }
+  }, [modelState]);
+
+  const handleColorClick = (selectedModelId) => {
+    setSelectedModelId(selectedModelId);
+  };
+
   useEffect(() => {
     getAProduct(getProductId);
   }, []);
@@ -57,14 +79,22 @@ const SingleProduct = () => {
       }
     }
   });
-  console.log(getProductId);
+  const hexToRgb = (hex) => {
+    hex = hex.replace("#", "");
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    return [r, g, b];
+  };
+
+  const colorState = selectedModelColor;
+  const rgbColor = hexToRgb(colorState);
+
   const getAProduct = () => {
     dispatch(getProduct(getProductId));
     dispatch(getUserCart());
     dispatch(getModels(getProductId));
   };
-
-  console.log(modelState);
 
   const uploadCart = () => {
     dispatch(
@@ -107,17 +137,18 @@ const SingleProduct = () => {
   };
 
   useEffect(() => {
-    setCurrentImage(productState?.images[0]?.url || "");
+    setCurrentImage(modelState[0]?.attachments[0]?.path || "");
   }, [productState]);
   console.log(currentImage);
-
-  console.log(productState?.images[0]?.url);
 
   const props = {
     width: 600,
     height: 600,
     zoomWidth: 600,
-    img: productState?.images[0]?.url || productState?.images[1]?.url || "",
+    img:
+      modelState[0]?.attachments[0]?.path ||
+      modelState[0]?.attachments[1]?.path ||
+      "",
   };
 
   return (
@@ -174,27 +205,18 @@ const SingleProduct = () => {
               </div>
             </div>
             <div className="col-6">
-              {modelState.map((model) => (
-                <button
-                  key={model.modelId}
-                  onClick={() => setSelectedModelId(model.modelId)}
-                >
-                  View Model {model.modelId} Details
-                </button>
-              ))}
               {selectedModelId && (
                 <div>
                   <h2>Details of Model {selectedModelId}</h2>
-                  {/* Render the details based on the selected modelId */}
                   {modelState
                     .filter((model) => model.modelId === selectedModelId)
                     .map((model) => (
                       <div key={model.modelId} className="main-product-details">
                         <div className="border-bottom">
-                          <h3 className="title">{productState?.title}</h3>
+                          <h3 className="title">{model?.modelName}</h3>
                         </div>
                         <div className="border-bottom py-3">
-                          <p className="price"> $ {productState?.price}</p>
+                          <p className="price"> $ {model?.primaryPrice}</p>
                           <div className="d-flex align-items-ceter gap-10">
                             <ReactStars
                               count={5}
@@ -211,27 +233,33 @@ const SingleProduct = () => {
                         </div>
                         <div className="border-bottom py-3">
                           <div className="d-flex gap-10 align-items-center my-2 mb-3">
-                            <h3 className="product-heading">Brand: </h3>
-                            <p class="product-data">{model.primaryPrice}</p>
+                            <h3 className="product-heading">Color: </h3>
+                            <Color
+                              models={modelState}
+                              handleColorClick={handleColorClick}
+                            />
                           </div>
                           <div className="d-flex gap-10 align-items-center my-2 mb-3">
-                            <h3 className="product-heading">Category: </h3>
-                            {/* <p class="product-data">{categoryTitle}</p> */}
-                          </div>
-                          <div className="d-flex gap-10 align-items-center my-2 mb-3">
-                            <h3 className="product-heading">Tags: </h3>
-                            <p class="product-data">{productState?.tags}</p>
+                            <h3 className="product-heading">Specification: </h3>
+                            <p
+                              className="product-data"
+                              dangerouslySetInnerHTML={{
+                                __html: model?.specification,
+                              }}
+                            ></p>
                           </div>
                           <div className="d-flex gap-10 align-items-center my-2 mb-3">
                             <h3 className="product-heading">Quantity: </h3>
-                            <p class="product-data">{productState?.quantity}</p>
+                            <p className="product-data">
+                              {productState?.quantity}
+                            </p>
                           </div>
                           <div className="d-flex gap-10 align-items-center my-2 mb-3">
                             <h3 className="product-heading">Available: </h3>
                             {productState?.quantity > 0 ? (
-                              <p class="product-data">In Stock</p>
+                              <p className="product-data">In Stock</p>
                             ) : (
-                              <p class="product-data">Out of Stock</p>
+                              <p className="product-data">Out of Stock</p>
                             )}
                           </div>
                           <div className="d-flex gap-15 align-items-center flex-row my-2 mb-3">
@@ -336,7 +364,7 @@ const SingleProduct = () => {
                 <p
                   className="desc"
                   dangerouslySetInnerHTML={{
-                    __html: productState?.description,
+                    __html: modelState[0]?.description,
                   }}
                 ></p>
               </div>
