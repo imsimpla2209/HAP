@@ -135,7 +135,7 @@ const AddCollection = () => {
           <div className="mt-3 py-2 pb-4">
             <p className="fw-bold">Ảnh nền</p>
 
-            <div className="attachments-cn">
+            {/* <div className="attachments-cn">
               <p className="pt-2 px-5 text-center">
                 Thả hoặc{' '}
                 <label htmlFor="file" className="upw-c-cn me-1" style={{ cursor: 'pointer' }}>
@@ -147,7 +147,7 @@ const AddCollection = () => {
             </div>
             <p className="my-3 mx-4 ">
               Bạn có thể đính kèm tối đa 10 tệp có kích thước bằng <strong>25MB</strong>{' '}
-            </p>
+            </p> */}
           </div>
           <button
             className="btn btn-success border-0 rounded-3 my-5"

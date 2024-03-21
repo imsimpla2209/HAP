@@ -127,18 +127,18 @@ const Home = () => {
                 <div class="carousel-inner">
                   <div class="carousel-item active">
                     <img
-                      src="images\main-banner-2.jpg"
+                      src="images\bannertet.jpg"
                       class="img-fluid rounded-3"
                       alt="main banner"
                     />
-                    <div className="main-banner-content position-absolute">
+                    {/* <div className="main-banner-content position-absolute">
                       <h4>SUPERCHANGED FOR PROS</h4>
                       <h5>Guitars LakeWood</h5>
                       <p></p>
                       <Link to={"/product"} className="button">
                         BUY NOW
                       </Link>
-                    </div>
+                    </div> */}
                   </div>
                   <div class="carousel-item">
                     <img
