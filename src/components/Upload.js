@@ -48,6 +48,10 @@ export const handleValidateFile = (e) => {
     if (!checkFile) {
       return []
     } else {
+      if (typeof file === 'string') {
+        file.thumbUrl = file
+        file.url = file
+      }
       if (file.path) {
         file.thumbUrl = file.path
         file.url = file.path
@@ -89,7 +93,7 @@ export const previewFile = file => {
   return file?.thumbUrl ?? ''
 }
 
-export function DefaultUpload({ normFile, files, text }) {
+export function DefaultUpload({ normFile, files, text, maxCount = 10 }) {
   return (
     // <Form.Item
     //   name="upload"
@@ -118,11 +122,11 @@ export function DefaultUpload({ normFile, files, text }) {
 text/plain, application/pdf, image/*, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, 
 application/vnd.ms-excel, .xlsx, .xls"
       beforeUpload={file => onChangeUpload(file)}
-      maxCount={10}
+      maxCount={maxCount}
     >
       <Button icon={<UploadOutlined />}>{text || 'Đăng Tải'}</Button>
       <Typography.Text disabled style={{ marginLeft: '10px' }}>
-        Số lượng tối đa: 10
+        Số lượng tối đa: {maxCount}
       </Typography.Text>
     </Upload>
     // </Form.Item>

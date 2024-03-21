@@ -26,7 +26,7 @@ const updateCollection = async (collection) => {
     {
       collectionName: collection.colData.collectionName,
       description: collection.colData.description,
-      // collectionImages: product.productData.images,
+      thumbnail: collection.colData.thumbnail,
     },
     config
   );

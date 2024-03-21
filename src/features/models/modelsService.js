@@ -7,6 +7,11 @@ const getModels = async (productId) => {
   return response.data
 }
 
+const getAllModels = async (page) => {
+  const response = await instance.get(`Admin/models`)
+  return response.data
+}
+
 const createModel = async (productId, dataProduct) => {
   const response = await instance.post(`Admin/products/${productId}/models/add`, dataProduct, config)
   return response.data
@@ -47,6 +52,7 @@ const modelsServices = {
   createModel,
   getAModel,
   updateModel,
-  deleteModel
+  deleteModel,
+  getAllModels
 }
 export default modelsServices
