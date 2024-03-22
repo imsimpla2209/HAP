@@ -3,30 +3,30 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import Meta from "../../components/Meta";
-import BreadCrumb from "../../components/BreadCrumb";
-import ProductCard from "../../components/ProductCard";
-import ReactStars from "react-stars";
-import { TbGitCompare } from "react-icons/tb";
-import { AiOutlineHeart } from "react-icons/ai";
-import ReactImageZoom from "react-image-zoom";
 import ReactImageMagnify from "react-image-magnify";
+import ReactStars from "react-stars";
+import BreadCrumb from "../../components/BreadCrumb";
+import Meta from "../../components/Meta";
 
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import Color from "components/Color";
+import { getModels } from "features/models/modelsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import {
+  getAProduct,
+} from "../../features/product/productSlice";
 import {
   addRating,
-  getProduct,
 } from "../../features/customer/products/productSlice";
 import {
   addProdToCart,
   getUserCart,
 } from "../../features/customer/user/authSlice";
-import { toast } from "react-toastify";
-import { getBrands } from "../../features/customer/brand/brandSlice";
-import { getCategorys } from "../../features/customer/category/categorySlice";
-import { getModels } from "features/models/modelsSlice";
-import Color from "components/Color";
+import { Button, Divider, Radio } from "antd";
+import { formatCurrencyVND } from "utils/formator";
+import { AiOutlineHeart } from "react-icons/ai";
+import { Tab } from "components/Tabs/Tabs";
 
 const SingleProduct = () => {
   const [orderProduct, setorderedProduct] = useState(true);
@@ -37,7 +37,7 @@ const SingleProduct = () => {
 
   const location = useLocation();
   const getProductId = location.pathname.split("/")[2];
-  const productState = useSelector((state) => state?.product?.singleproduct);
+  const productState = useSelector((state) => state?.product?.singleProduct);
   const cartState = useSelector((state) => state?.auth?.cartProducts);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -69,7 +69,7 @@ const SingleProduct = () => {
   };
 
   useEffect(() => {
-    getAProduct(getProductId);
+    getProduct();
   }, []);
 
   useEffect(() => {
@@ -90,8 +90,8 @@ const SingleProduct = () => {
   const colorState = selectedModelColor;
   const rgbColor = hexToRgb(colorState);
 
-  const getAProduct = () => {
-    dispatch(getProduct(getProductId));
+  const getProduct = () => {
+    dispatch(getAProduct(getProductId));
     dispatch(getUserCart());
     dispatch(getModels(getProductId));
   };
@@ -105,7 +105,7 @@ const SingleProduct = () => {
       })
     );
     setTimeout(() => {
-      getAProduct();
+      getProduct();
     }, 200);
   };
 
@@ -130,7 +130,7 @@ const SingleProduct = () => {
         })
       );
       setTimeout(() => {
-        dispatch(getProduct(getProductId));
+        dispatch(getAProduct(getProductId));
       }, 100);
     }
     return false;
@@ -157,12 +157,29 @@ const SingleProduct = () => {
       "",
   };
 
+  console.log('sa', productState)
 
+  const data = [
+    {
+      id: '1',
+      tabTitle: "Mô tả",
+      tabContent: modelState
+        ?.find((model) => model?.modelId === selectedModelId)?.description || "",
+      type: "html"
+    },
+    {
+      id: '2',
+      tabTitle: "Thông số kỹ thuật",
+      tabContent: modelState
+        ?.find((model) => model?.modelId === selectedModelId)?.specification || "",
+      type: "html"
+    },
+  ]
 
   return (
     <>
       <Meta title={"Chi tiết sản phẩm"} />
-      <BreadCrumb title={productState?.title} />
+      <BreadCrumb title={productState?.productName} />
       <div className="main-product-wrapper home-wrapper-2 py-5">
         <div className="container-xxl">
           <div className="row">
@@ -171,8 +188,10 @@ const SingleProduct = () => {
                 <div
                   className="main-product-image-main"
                   style={{
-                    width: "500px",
-                    height: "500px",
+                    // width: "500px",
+                    // height: "500px",
+                    width: "100%",
+                    height: "100%",
                     position: "relative",
                     zIndex: 1,
                   }}
@@ -221,60 +240,87 @@ const SingleProduct = () => {
                     .map((model) => (
                       <div key={model.modelId} className="main-product-details">
                         <div className="border-bottom">
-                          <h3 className="title">{model?.modelName}</h3>
+                          <h3 className="title">{productState?.productName}</h3>
                         </div>
                         <div className="border-bottom py-3">
-                          <p className="price"> $ {model?.primaryPrice}</p>
-                          <div className="d-flex align-items-ceter gap-10">
-                            <ReactStars
-                              count={5}
-                              size={24}
-                              value={productState?.totalrating?.toString()}
-                              edit={false}
-                              activeColor="#ffd700"
-                            />
+                          <div className="d-flex align-items-end gap-10">
+                            <div className="d-flex align-items-unset gap-2">
+                              <p className={`text-decoration-underline mb-0 ${productState?.voteStar ? '' : 'text-muted'}`}>
+                                {productState?.voteStar ? productState?.voteStar?.toString() : 'Chưa có đánh giá'}
+                              </p>
+                              {productState?.voteStar ? <ReactStars
+                                count={5}
+                                size={16}
+                                value={productState?.voteStar?.toString()}
+                                edit={false}
+                                activeColor="#ffd700"
+                              /> : null}
+                            </div>
+                            <Divider type="vertical" className="mb-1" />
+                            <div className="d-flex align-items-unset gap-2">
+                              <p className={`text-decoration mb-0`}>
+                                {productState?.sold}
+                              </p>
+                              <p className="text-muted mb-0">
+                                Đã Bán
+                              </p>
+                            </div>
+                            <Divider type="vertical" className="mb-1" />
+
+                            <a className="review-btn" href="#review">
+                              Viết Bình Luận
+                            </a>
                             {/* <p className="mb-0 t-review">(2 Reviews)</p> */}
                           </div>
-                          <a className="review-btn" href="#review">
-                            Viết Bình Luận
-                          </a>
                         </div>
+                        <div className=" py-2 mt-2 mb-4" style={{ backgroundColor: "#f9f9f9" }}>
+                          <p className="price mb-0 fw-bold mx-2" style={{
+                            fontSize: "26px",
+                            color: "#e65e51"
+
+                          }}> {formatCurrencyVND(model?.primaryPrice || 0)}</p>
+                        </div>
+
+
                         <div className="border-bottom py-3">
                           <div className="d-flex gap-10 align-items-center my-2 mb-3">
-                            <h3 className="product-heading">Màu Sắc: </h3>
+                            <h3 className="product-heading text-muted ">Màu Sắc: </h3>
                             <Color
                               models={modelState}
                               handleColorClick={handleColorClick}
                             />
                           </div>
                           <div className="d-flex gap-10 align-items-center my-2 mb-3">
-                            <h3 className="product-heading">Thông Số Kỹ Thuật: </h3>
-                            <p
-                              className="product-data"
-                              dangerouslySetInnerHTML={{
-                                __html: model?.specification,
-                              }}
-                            ></p>
+                            <h3 className="product-heading text-muted">Mẫu: </h3>
+                            <Radio.Group onChange={(e) => setSelectedModelId(e.target.value)} defaultValue={selectedModelId}>
+                              {
+                                modelState?.map((model) =>
+                                  <Radio.Button value={model.modelId} key={model.modelId}>
+                                    {model?.modelName}</Radio.Button>
+                                )
+                              }
+                            </Radio.Group>
+
                           </div>
-                          <div className="d-flex gap-10 align-items-center my-2 mb-3">
-                            <h3 className="product-heading">Số Lượng: </h3>
-                            <p className="product-data">
-                              {productState?.quantity}
-                            </p>
+                          <div className="d-flex gap-10 align-items-baseline my-2 mb-3">
+                            <h3 className="product-heading text-muted">Số Lượng: </h3>
+                            <h3 className="product-data">
+                              {productState?.quantity || 0}
+                            </h3>
                           </div>
-                          <div className="d-flex gap-10 align-items-center my-2 mb-3">
-                            <h3 className="product-heading">Tình Trạng Kho: </h3>
+                          <div className="d-flex gap-10 align-items-baseline my-2 mb-3">
+                            <h3 className="product-heading text-muted">Tình Trạng Kho: </h3>
                             {productState?.quantity > 0 ? (
-                              <p className="product-data">In Stock</p>
+                              <h3 className="product-data">In Stock</h3>
                             ) : (
-                              <p className="product-data">Out of Stock</p>
+                              <h3 className="product-data">Out of Stock</h3>
                             )}
                           </div>
                           <div className="d-flex gap-15 align-items-center flex-row my-2 mb-3">
                             {alreadyAddCart === false &&
-                              productState?.quantity > 0 && (
+                              model?.quantity > 0 && (
                                 <>
-                                  <h3 className="product-heading">
+                                  <h3 className="product-heading text-muted">
                                     Quantity:{" "}
                                   </h3>
                                   <div>
@@ -323,16 +369,16 @@ const SingleProduct = () => {
                               )}
                             </div>
                           </div>
-                          {/* <div className="d-flex align-items-center gap-15">
-                    <div>
-                      <a href="">
-                        <AiOutlineHeart className="fs-5 me-2" />
-                        Add to WishList
-                      </a>
-                    </div>
-                  </div> */}
+                          <div className="d-flex align-items-center gap-15">
+                            <div>
+                              <a href="">
+                                <AiOutlineHeart className="fs-5 me-2" />
+                                Add to WishList
+                              </a>
+                            </div>
+                          </div>
                           <div className="d-flex gap-10 flex-column my-3">
-                            <h3 className="product-heading">
+                            <h3 className="product-heading text-muted">
                               Vận Chuyển & Hoàn Trả:
                             </h3>
                             <p class="product-data">
@@ -340,20 +386,18 @@ const SingleProduct = () => {
                             </p>
                           </div>
                           {/* <div className="d-flex gap-10 align-items-center my-3">
-                    <h3 className="product-heading">Copy Product Link </h3>
-                    <p class="product-data">
-                      <a
-                        href="javascript:void(0);"
-                        onClick={() => {
-                          copyToClipboard(
-                            "https://thelightmusic.net/wp-content/uploads/2020/04/267896bf64449d1ac455_49268178378_o.jpg"
-                          );
-                        }}
-                      >
-                        Copy Product Link
-                      </a>
-                    </p>
-                  </div> */}
+                            <h3 className="product-heading text-muted">Copy Product Link </h3>
+                            <p class="product-data">
+                              <a
+                                href="javascript:void(0);"
+                                onClick={() => {
+
+                                }}
+                              >
+                                Copy Product Link
+                              </a>
+                            </p>
+                          </div> */}
                         </div>
                       </div>
                     ))}
@@ -367,14 +411,9 @@ const SingleProduct = () => {
         <div className="container-xxl">
           <div class="row">
             <div className="col-12">
-              <h4>Description</h4>
+              <h4>Thông tin</h4>
               <div className="bg-white p-3">
-                <p
-                  className="desc"
-                  dangerouslySetInnerHTML={{
-                    __html: modelState[0]?.description,
-                  }}
-                ></p>
+                <Tab data={data} />
               </div>
             </div>
           </div>
