@@ -7,6 +7,14 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import { getUserCart, logout } from "../features/customer/user/authSlice";
 import { getProduct } from "../features/customer/products/productSlice";
+import { CiHeart } from "react-icons/ci";
+import { FaRegUser } from "react-icons/fa";
+import { formatCurrencyVND } from "utils/formator";
+import { TiShoppingCart } from "react-icons/ti";
+import { Badge } from "react-rainbow-components";
+import { Tooltip } from "antd";
+import { FaPhoneAlt } from "react-icons/fa";
+import { LuLogOut } from "react-icons/lu";
 
 const Header = ({ history }) => {
   // Get the history object from React Router
@@ -55,31 +63,43 @@ const Header = ({ history }) => {
 
   return (
     <>
-      <header className="header-top-strip py-3">
+      <header className="header-top-strip py-1">
         <div className="container-xxl">
           <div className="row">
             <div className="col-6">
-              <p className="text-white mb-0">Ha An Phat</p>
+              <a className="text-end text-white mb-0 link-light" href="tel: 0345532150">
+                <FaPhoneAlt className="me-2 mb-1" />
+                {" "}
+                0345532150
+              </a>
             </div>
-            <div className="col-6">
-              <p className="text-end text-white mb-0">
-                HotLine:
-                <a className="test-white" href="tel: 0345532150">
-                  {" "}
-                  0345532150
-                </a>
-              </p>
+            <div className="col-6 text-end align-items-end d-flex justify-content-end gap-3">
+              <div className="menu-links">
+                {authState?.user === null ? (
+                  <p className="mb-0"></p>
+                ) : (
+                  <button
+                    onClick={handleLogout}
+                    className="border border-0 bg-transparent text-white text-uppercase justify-content-end"
+                    type="button"
+                  >
+                    <LuLogOut className="fs-4" />
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </header>
-      <header className="header-upper py-3">
+      <header className="header-upper py-1">
         <div className="container-xxl">
           <div className="row align-items-center">
             <div className="col-3">
               <h2>
-                <Link className="mw-100" to="/">
-                <img src="images/logo.png" alt="logo" style={{ width: '70px', height: '70px' }} />
+                <Link className="mw-100 d-flex align-items-center gap-2" to="/">
+                  <img src="images/logo.png" alt="logo" style={{ width: '70px', height: '70px' }} />
+                  <p className=" mb-0 gradient-yellow-text" style={{ fontWeight: '500' }}>Hà An Phát</p>
+
                 </Link>
               </h2>
             </div>
@@ -104,7 +124,7 @@ const Header = ({ history }) => {
                 </span>
               </div>
             </div>
-            <div className="col-5">
+            <div className="col-6">
               <div className="header-upper-links d-flex align-items-center justify-content-between">
                 <div>
                   {/* <Link
@@ -120,9 +140,9 @@ const Header = ({ history }) => {
                 <div>
                   <Link
                     to="wishlist"
-                    className="d-flex align-items-center gap-10"
+                    className="d-flex align-items-center gap-10 nav-item"
                   >
-                    <img src="images\wishlist.svg" alt="wishlist" />
+                    <CiHeart className="fs-4 orange-text" />
                     <p className="mb-0">
                       Danh sách <br /> Yêu thích
                     </p>
@@ -131,9 +151,9 @@ const Header = ({ history }) => {
                 <div>
                   <Link
                     to={authState?.user === null ? "/login" : "/profile"}
-                    className="d-flex align-items-center gap-10"
+                    className="d-flex align-items-center gap-10 nav-item"
                   >
-                    <img src="images\user.svg" alt="user" />
+                    <FaRegUser className="fs-4 orange-text" />
                     {authState?.user === null ? (
                       <p className="mb-0">
                         Đăng nhập <br /> Tài khoản
@@ -147,22 +167,26 @@ const Header = ({ history }) => {
                 </div>
 
                 <div>
-                  <Link to="cart" className="d-flex align-items-center gap-10">
-                    <img src="images\cart.svg" alt="cart" />
-                    <div className="d-flex flex-column">
-                      <span className="badge bg-white text-dark">
-                        {cartState?.length ? cartState?.length : 0}
-                      </span>
-                      <p className="mb-0">$ {total ? total : 0}</p>
-                    </div>
-                  </Link>
+                  <Badge showZero>
+                    <Tooltip title="Rỏ hàng" color={"#c44135"} key={"#c44135"}>
+                      <Link to="cart" className="d-flex align-items-center gap-10">
+                        <TiShoppingCart className="fs-4 orange-text" />
+                        <div className="d-flex flex-column">
+                          <span className="badge bg-white text-dark mb-1">
+                            {cartState?.length ? cartState?.length : 0}
+                          </span>
+                          <p className="mb-0">{formatCurrencyVND(total ? total : 0)}</p>
+                        </div>
+                      </Link>
+                    </Tooltip>
+                  </Badge>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </header>
-      <header className="header-bottom py-3">
+      <header className="header-bottom py-2">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
@@ -183,21 +207,7 @@ const Header = ({ history }) => {
                   </div>
                 </div>
 
-                <div className="col px-md-5">
-                  <div className="menu-links">
-                    {authState?.user === null ? (
-                      <p className="mb-0"></p>
-                    ) : (
-                      <button
-                        onClick={handleLogout}
-                        className="border border-0 bg-transparent text-white text-uppercase justify-content-end"
-                        type="button"
-                      >
-                        Thoát
-                      </button>
-                    )}
-                  </div>
-                </div>
+
               </div>
             </div>
           </div>

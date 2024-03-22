@@ -23,6 +23,7 @@ import {
 } from "../../features/customer/products/productSlice";
 import { getUserProductWishList } from "../../features/customer/user/authSlice";
 import { getCategories } from "apis";
+import { FaStarHalfAlt } from "react-icons/fa";
 
 const Home = () => {
   const blogState = useSelector((state) => state?.blog?.blogs);
@@ -89,23 +90,23 @@ const Home = () => {
 
   return (
     <>
-      <Meta title={"Blogs"} />
+      <Meta title={"Hà An Phát"} />
       <section className="home-wrapper-1 py-5">
         <div className="container-xxl">
           <div className="row">
-            <div className="col-6">
+            <div className="col-7">
               <div
                 id="carouselExampleIndicators"
-                class="carousel slide"
+                className="carousel slide"
                 // className="main-banner position-relative p-3"
                 data-bs-ride="carousel"
               >
-                <div class="carousel-indicators">
+                <div className="carousel-indicators">
                   <button
                     type="button"
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="0"
-                    class="active"
+                    className="active"
                     aria-current="true"
                     aria-label="Slide 1"
                   ></button>
@@ -122,11 +123,11 @@ const Home = () => {
                     aria-label="Slide 3"
                   ></button>
                 </div>
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
+                <div className="carousel-inner">
+                  <div className="carousel-item active">
                     <img
                       src="images\bannertet.jpg"
-                      class="img-fluid rounded-3"
+                      className="img-fluid rounded-3"
                       alt="main banner"
                     />
                     {/* <div className="main-banner-content position-absolute">
@@ -138,10 +139,10 @@ const Home = () => {
                       </Link>
                     </div> */}
                   </div>
-                  <div class="carousel-item">
+                  <div className="carousel-item">
                     <img
-                      src="images\main-banner-2.jpg"
-                      class="img-fluid rounded-3"
+                      src="images\bannertet.jpg"
+                      className="img-fluid rounded-3"
                       alt="main banner"
                     />
                     <div className="main-banner-content position-absolute">
@@ -153,10 +154,10 @@ const Home = () => {
                       </Link>
                     </div>
                   </div>
-                  <div class="carousel-item">
+                  <div className="carousel-item">
                     <img
-                      src="images\main-banner-2.jpg"
-                      class="img-fluid rounded-3"
+                      src="images\bannertet.jpg"
+                      className="img-fluid rounded-3"
                       alt="main banner"
                     />
                     <div className="main-banner-content position-absolute">
@@ -170,34 +171,34 @@ const Home = () => {
                   </div>
                 </div>
                 <button
-                  class="carousel-control-prev"
+                  className="carousel-control-prev"
                   type="button"
                   data-bs-target="#carouselExampleIndicators"
                   data-bs-slide="prev"
                 >
                   <span
-                    class="carousel-control-prev-icon"
+                    className="carousel-control-prev-icon"
                     aria-hidden="true"
                   ></span>
-                  <span class="visually-hidden">Previous</span>
+                  <span className="visually-hidden">Previous</span>
                 </button>
                 <button
-                  class="carousel-control-next"
+                  className="carousel-control-next"
                   type="button"
                   data-bs-target="#carouselExampleIndicators"
                   data-bs-slide="next"
                 >
                   <span
-                    class="carousel-control-next-icon"
+                    className="carousel-control-next-icon"
                     aria-hidden="true"
                   ></span>
-                  <span class="visually-hidden">Next</span>
+                  <span className="visually-hidden">Next</span>
                 </button>
               </div>
               {/* <div className="main-banner position-relative p-3">
                 <img
                   src="images\main-banner-2.jpg"
-                  class="img-fluid rounded-3"
+                  className="img-fluid rounded-3"
                   alt="main banner"
                 />
                 <div className="main-banner-content position-absolute">
@@ -210,7 +211,7 @@ const Home = () => {
                 </div>
               </div> */}
             </div>
-            <div className="col-6">
+            <div className="col-5">
               <div className="d-flex flex-wrap gap-10 justify-content-between align-items">
                 <div className="small-banner position-relative">
                   <img
@@ -263,8 +264,123 @@ const Home = () => {
           </div>
         </div>
       </section>
-
       <section className="home-wrapper-2 py-5">
+        <div className="container-xxl">
+          <div className="row">
+            <div className="col-12 d-flex align-items-baseline gap-3">
+              <FaStarHalfAlt className="fs-4" />
+              <h3 className="section-heading">
+                Video Tiêu Biểu</h3>
+            </div>
+            <div className="col-6">
+              <div className="embed-responsive embed-responsive-21by9 position-relative" style={{
+                height: 0,
+                paddingBottom: "56.25%",
+                overflow: "hidden",
+              }}>
+                <iframe
+                  loading="lazy"
+                  className="embed-responsive-item"
+                  title="THU HẰNG GLASS XIN KÍNH CHÀO ANH CHỊ EM TRONG LÀNG KÍNH VIỆT NAM."
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  src="https://www.youtube.com/embed/s3HPZ95J3Q8?feature=oembed"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen=""
+                ></iframe>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="d-flex flex-wrap gap-10 justify-content-between align-items">
+                <div className="small-banner position-relative">
+                  <div className="embed-responsive embed-responsive-16by9 position-relative" style={{ paddingTop: "57%" }}>
+                    <iframe
+                      loading="lazy"
+                      title="VẬT LIỆU KÍNH TRANG TRÍ & NGHỆ THUẬT - THU HẰNG GLASS 0904 866 118"
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                      }}
+                      src="https://www.youtube.com/embed/RQERAjXz6Yw?feature=oembed"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen=""
+                    ></iframe>
+                  </div>
+
+                </div>
+                <div className="small-banner position-relative">
+                  <div className="embed-responsive embed-responsive-16by9 position-relative" style={{ paddingTop: "56.25%" }}>
+                    <iframe
+                      loading="lazy"
+                      title="THU HANG GLASS - CÔNG TY HÀ AN PHÁT"
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                      }}
+                      src="https://www.youtube.com/embed/UkrziPyNxzA?feature=oembed"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen=""
+                    ></iframe>
+                  </div>
+                </div>
+                <div className="small-banner position-relative">
+                  <div className="embed-responsive embed-responsive-16by9 position-relative" style={{ paddingTop: "56.25%" }}>
+                    <iframe
+                      loading="lazy"
+                      title="THU HANG GLASS - CÔNG TY HÀ AN PHÁT"
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                      }}
+                      src="https://www.youtube.com/embed/zN6E51fkvlE?feature=oembed"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen=""
+                    ></iframe>
+                  </div>
+                </div>
+                <div className="small-banner position-relative">
+                  <div className="embed-responsive embed-responsive-16by9 position-relative" style={{ paddingTop: "56.25%" }}>
+                    <iframe
+                      loading="lazy"
+                      title="THU HẰNG THĂM CƠ SỞ SX ĐÁ MINH QUỲNH VĨNH PHÚC - PHÚ THỌ."
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                      }}
+                      src="https://www.youtube.com/embed/zN6E51fkvlE?feature=oembed"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen=""
+                    ></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="home-wrapper-1 py-5">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
@@ -272,35 +388,35 @@ const Home = () => {
                 <div className="d-flex align-items-center gap-15">
                   <img src="images/service.png" alt="services" />
                   <div>
-                    <h6>Free Shipping</h6>
+                    <h6>Miễn Phí Vận Chuyển</h6>
                     <p className="mb-0">From all order over $5</p>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
                   <img src="images/service-02.png" alt="services" />
                   <div>
-                    <h6>Daily Superise Offers</h6>
+                    <h6>Nhiều Ưu Đãi Hấp Dẫn</h6>
                     <p className="mb-0">Save up to 25%</p>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
                   <img src="images/service-03.png" alt="services" />
                   <div>
-                    <h6>Support 24/7</h6>
+                    <h6>Hỗ Trợ 24/7</h6>
                     <p className="mb-0">Shop with an expert</p>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
                   <img src="images/service-04.png" alt="services" />
                   <div>
-                    <h6>Affordable Prices</h6>
+                    <h6>Giá cả phải chăng</h6>
                     <p className="mb-0">Get Factory Default Price</p>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
                   <img src="images/service-05.png" alt="services" />
                   <div>
-                    <h6>Secure Payments</h6>
+                    <h6>Thanh toán an toàn</h6>
                     <p className="mb-0">100% Protected Payment</p>
                   </div>
                 </div>
@@ -415,10 +531,10 @@ const Home = () => {
                     description={item?.description}
                     collectionName={item?.collectionName}
                     quantity={10}
-                    // sold={3}
-                    // price={200}
-                    // image="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/307773363_500749115391640_3906085054103576647_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFWrlNaYkQUo1Pk0ZnwCdwz10djKjD-dFrXR2MqMP50Wk-rHiPTsE-YhYCE3kOkIkJ6TnOi8yVQwmLYY_Z604U3&_nc_ohc=pDdhRtfhiBIAX_bZsaY&_nc_ht=scontent.fhan2-3.fna&oh=00_AfBEv8jcaxN7_uL0fCztGywUuGG9ZLBwVWkZScLAsGK9Cg&oe=65FEF101"
-                    // totalrating={3}
+                  // sold={3}
+                  // price={200}
+                  // image="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/307773363_500749115391640_3906085054103576647_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFWrlNaYkQUo1Pk0ZnwCdwz10djKjD-dFrXR2MqMP50Wk-rHiPTsE-YhYCE3kOkIkJ6TnOi8yVQwmLYY_Z604U3&_nc_ohc=pDdhRtfhiBIAX_bZsaY&_nc_ht=scontent.fhan2-3.fna&oh=00_AfBEv8jcaxN7_uL0fCztGywUuGG9ZLBwVWkZScLAsGK9Cg&oe=65FEF101"
+                  // totalrating={3}
                   />
                 );
               })}

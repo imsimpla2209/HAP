@@ -28,7 +28,7 @@ import { getCategorys } from "../../features/customer/category/categorySlice";
 import { getModels } from "features/models/modelsSlice";
 import Color from "components/Color";
 
-const SingleProduct = () => {
+const SingleCollection = () => {
   const [orderProduct, setorderedProduct] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [alreadyAddCart, setAlreadyAddCart] = useState(false);
@@ -157,11 +157,9 @@ const SingleProduct = () => {
       "",
   };
 
-
-
   return (
     <>
-      <Meta title={"Chi tiết sản phẩm"} />
+      <Meta title={"Dynamic Product Name"} />
       <BreadCrumb title={productState?.title} />
       <div className="main-product-wrapper home-wrapper-2 py-5">
         <div className="container-xxl">
@@ -479,4 +477,4 @@ const SingleProduct = () => {
   );
 };
 
-export default SingleProduct;
+export default SingleCollection;
