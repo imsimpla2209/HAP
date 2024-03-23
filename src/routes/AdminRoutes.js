@@ -33,6 +33,7 @@ import ColorList from 'pages/AdminPages/Color/ColorList';
 import CollectionList from 'pages/AdminPages/Collections/CollectionList';
 import AddCollection from 'pages/AdminPages/Collections/AddCollection';
 import AddWarehouse from 'pages/AdminPages/Warehouse/AddWarehouse';
+import WarehouseList from 'pages/AdminPages/Warehouse/WarehouseList';
 
 
 function AdminRoutes() {
@@ -77,6 +78,7 @@ function AdminRoutes() {
         <Route path="collection" element={<AddCollection />} />
         <Route path="collection/:id" element={<AddCollection />} />
         <Route path="collection-list" element={<CollectionList />} />
+        <Route path="warehouse-list" element={<WarehouseList />} />
 
       </Route>
     </Routes>

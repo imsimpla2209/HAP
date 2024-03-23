@@ -1,8 +1,8 @@
 import { instance } from "apis/http"
 import { config } from "../auth/authService"
 
-const getWarehouses = async () => {
-  const response = await instance.get("Admin/warehouse-logs")
+const getWarehouses = async (page) => {
+  const response = await instance.get("Admin/warehouse-logs?page=" + page)
   return response.data
 }
 

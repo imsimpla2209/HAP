@@ -129,7 +129,7 @@ const MainLayout = () => {
                   label: "Thêm Nhật Ký Kho",
                 },
                 {
-                  key: "color-list",
+                  key: "warehouse-list",
                   icon: <FaWarehouse className="fs-4" />,
                   label: "Danh Sách Nhật Ký Kho",
                 },

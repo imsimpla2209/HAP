@@ -16,6 +16,7 @@ import blogReducer from '../features/blog/blogSlice';
 import brandReducer from '../features/customer/brand/brandSlice';
 import contactReducer from '../features/customer/contact/contactSlice';
 import authReducer from '../features/customer/user/authSlice';
+import warehouseReducer from '../features/warehouse/warehousesSlice';
 
 
 export const store = configureStore({
@@ -38,7 +39,8 @@ export const store = configureStore({
     enquiry: enquiryReducer,
     // blog: blogReducer,
     upload: uploadReducer,
-    coupon: couponReducer
+    coupon: couponReducer,
+    warehouse: warehouseReducer,
   },
 
 });

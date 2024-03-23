@@ -1,16 +1,21 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { createCollection, getACollection, resetState, updateCol } from "features/collections/collectionsSlice";
-import { getModels } from "features/models/modelsSlice";
+import { Button } from "antd";
+import { getACollection, resetState } from "features/collections/collectionsSlice";
+import { createWarehouse, updateWarehouse } from "features/warehouse/warehousesSlice";
 import { useFormik } from "formik";
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
+import { FormOutlined } from "@ant-design/icons";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import CustomInput from "../../../components/CustomInput";
-import { createWarehouse, updateWarehouse } from "features/warehouse/warehousesSlice";
+import CustomInput from "../../../components/CustomInput1";
+import SelectModelModal from "./SelectModelModal";
+import { FaSearch } from "react-icons/fa";
+import { Card } from "react-rainbow-components";
+import { formatCurrencyVND } from "utils/formator";
 
 
 let schema = yup.object().shape({
@@ -23,23 +28,23 @@ const AddWarehouse = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [show, setShow] = useState(false);
+  const [selectedModel, setSelectedModel] = useState(null);
+
   const getWarehouseId = location.pathname.split("/")[3];
   console.log(getWarehouseId);
   const collectionState = useSelector((state) => state.collections);
-  const modelsState = useSelector((state) => state.models.models);
   console.log(collectionState);
   const isEditMode = getWarehouseId !== undefined;
   const { modelId, note, quantity, isImport } = collectionState;
-
-  useEffect(() => {
-    dispatch(getModels());
-  }, [dispatch]);
 
   useEffect(() => {
     if (isEditMode) {
       dispatch(getACollection(getWarehouseId));
     }
   }, [isEditMode, getWarehouseId, dispatch]);
+
 
   useEffect(() => {
     if (getWarehouseId !== undefined) {
@@ -67,7 +72,7 @@ const AddWarehouse = () => {
         dispatch(updateWarehouse(data));
         formik.resetForm();
         setTimeout(() => {
-          navigate("/admin/collection-list");
+          navigate("/admin/warehouse-list");
           dispatch(resetState());
         }, 1000);
       } else {
@@ -75,36 +80,57 @@ const AddWarehouse = () => {
         dispatch(createWarehouse(values));
         formik.resetForm();
         setTimeout(() => {
-          navigate("/admin/collection-list");
+          navigate("/admin/warehouse-list");
         }, 1000);
       }
     },
   });
+
+
+  useEffect(() => {
+    formik.setFieldValue("modelId", selectedModel?.modelId || '')
+  }, [selectedModel]);
 
   return (
     <div>
       <h3 className="mb-4 title">
         {getWarehouseId !== undefined ? "Sửa" : "Thêm"} Nhật Kí kho
       </h3>
+      <SelectModelModal show={show} hide={() => { setShow(false) }} setSelectedRowKeys={(model) => {
+        setSelectedModel(model)
+        setShow(false)
+      }} />
       <div className="mt-4">
         <form onSubmit={formik.handleSubmit} className="add-warehouse-form">
           <div className="form-group">
             <label htmlFor="modelId">Mẫu</label>
-            <select
-              id="modelId"
-              name="modelId"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.modelId}
-              className="form-select"
+            {!selectedModel ? <Button
+              type="primary"
+              shape="round"
+              icon={<FaSearch />}
+              onClick={() => {
+                setShow(true);
+              }}
             >
-              <option value="">Lựa chọn bộ mẫu cần nhập</option>
-              {modelsState?.map((item, index) => (
-                <option key={index} value={item.modelId}>
-                  {item?.modelName}
-                </option>
-              ))}
-            </select>
+              Chọn mẫu
+            </Button> :
+              <Card size="small" title={selectedModel?.modelName || 'Mẫu không tên'}
+
+                style={{ width: 300 }}
+              >
+                <div className="mx-4">
+                  <p><span className="text-muted">
+                    Giá bán buôn:</span> {formatCurrencyVND(selectedModel?.primaryPrice)}</p>
+                  <p><span className="text-muted">
+                    Giá bán lẻ:</span> {formatCurrencyVND(selectedModel?.secondaryPrice)}</p>
+                  <p><span className="text-muted">Còn lại:</span> {selectedModel?.quantity || 0} cái</p>
+                </div>
+                <Button type="danger" style={{ float: 'right' }} icon={<FormOutlined />} onClick={() => {
+                  setShow(true);
+                }}>
+                  <>Chọn lại mẫu</>
+                </Button>
+              </Card>}
             {formik.touched.modelId && formik.errors.modelId && (
               <div className="error">{formik.errors.modelId}</div>
             )}

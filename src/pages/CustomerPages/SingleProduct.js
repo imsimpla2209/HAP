@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
-  getAProduct,
+  getAProduct, resetState,
 } from "../../features/product/productSlice";
 import {
   addRating,
@@ -70,6 +70,9 @@ const SingleProduct = () => {
 
   useEffect(() => {
     getProduct();
+    return () => {
+      dispatch(resetState());
+    }
   }, []);
 
   useEffect(() => {
@@ -156,8 +159,6 @@ const SingleProduct = () => {
       modelState[0]?.attachments[1]?.path ||
       "",
   };
-
-  console.log('sa', productState)
 
   const data = [
     {
