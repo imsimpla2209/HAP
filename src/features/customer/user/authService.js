@@ -6,14 +6,14 @@ import { Http, instance } from "apis/http";
 
 const register = async (userData) => {
   const response = await instance.post(`authentication/sign-up`, userData)
-    if (response.data) {
+  if (response.data) {
     localStorage.setItem("customer", JSON.stringify(response.data));
   }
 };
 
 const login = async (userData) => {
   const response = await instance.post(`authentication/login`, userData, config);
-  
+
   if (response.data) {
     localStorage.setItem("customer", JSON.stringify(response.data));
   }
@@ -32,7 +32,7 @@ const updateUser = async (data) => {
   }
 };
 
-const updateUserPassword  = async (data) => {
+const updateUserPassword = async (data) => {
   const response = await instance.put(`/Admin/users/change-password`, data, config);
   if (response.data) {
     return response.data;
@@ -61,22 +61,22 @@ const getUserWishList = async () => {
 };
 
 const addToCart = async (cartData) => {
-  const response = await axios.post(`${base_url}user/cart`, cartData, config);
+  const response = await instance.post(`customer/carts/add-to-cart`, cartData, config);
   if (response.data) {
     return response.data;
   }
 };
 
-const getCart = async () => {
-  const response = await axios.get(`${base_url}user/cart`, config);
+const getCart = async (page) => {
+  const response = await instance.get(`customer/carts?page=${page}`, config);
   if (response.data) {
     return response.data;
   }
 };
 
 const removeCart = async (cartItemId) => {
-  const response = await axios.delete(
-    `${base_url}user/delete-product-cart/${cartItemId}`,
+  const response = await instance.delete(
+    `customer/carts/remove/${cartItemId}`,
     config
   );
   if (response.data) {
@@ -85,8 +85,8 @@ const removeCart = async (cartItemId) => {
 };
 
 const updateProdFromCart = async (cartDetail) => {
-  const response = await axios.delete(
-    `${base_url}user/update-product-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`,
+  const response = await instance.put(
+    `customer/carts/edit/${cartDetail?.cartId}`,
     config
   );
   if (response.data) {

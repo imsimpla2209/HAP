@@ -29,7 +29,7 @@ import "./addproduct.css";
 
 let schema = yup.object().shape({
   productName: yup.string().required("Hãy điền tên cho sản phẩm"),
-  description: yup.string(),
+  description: yup.string()?.nullable(),
   productCode: yup.string().required("Mã sản phẩm là cần thiết"),
   collectionId: yup.string(),
   categoryId: yup.string(),

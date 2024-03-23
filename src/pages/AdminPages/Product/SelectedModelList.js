@@ -37,7 +37,7 @@ const SelectedModelList = ({
       title: 'Thông số',
       dataIndex: 'specification',
       key: 'specification',
-      render: (text) => <>{text}</>,
+      render: (text) => <div style={{ margin: 0 }} dangerouslySetInnerHTML={{ __html: text }}></div>
     },
     {
       title: 'Giá Bán Lẻ',

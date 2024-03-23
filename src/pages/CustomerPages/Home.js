@@ -24,6 +24,7 @@ import {
 import { getUserProductWishList } from "../../features/customer/user/authSlice";
 import { getCategories } from "apis";
 import { FaStarHalfAlt } from "react-icons/fa";
+import { formatCurrencyVND } from "utils/formator";
 
 const Home = () => {
   const blogState = useSelector((state) => state?.blog?.blogs);
@@ -91,10 +92,10 @@ const Home = () => {
   return (
     <>
       <Meta title={"Hà An Phát"} />
-      <section className="home-wrapper-1 py-5">
-        <div className="container-xxl">
+      <section className="home-wrapper-1">
+        <div className="">
           <div className="row">
-            <div className="col-7">
+            <div className="col-12">
               <div
                 id="carouselExampleIndicators"
                 className="carousel slide"
@@ -116,19 +117,20 @@ const Home = () => {
                     data-bs-slide-to="1"
                     aria-label="Slide 2"
                   ></button>
-                  <button
+                  {/* <button
                     type="button"
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="2"
                     aria-label="Slide 3"
-                  ></button>
+                  ></button> */}
                 </div>
                 <div className="carousel-inner">
                   <div className="carousel-item active">
                     <img
                       src="images\bannertet.jpg"
-                      className="img-fluid rounded-3"
+                      className="img-fluid"
                       alt="main banner"
+                      height={500}
                     />
                     {/* <div className="main-banner-content position-absolute">
                       <h4>SUPERCHANGED FOR PROS</h4>
@@ -142,19 +144,19 @@ const Home = () => {
                   <div className="carousel-item">
                     <img
                       src="images\bannertet.jpg"
-                      className="img-fluid rounded-3"
+                      className="img-fluid"
                       alt="main banner"
                     />
                     <div className="main-banner-content position-absolute">
-                      <h4>SUPERCHANGED FOR PROS</h4>
+                      {/* <h4>SUPERCHANGED FOR PROS</h4>
                       <h5>Guitars LakeWood</h5>
-                      <p></p>
+                      <p></p> */}
                       <Link to={"/product"} className="button">
-                        BUY NOW
+                        Liên hệ ngay
                       </Link>
                     </div>
                   </div>
-                  <div className="carousel-item">
+                  {/* <div className="carousel-item">
                     <img
                       src="images\bannertet.jpg"
                       className="img-fluid rounded-3"
@@ -168,7 +170,7 @@ const Home = () => {
                         BUY NOW
                       </Link>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 <button
                   className="carousel-control-prev"
@@ -211,7 +213,7 @@ const Home = () => {
                 </div>
               </div> */}
             </div>
-            <div className="col-5">
+            {/* <div className="col-5">
               <div className="d-flex flex-wrap gap-10 justify-content-between align-items">
                 <div className="small-banner position-relative">
                   <img
@@ -260,7 +262,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -457,7 +459,7 @@ const Home = () => {
                               <img
                                 width={400}
                                 height={400}
-                                src={item?.images?.[0]?.url}
+                                src={item?.image?.[0]?.path}
                                 className="img-fluid mx-auto"
                                 alt="product-image"
                               />
@@ -465,7 +467,7 @@ const Home = () => {
                                 <img
                                   width={400}
                                   height={400}
-                                  src={item?.images?.[1]?.url}
+                                  src={item?.image?.[1]?.path}
                                   className="img-fluid mx-auto"
                                   alt="product image"
                                 />
@@ -474,7 +476,7 @@ const Home = () => {
                                 <img
                                   width={400}
                                   height={400}
-                                  src={item?.images?.[0]?.url}
+                                  src={item?.image?.[0]?.path}
                                   className="img-fluid mx-auto"
                                   alt="product image"
                                 />
@@ -485,16 +487,16 @@ const Home = () => {
                       </Link>
 
                       <div className="product-details">
-                        <h6 className="brand">{item?.brand}</h6>
+                        <h6 className="brand">{item?.category?.categoryName}</h6>
                         <h5 className="product-title">{item?.productName}</h5>
-                        <ReactStars
-                          count={5}
-                          size={24}
-                          value={item?.voteStar?.toString()}
-                          edit={false}
-                          activeColor="#ffd700"
-                        />
-                        <p className="price">$ {item?.price}</p>
+                        {/* <ReactStars
+                            count={5}
+                            size={18}
+                            value={item?.voteStar?.toString()}
+                            edit={false}
+                            activeColor="#ffd700"
+                          /> */}
+                        <p className="price" style={{}}>{formatCurrencyVND(item?.price)}</p>
                       </div>
                       <div className="action-bar position-absolute">
                         <div className="d-flex flex-column gap-15">
@@ -577,7 +579,7 @@ const Home = () => {
                                   <img
                                     width={400}
                                     height={400}
-                                    src={item?.images?.[0]?.url}
+                                    src={item?.images?.[0]?.path}
                                     className="img-fluid mx-auto"
                                     alt="product-image"
                                   />
@@ -585,7 +587,7 @@ const Home = () => {
                                     <img
                                       width={400}
                                       height={400}
-                                      src={item?.images?.[1]?.url}
+                                      src={item?.images?.[1]?.path}
                                       className="img-fluid mx-auto"
                                       alt="product image"
                                     />
@@ -594,7 +596,7 @@ const Home = () => {
                                     <img
                                       width={400}
                                       height={400}
-                                      src={item?.images?.[0]?.url}
+                                      src={item?.images?.[0]?.path}
                                       className="img-fluid mx-auto"
                                       alt="product image"
                                     />

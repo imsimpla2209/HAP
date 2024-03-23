@@ -45,9 +45,9 @@ export const addProdToCart = createAsyncThunk(
   }
 );
 
-export const getUserCart = createAsyncThunk("user/cart", async (thunkAPI) => {
+export const getUserCart = createAsyncThunk("user/cart", async (page, thunkAPI) => {
   try {
-    return await authService.getCart();
+    return await authService.getCart(page);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
@@ -121,7 +121,7 @@ export const updateUserPass = createAsyncThunk(
 
 export const emptyUserCart = createAsyncThunk(
   "user/cart/delete",
-  async ( thunkAPI) => {
+  async (thunkAPI) => {
     try {
       return await authService.emptyCart();
     } catch (error) {
@@ -402,7 +402,7 @@ export const authSlice = createSlice({
         state.isError = true;
         state.message = action.error;
       })
-      
+
 
 
 
@@ -415,8 +415,8 @@ export const authSlice = createSlice({
         state.isError = false;
         state.updatedUser = action.payload;
         if (state.isSuccess === true) {
-          state.user = action.payload; 
-         
+          state.user = action.payload;
+
         }
       })
       .addCase(updateUserProf.rejected, (state, action) => {
@@ -500,7 +500,7 @@ export const authSlice = createSlice({
           logout();
         }
         if (state.isError === true) {
-          toast.info("Something Error");  
+          toast.info("Something Error");
         }
       }).addCase(resetState, () => initialState)
       .addCase(updateUserPass.pending, (state) => {
@@ -512,8 +512,8 @@ export const authSlice = createSlice({
         state.isError = false;
         state.updatedPass = action.payload;
         if (state.isSuccess === true) {
-          state.user = action.payload; 
-          toast.info("Cập nhật mật khẩu thành công");  
+          state.user = action.payload;
+          toast.info("Cập nhật mật khẩu thành công");
         }
       })
       .addCase(updateUserPass.rejected, (state, action) => {
@@ -522,8 +522,8 @@ export const authSlice = createSlice({
         state.isError = true;
         state.message = action.error;
         if (state.isError === true) {
-          state.user = action.payload; 
-          toast.info("Mật khẩu cũ không đúng");  
+          state.user = action.payload;
+          toast.info("Mật khẩu cũ không đúng");
         }
       })
       .addCase(getUserProfile.pending, (state) => {
@@ -539,7 +539,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
-        state.message = action.error;      
+        state.message = action.error;
       });
   },
 });

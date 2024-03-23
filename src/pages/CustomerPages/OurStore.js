@@ -97,13 +97,13 @@ const OurStore = () => {
   return (
     <>
       <Meta title={"Our Store"} />
-      <BreadCrumb title="Our Store" />
+      <BreadCrumb title="Gian Hàng" />
       <div className="store-wrapper home-wrapper-2 py-5">
         <div className="container-xxl">
           <div className="row">
             <div className="col-3">
               <div className="filter-card mb-3">
-                <h3 className="filter-title">Shop by Categories</h3>
+                <h3 className="filter-title">Lọc Theo Danh Mục</h3>
                 <div>
                   <div className="product-tags d-flex flex-wrap align-content-center gap-10">
                     {categories &&
@@ -118,11 +118,10 @@ const OurStore = () => {
                             onClick={() =>
                               setCategory(pcategories === item ? null : item)
                             }
-                            className={`btn ${
-                              pcategories === item ? "btn-primary" : "btn-light"
-                            } fst-italic py-2 px-3`}
+                            className={`btn ${pcategories === item ? "btn-primary" : "btn-light"
+                              } fst-italic py-2 px-3`}
                           >
-                            {categoryInfo ? categoryInfo.title : ""}
+                            {categoryInfo ? categoryInfo.categoryName : ""}
                           </span>
                         );
                       })}
@@ -174,9 +173,8 @@ const OurStore = () => {
                               setBrands(brands === item ? null : item)
                             }
                             // className="badge bg-light text-muted fst-italic py-2 px-3"
-                            className={`btn ${
-                              brands === item ? "btn-primary" : "btn-light"
-                            } fst-italic py-2 px-3`}
+                            className={`btn ${brands === item ? "btn-primary" : "btn-light"
+                              } fst-italic py-2 px-3`}
                           >
                             {brandInfo ? brandInfo.title : ""}
                           </span>
@@ -196,9 +194,8 @@ const OurStore = () => {
                             key={index}
                             onClick={() => setTag(tag === item ? null : item)}
                             // className="badge bg-light text-muted fst-italic py-2 px-3"
-                            className={`btn ${
-                              tag === item ? "btn-primary" : "btn-light"
-                            } fst-italic py-2 px-3`}
+                            className={`btn ${tag === item ? "btn-primary" : "btn-light"
+                              } fst-italic py-2 px-3`}
                           >
                             {item}
                           </span>
@@ -242,7 +239,7 @@ const OurStore = () => {
                     </select>
                   </div>
                   <div className="d-flex align-items-center gap-10">
-                    <p className="total-products mb-0">{totalProducts} Products</p>
+                    <p className="total-products mb-0">{totalProducts} Sản Phẩm</p>
                     <div className="d-flex gap-10 align-items-center grid">
                       <img
                         onClick={() => {
@@ -290,7 +287,7 @@ const OurStore = () => {
                   />
                 </div>
               </div>
-             
+
             </div>
           </div>
         </div>

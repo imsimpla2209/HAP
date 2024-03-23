@@ -14,6 +14,7 @@ import { formatCurrencyVND } from "utils/formator";
 import { getModels } from "features/models/modelsSlice";
 import modelsServices from "features/models/modelsService";
 import { ImportOutlined } from '@ant-design/icons';
+import productService from "features/product/productService";
 
 const columns = [
   {
@@ -57,46 +58,45 @@ const SelectModelModal = ({
   const [open, setOpen] = useState(false);
   const [productId, setPoductId] = useState("");
   const [page, setPage] = useState(1);
+  const [product, setProduct] = useState([]);
   useEffect(() => {
     dispatch(resetState())
     dispatch(getCollections())
-    dispatch(getCategorys())
     dispatch(getUnits())
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getProducts(page));
+    productService.getProducts(page).then((res) => {
+      setProduct(res);
+    });
   }, [page]);
 
-  const productstate = useSelector((state) => state.product.products);
   const collectionsState = useSelector((state) => state.collections.collections);
-  const categoryState = useSelector((state) => state.category.categorys);
   const unitsState = useSelector((state) => state.unit.units);
 
-  console.log(productstate)
   const data1 = [];
-  for (let i = 0; i < productstate.length; i++) {
-    const collections = collectionsState?.filter((collections) => productstate?.[i].collection?.include?.(collections.collectionId));
+  for (let i = 0; i < product.length; i++) {
+    const collections = collectionsState?.filter((collections) => product?.[i].collection?.include?.(collections.collectionId));
 
     data1.push({
       key: i + 1,
-      productId: productstate[i].productId,
-      productName: productstate[i].productName,
+      productId: product[i].productId,
+      productName: product[i].productName,
       collections: collections?.length ? collections?.map((c) => c?.collectionName).join(", ") : "",
-      pcategories: productstate?.[i]?.category?.categoryName || "",
-      price: `${productstate[i].price}`,
-      quantity: `${productstate[i].quantity}`,
+      pcategories: product?.[i]?.category?.categoryName || "",
+      price: `${product[i].price}`,
+      quantity: `${product[i].quantity}`,
       // action: (
       //   <>
       //     <Link
       //       className="ms-3 fs-3 text-danger"
-      //       to={`/admin/product/${productstate[i]?.productId}`}
+      //       to={`/admin/product/${product[i]?.productId}`}
       //     >
       //       <BiEdit />
       //     </Link>
       //     <button
       //       className="ms-3 fs-3 text-danger bg-transparent border-0"
-      //       onClick={() => showModal(productstate[i].productId)}
+      //       onClick={() => showModal(product[i].productId)}
       //     >
       //       <AiFillDelete />
       //     </button>

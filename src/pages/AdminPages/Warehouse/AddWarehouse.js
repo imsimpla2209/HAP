@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from "antd";
-import { getACollection, resetState } from "features/collections/collectionsSlice";
-import { createWarehouse, updateWarehouse } from "features/warehouse/warehousesSlice";
+import { createWarehouse, getAWarehouse, updateWarehouse, resetState } from "features/warehouse/warehousesSlice";
 import { useFormik } from "formik";
 import { React, useEffect, useState } from "react";
 import { FormOutlined } from "@ant-design/icons";
@@ -34,26 +33,33 @@ const AddWarehouse = () => {
 
   const getWarehouseId = location.pathname.split("/")[3];
   console.log(getWarehouseId);
-  const collectionState = useSelector((state) => state.collections);
-  console.log(collectionState);
+  const warehouse = useSelector((state) => state.warehouse);
+  console.log(warehouse);
   const isEditMode = getWarehouseId !== undefined;
-  const { modelId, note, quantity, isImport } = collectionState;
+  const { modelId, note, quantity, isImport } = warehouse;
 
   useEffect(() => {
     if (isEditMode) {
-      dispatch(getACollection(getWarehouseId));
+      dispatch(getAWarehouse(getWarehouseId));
     }
   }, [isEditMode, getWarehouseId, dispatch]);
 
 
   useEffect(() => {
     if (getWarehouseId !== undefined) {
-      dispatch(getACollection(getWarehouseId));
+      dispatch(getAWarehouse(getWarehouseId));
 
     } else {
       dispatch(resetState());
     }
   }, [getWarehouseId]);
+
+  const handleDone = () => {
+    navigate("/admin/warehouse-list");
+    dispatch(resetState());
+    formik.resetForm();
+
+  }
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -69,19 +75,12 @@ const AddWarehouse = () => {
       console.log(getWarehouseId)
       if (getWarehouseId !== undefined) {
         const data = { id: getWarehouseId, warehouseData: values };
-        dispatch(updateWarehouse(data));
-        formik.resetForm();
-        setTimeout(() => {
-          navigate("/admin/warehouse-list");
-          dispatch(resetState());
-        }, 1000);
+        dispatch(updateWarehouse(data, handleDone));
+
       } else {
         console.log(values);
-        dispatch(createWarehouse(values));
-        formik.resetForm();
-        setTimeout(() => {
-          navigate("/admin/warehouse-list");
-        }, 1000);
+        dispatch(createWarehouse(values, handleDone));
+
       }
     },
   });
@@ -164,7 +163,7 @@ const AddWarehouse = () => {
 
           <div className="form-group">
             <label htmlFor="isImport">Hàng Nhập</label>
-            <input type="checkbox" id='isImport' name='isImport'
+            <input type="checkbox" id='isImport' defaultChecked={formik?.values?.isImport || false} name='isImport'
               onChange={(e) => { formik.setFieldValue('isImport', e.target.checked) }} />
 
             {formik.touched.isImport && formik.errors.isImport && (

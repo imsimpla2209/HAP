@@ -15,9 +15,16 @@ export const getWarehouses = createAsyncThunk(
 
 export const createWarehouse = createAsyncThunk(
   "warehouse/create-warehouses",
-  async (colData, thunkAPI) => {
+  async (colData, callBack, thunkAPI) => {
     try {
-      return await warehousesService.createWarehouse(colData);
+      const response = await warehousesService.createWarehouse(colData);
+
+      if (callBack) {
+        callBack();
+      }
+
+      return response;
+
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -38,9 +45,15 @@ export const getAWarehouse = createAsyncThunk(
 
 export const updateWarehouse = createAsyncThunk(
   "warehouse/update-warehouse",
-  async (colData, thunkAPI) => {
+  async (colData, callBack, thunkAPI) => {
     try {
-      return await warehousesService.updateWarehouse(colData);
+      const response = await warehousesService.updateWarehouse(colData);
+
+      if (callBack) {
+        callBack();
+      }
+
+      return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

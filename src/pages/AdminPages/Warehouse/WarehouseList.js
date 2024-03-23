@@ -31,12 +31,13 @@ const columns = [
   {
     title: "Ghi Chú",
     dataIndex: "note",
+    render: (text) => <div style={{ margin: 0 }} dangerouslySetInnerHTML={{ __html: text }}></div>
   },
-  {
-    title: "Action",
-    width: 150,
-    dataIndex: "action",
-  },
+  // {
+  //   title: "Action",
+  //   width: 150,
+  //   dataIndex: "action",
+  // },
 ];
 
 const WarehouseList = () => {
@@ -78,22 +79,22 @@ const WarehouseList = () => {
       description: warehousesState[i].description,
       ...warehousesState[i],
       // bcategories: blogcat ? blogcat.title : "",
-      action: (
-        <>
-          <Link
-            className="ms-3 fs-3 text-danger"
-            to={`/admin/warehouse/${warehousesState[i].warehouseLogId}`}
-          >
-            <BiEdit />
-          </Link>
-          <button
-            className="ms-3 fs-3 text-danger bg-transparent border-0"
-            onClick={() => showModal(warehousesState[i].warehouseLogId)}
-          >
-            <AiFillDelete />
-          </button>
-        </>
-      ),
+      // action: (
+      //   <>
+      //     <Link
+      //       className="ms-3 fs-3 text-danger"
+      //       to={`/admin/warehouse/${warehousesState[i].warehouseLogId}`}
+      //     >
+      //       <BiEdit />
+      //     </Link>
+      //     <button
+      //       className="ms-3 fs-3 text-danger bg-transparent border-0"
+      //       onClick={() => showModal(warehousesState[i].warehouseLogId)}
+      //     >
+      //       <AiFillDelete />
+      //     </button>
+      //   </>
+      // ),
     });
   }
 

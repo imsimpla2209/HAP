@@ -15,7 +15,8 @@ import { Badge } from "react-rainbow-components";
 import { Tooltip } from "antd";
 import { FaPhoneAlt } from "react-icons/fa";
 import { LuLogOut } from "react-icons/lu";
-
+import { TbJewishStarFilled } from "react-icons/tb";
+import { RiFileList3Fill } from "react-icons/ri";
 const Header = ({ history }) => {
   // Get the history object from React Router
   const dispatch = useDispatch();
@@ -26,6 +27,11 @@ const Header = ({ history }) => {
   const [productOpt, setProductOpt] = useState([]);
   const cartState = useSelector((state) => state?.auth?.cartProducts);
   const productState = useSelector((state) => state?.product?.products);
+  const [scrollDirection, setScrollDirection] = useState(
+    null
+  );
+  const [visible, setVisible] = useState(true);
+
 
   useEffect(() => {
     let sum = 0;
@@ -36,6 +42,38 @@ const Header = ({ history }) => {
       setTotal(sum);
     }
   }, [cartState]);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const updateScrollDirection = () => {
+      const scrollY = window.scrollY;
+      const direction = scrollY > lastScrollY ? 'down' : 'up';
+      if (
+        direction !== scrollDirection &&
+        (scrollY - lastScrollY > 10 || scrollY - lastScrollY < -10)
+      ) {
+        setScrollDirection(direction);
+      }
+      lastScrollY = scrollY > 0 ? scrollY : 0;
+    };
+    window.addEventListener('scroll', updateScrollDirection); // add event listener
+    return () => {
+      window.removeEventListener('scroll', updateScrollDirection); // clean up
+    };
+  }, [scrollDirection]);
+
+  const handleScroll = React.useCallback(() => {
+    const currentScrollY = window.scrollY;
+    setVisible(currentScrollY);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
 
   useEffect(() => {
     getCart();
@@ -62,8 +100,12 @@ const Header = ({ history }) => {
   };
 
   return (
-    <>
-      <header className="header-top-strip py-1">
+    <div className="" style={{
+      top: 0,
+      position: "sticky",
+      zIndex: 10,
+    }}>
+      <header className="header-top-strip py-1" style={{}}>
         <div className="container-xxl">
           <div className="row">
             <div className="col-6">
@@ -74,6 +116,34 @@ const Header = ({ history }) => {
               </a>
             </div>
             <div className="col-6 text-end align-items-end d-flex justify-content-end gap-3">
+              <div className="menu-links">
+                <Tooltip placement="leftBottom" title={"Danh sách yêu thích"}>
+                  <Link
+                    to="wishlist"
+                    className="d-flex align-items-center gap-10 nav-item"
+                  >
+                    <RiFileList3Fill className="fs-4 orange-text" />
+                  </Link>
+                </Tooltip>
+              </div>
+              <div className="menu-links">
+                <Link
+                  to={authState?.user === null ? "/login" : "/profile"}
+                  className="d-flex align-items-center gap-10 nav-item"
+                >
+                  {authState?.user === null ? (
+                    <p className="mb-0 orange-text">
+                      Đăng nhập
+                    </p>
+                  ) : (
+                    <Tooltip placement="bottom" title={"Tài khoản"}>
+
+                      <FaRegUser className="fs-4 orange-text" />
+                    </Tooltip>
+
+                  )}
+                </Link>
+              </div>
               <div className="menu-links">
                 {authState?.user === null ? (
                   <p className="mb-0"></p>
@@ -94,17 +164,17 @@ const Header = ({ history }) => {
       <header className="header-upper py-1">
         <div className="container-xxl">
           <div className="row align-items-center">
-            <div className="col-3">
+            <div className="col-1">
               <h2>
                 <Link className="mw-100 d-flex align-items-center gap-2" to="/">
                   <img src="images/logo.png" alt="logo" style={{ width: '70px', height: '70px' }} />
-                  <p className=" mb-0 gradient-yellow-text" style={{ fontWeight: '500' }}>Hà An Phát</p>
+                  {/* <p className=" mb-0 gradient-yellow-text" style={{ fontWeight: '500' }}>Hà An Phát</p> */}
 
                 </Link>
               </h2>
             </div>
 
-            <div className="col-3">
+            <div className="col-5">
               <div className="input-group">
                 <Typeahead
                   id="pagination-example"
@@ -125,7 +195,21 @@ const Header = ({ history }) => {
               </div>
             </div>
             <div className="col-6">
-              <div className="header-upper-links d-flex align-items-center justify-content-between">
+
+              <div className="header-upper-links d-flex align-items-center justify-content-between ms-2">
+                {/* <div className="menu-links"> */}
+                {/* <div className="d-flex align-items-center gap-15"> */}
+                <NavLink className="link-secondary fs-5" to="/">Trang chủ</NavLink>
+                <NavLink className="link-secondary fs-5" to="/product">Sản phẩm</NavLink>
+                <NavLink className="link-secondary fs-5" to="/blogs">Tin tức</NavLink>
+                <NavLink className="link-secondary fs-5" to="/contact">Liên hệ</NavLink>
+                {authState?.user === null ? (
+                  <p className="mb-0"></p>
+                ) : (
+                  <NavLink className="link-secondary fs-5" to="/my-orders">Lịch sử mua</NavLink>
+                )}
+                {/* </div> */}
+                {/* </div> */}
                 <div>
                   {/* <Link
                     to="compareproduct"
@@ -137,40 +221,12 @@ const Header = ({ history }) => {
                     </p>
                   </Link> */}
                 </div>
-                <div>
-                  <Link
-                    to="wishlist"
-                    className="d-flex align-items-center gap-10 nav-item"
-                  >
-                    <CiHeart className="fs-4 orange-text" />
-                    <p className="mb-0">
-                      Danh sách <br /> Yêu thích
-                    </p>
-                  </Link>
-                </div>
-                <div>
-                  <Link
-                    to={authState?.user === null ? "/login" : "/profile"}
-                    className="d-flex align-items-center gap-10 nav-item"
-                  >
-                    <FaRegUser className="fs-4 orange-text" />
-                    {authState?.user === null ? (
-                      <p className="mb-0">
-                        Đăng nhập <br /> Tài khoản
-                      </p>
-                    ) : (
-                      <p className="mb-0">
-                        Chào mừng {authState?.user?.firstname}
-                      </p>
-                    )}
-                  </Link>
-                </div>
 
                 <div>
                   <Badge showZero>
-                    <Tooltip title="Rỏ hàng" color={"#c44135"} key={"#c44135"}>
+                    <Tooltip title="Giỏ hàng" color={"#c44135"} key={"#c44135"}>
                       <Link to="cart" className="d-flex align-items-center gap-10">
-                        <TiShoppingCart className="fs-4 orange-text" />
+                        <TiShoppingCart className="fs-4 black-text" />
                         <div className="d-flex flex-column">
                           <span className="badge bg-white text-dark mb-1">
                             {cartState?.length ? cartState?.length : 0}
@@ -192,7 +248,7 @@ const Header = ({ history }) => {
             <div className="col-12">
               <div className="menu-bottom d-flex align-items-center gap-30">
                 <div className="col-sm-10">
-                  <div className="menu-links">
+                  {/* <div className="menu-links">
                     <div className="d-flex align-items-center gap-15">
                       <NavLink to="/">Trang chủ</NavLink>
                       <NavLink to="/product">Sản phẩm</NavLink>
@@ -204,7 +260,7 @@ const Header = ({ history }) => {
                         <NavLink to="/my-orders">Lịch sử mua</NavLink>
                       )}
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
 
@@ -214,7 +270,7 @@ const Header = ({ history }) => {
         </div>
         <div></div>
       </header>
-    </>
+    </div>
   );
 };
 

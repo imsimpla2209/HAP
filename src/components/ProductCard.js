@@ -8,6 +8,7 @@ import {
   removeFromWishlist,
 } from "../features/customer/products/productSlice";
 import { getUserProductWishList } from "../features/customer/user/authSlice";
+import { formatCurrencyVND } from "utils/formator";
 
 const ProductCard = (props) => {
   const { grid, data } = props;
@@ -51,9 +52,8 @@ const ProductCard = (props) => {
           return (
             <div
               key={index}
-              className={`${
-                location.pathname === "/product" ? `gr-${grid}` : "col-3"
-              }`}
+              className={`${location.pathname === "/product" ? `gr-${grid}` : "col-3"
+                }`}
             >
               <Link className="product-card position-relative">
                 <div className="wishlist-icon position-absolute">
@@ -69,29 +69,29 @@ const ProductCard = (props) => {
                 {/* <div className="container"> */}
                 <Link to={"/product/" + item?.productId} className="product-card position-relative">
                   <div className="product-image">
-                    {item?.images?.length > 0 && (
+                    {item?.image?.length > 0 && (
                       <>
                         <img
                           width={400}
                           height={400}
-                          src={item?.images?.[0]?.url}
+                          src={item?.image?.[0]?.path}
                           className="img-fluid mx-auto"
                           alt="product-image"
                         />
-                        {item?.images?.length > 1 && (
+                        {item?.image?.length > 1 && (
                           <img
                             width={400}
                             height={400}
-                            src={item?.images?.[1]?.url}
+                            src={item?.image?.[1]?.path}
                             className="img-fluid mx-auto"
                             alt="product image"
                           />
                         )}
-                        {item?.images?.length === 1 && (
+                        {item?.image?.length === 1 && (
                           <img
                             width={400}
                             height={400}
-                            src={item?.images?.[0]?.url}
+                            src={item?.image?.[0]?.path}
                             className="img-fluid mx-auto"
                             alt="product image"
                           />
@@ -104,22 +104,21 @@ const ProductCard = (props) => {
                 {/* </div> */}
 
                 <div className="product-details">
-                  <h6 className="brand">{item?.brand}</h6>
-                  <h5 className="product-title">{item?.title}</h5>
+                  <h6 className="brand">{item?.category.categoryName}</h6>
+                  <h5 className="product-title">{item?.productName}</h5>
                   <ReactStars
                     count={5}
-                    size={24}
-                    value={item?.totalrating?.toString()}
+                    size={20}
+                    value={item?.voteStar?.toString()}
                     edit={false}
                     activeColor="#ffd700"
                   />
                   <p
-                    className={`description ${
-                      grid === 12 ? "d-block" : "d-none"
-                    }`}
+                    className={`description ${grid === 12 ? "d-block" : "d-none"
+                      }`}
                     dangerouslySetInnerHTML={{ __html: item?.description }}
                   ></p>
-                  <p className="price">$ {item?.price}</p>
+                  <p className="price">{formatCurrencyVND(item?.price)}</p>
                 </div>
                 <div className="action-bar position-absolute">
                   <div className="d-flex flex-column gap-15">

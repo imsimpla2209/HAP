@@ -27,6 +27,7 @@ import { Button, Divider, Radio } from "antd";
 import { formatCurrencyVND } from "utils/formator";
 import { AiOutlineHeart } from "react-icons/ai";
 import { Tab } from "components/Tabs/Tabs";
+import { paymentInfo } from "./constant";
 
 const SingleProduct = () => {
   const [orderProduct, setorderedProduct] = useState(true);
@@ -102,9 +103,8 @@ const SingleProduct = () => {
   const uploadCart = () => {
     dispatch(
       addProdToCart({
-        productId: productState?._id,
+        modelId: selectedModelId,
         quantity,
-        price: productState?.price,
       })
     );
     setTimeout(() => {
@@ -175,6 +175,12 @@ const SingleProduct = () => {
         ?.find((model) => model?.modelId === selectedModelId)?.specification || "",
       type: "html"
     },
+    {
+      id: '3',
+      tabTitle: "Thống tin thanh toán",
+      tabContent: paymentInfo,
+      type: "html"
+    }
   ]
 
   return (
@@ -295,9 +301,9 @@ const SingleProduct = () => {
                             <h3 className="product-heading text-muted">Mẫu: </h3>
                             <Radio.Group onChange={(e) => setSelectedModelId(e.target.value)} defaultValue={selectedModelId}>
                               {
-                                modelState?.map((model) =>
+                                modelState?.map((model, index) =>
                                   <Radio.Button value={model.modelId} key={model.modelId}>
-                                    {model?.modelName}</Radio.Button>
+                                    {model?.modelName || `Mẫu ${index + 1}`}</Radio.Button>
                                 )
                               }
                             </Radio.Group>
@@ -306,20 +312,20 @@ const SingleProduct = () => {
                           <div className="d-flex gap-10 align-items-baseline my-2 mb-3">
                             <h3 className="product-heading text-muted">Số Lượng: </h3>
                             <h3 className="product-data">
-                              {productState?.quantity || 0}
+                              {model?.available || 0}
                             </h3>
                           </div>
                           <div className="d-flex gap-10 align-items-baseline my-2 mb-3">
                             <h3 className="product-heading text-muted">Tình Trạng Kho: </h3>
-                            {productState?.quantity > 0 ? (
-                              <h3 className="product-data">In Stock</h3>
+                            {model?.available > 0 ? (
+                              <h3 className="product-data">Có sẵn</h3>
                             ) : (
-                              <h3 className="product-data">Out of Stock</h3>
+                              <h3 className="product-data">Hết hàng</h3>
                             )}
                           </div>
                           <div className="d-flex gap-15 align-items-center flex-row my-2 mb-3">
                             {alreadyAddCart === false &&
-                              model?.quantity > 0 && (
+                              model?.available > 0 && (
                                 <>
                                   <h3 className="product-heading text-muted">
                                     Quantity:{" "}
@@ -343,12 +349,12 @@ const SingleProduct = () => {
 
                             <div
                               className={
-                                alreadyAddCart || productState?.quantity === 0
+                                alreadyAddCart || model?.available === 0
                                   ? "mb-0"
                                   : "d-flex align-item-center gap-15 ms-2"
                               }
                             >
-                              {productState?.quantity > 0 && (
+                              {model?.available > 0 && (
                                 <button
                                   className="button border-0"
                                   type="button"
@@ -359,13 +365,13 @@ const SingleProduct = () => {
                                   }}
                                 >
                                   {alreadyAddCart
-                                    ? "Go to cart"
-                                    : "Add to cart"}
+                                    ? "Đến rỏ hàng"
+                                    : "Thêm vào rỏ hàng"}
                                 </button>
                               )}
-                              {productState?.quantity === 0 && (
-                                <a className="button border-0" type="button">
-                                  This product is not available
+                              {model?.available === 0 && (
+                                <a className="button border-0" type="button" disabled>
+                                  Mẫu này đã hết hàng
                                 </a>
                               )}
                             </div>
@@ -374,7 +380,7 @@ const SingleProduct = () => {
                             <div>
                               <a href="">
                                 <AiOutlineHeart className="fs-5 me-2" />
-                                Add to WishList
+                                Yêu thích
                               </a>
                             </div>
                           </div>
@@ -424,7 +430,7 @@ const SingleProduct = () => {
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
-              <h4>Reviews</h4>
+              <h4>Đánh giá</h4>
               <div className="review-inner-wrapper">
                 {/* <div className="review-head d-flex justify-content-between align-items-end">
                   <div>
@@ -454,7 +460,7 @@ const SingleProduct = () => {
                   </div>
                 </div> */}
                 <div id="review" className="review-form py-4">
-                  <h4 className="mb-2">Write A Review</h4>
+                  <h4 className="mb-2">Viết Đánh Giá</h4>
                   <div className="">
                     <ReactStars
                       count={5}
@@ -474,19 +480,19 @@ const SingleProduct = () => {
                       className="w-100 form-control"
                       cols="30"
                       row="10"
-                      placeholder="Comments"
+                      placeholder="Nhận xét"
                       onChange={(e) => {
                         setComment(e.target.value);
                       }}
                     ></textarea>
                   </div>
-                  <div className="d-flex justify-content-end">
+                  <div className="d-flex justify-content-end mt-3">
                     <button
                       onClick={addRatingToProduct}
                       className="button border-0"
                       type="submit"
                     >
-                      Submit Review
+                      Đăng tải
                     </button>
                   </div>
                 </div>
