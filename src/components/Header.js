@@ -12,11 +12,15 @@ import { FaRegUser } from "react-icons/fa";
 import { formatCurrencyVND } from "utils/formator";
 import { TiShoppingCart } from "react-icons/ti";
 import { Badge } from "react-rainbow-components";
-import { Tooltip } from "antd";
+import { Space, Tooltip } from "antd";
 import { FaPhoneAlt } from "react-icons/fa";
 import { LuLogOut } from "react-icons/lu";
 import { TbJewishStarFilled } from "react-icons/tb";
 import { RiFileList3Fill } from "react-icons/ri";
+import { DownOutlined, SmileOutlined } from '@ant-design/icons';
+import { getCategorys } from "features/category/categorySlice";
+import Dropdown from "antd/es/dropdown/dropdown";
+
 const Header = ({ history }) => {
   // Get the history object from React Router
   const dispatch = useDispatch();
@@ -27,6 +31,7 @@ const Header = ({ history }) => {
   const [productOpt, setProductOpt] = useState([]);
   const cartState = useSelector((state) => state?.auth?.cartProducts);
   const productState = useSelector((state) => state?.product?.products);
+  const categoriesState = useSelector((state) => state?.category?.categories);
   const [scrollDirection, setScrollDirection] = useState(
     null
   );
@@ -77,6 +82,7 @@ const Header = ({ history }) => {
 
   useEffect(() => {
     getCart();
+    dispatch(getCategorys())
   }, []);
 
   const getCart = () => {
@@ -103,19 +109,22 @@ const Header = ({ history }) => {
     <div className="" style={{
       top: 0,
       position: "sticky",
-      zIndex: 10,
+      zIndex: 1000,
     }}>
-      <header className="header-top-strip py-1" style={{}}>
+      <header className="header-top-strip py-1" >
         <div className="container-xxl">
           <div className="row">
             <div className="col-6">
-              <a className="text-end text-white mb-0 link-light" href="tel: 0345532150">
-                <FaPhoneAlt className="me-2 mb-1" />
-                {" "}
-                0345532150
-              </a>
+
             </div>
             <div className="col-6 text-end align-items-end d-flex justify-content-end gap-3">
+              <div className="menu-links">
+                <a className="text-end text-white mb-0 link-light" href="tel: 0345532150">
+                  <FaPhoneAlt className="me-2 mb-1" />
+                  {" "}
+                  0345532150
+                </a>
+              </div>
               <div className="menu-links">
                 <Tooltip placement="leftBottom" title={"Danh sách yêu thích"}>
                   <Link
@@ -161,7 +170,9 @@ const Header = ({ history }) => {
           </div>
         </div>
       </header>
-      <header className="header-upper py-1">
+      <header className="header-upper py-1" style={{
+        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px"
+      }}>
         <div className="container-xxl">
           <div className="row align-items-center">
             <div className="col-1">
@@ -174,7 +185,7 @@ const Header = ({ history }) => {
               </h2>
             </div>
 
-            <div className="col-5">
+            <div className="col-4">
               <div className="input-group">
                 <Typeahead
                   id="pagination-example"
@@ -194,19 +205,22 @@ const Header = ({ history }) => {
                 </span>
               </div>
             </div>
-            <div className="col-6">
+            <div className="col-7">
 
               <div className="header-upper-links d-flex align-items-center justify-content-between ms-2">
                 {/* <div className="menu-links"> */}
                 {/* <div className="d-flex align-items-center gap-15"> */}
-                <NavLink className="link-secondary fs-5" to="/">Trang chủ</NavLink>
-                <NavLink className="link-secondary fs-5" to="/product">Sản phẩm</NavLink>
-                <NavLink className="link-secondary fs-5" to="/blogs">Tin tức</NavLink>
-                <NavLink className="link-secondary fs-5" to="/contact">Liên hệ</NavLink>
+                <NavLink className="fs-5 nav-link" to="/">Trang chủ</NavLink>
+                <NavLink className="fs-5 nav-link dropdown-link" to="/product">
+                  Sản phẩm
+                </NavLink>
+                {/* <NavLink className="fs-5 nav-link" to="/product">Sản phẩm</NavLink> */}
+                <NavLink className="fs-5 nav-link" to="/blogs">Tin tức</NavLink>
+                <NavLink className="fs-5 nav-link" to="/contact">Liên hệ</NavLink>
                 {authState?.user === null ? (
                   <p className="mb-0"></p>
                 ) : (
-                  <NavLink className="link-secondary fs-5" to="/my-orders">Lịch sử mua</NavLink>
+                  <NavLink className="nav-link fs-5" to="/my-orders">Lịch sử mua</NavLink>
                 )}
                 {/* </div> */}
                 {/* </div> */}
@@ -242,25 +256,12 @@ const Header = ({ history }) => {
           </div>
         </div>
       </header>
-      <header className="header-bottom py-2">
+      {/* <header className="header-bottom py-2">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
               <div className="menu-bottom d-flex align-items-center gap-30">
                 <div className="col-sm-10">
-                  {/* <div className="menu-links">
-                    <div className="d-flex align-items-center gap-15">
-                      <NavLink to="/">Trang chủ</NavLink>
-                      <NavLink to="/product">Sản phẩm</NavLink>
-                      <NavLink to="/blogs">Tin tức</NavLink>
-                      <NavLink to="/contact">Liên hệ</NavLink>
-                      {authState?.user === null ? (
-                        <p className="mb-0"></p>
-                      ) : (
-                        <NavLink to="/my-orders">Lịch sử mua</NavLink>
-                      )}
-                    </div>
-                  </div> */}
                 </div>
 
 
@@ -269,7 +270,7 @@ const Header = ({ history }) => {
           </div>
         </div>
         <div></div>
-      </header>
+      </header> */}
     </div>
   );
 };

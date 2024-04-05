@@ -3,17 +3,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import Meta from "../../components/Meta";
-import BreadCrumb from "../../components/BreadCrumb";
-import ProductCard from "../../components/ProductCard";
-import ReactStars from "react-stars";
-import { TbGitCompare } from "react-icons/tb";
-import { AiOutlineHeart } from "react-icons/ai";
-import ReactImageZoom from "react-image-zoom";
 import ReactImageMagnify from "react-image-magnify";
+import ReactStars from "react-stars";
+import BreadCrumb from "../../components/BreadCrumb";
+import Meta from "../../components/Meta";
 
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import Color from "components/Color";
+import { getModels } from "features/models/modelsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   addRating,
   getProduct,
@@ -22,11 +21,6 @@ import {
   addProdToCart,
   getUserCart,
 } from "../../features/customer/user/authSlice";
-import { toast } from "react-toastify";
-import { getBrands } from "../../features/customer/brand/brandSlice";
-import { getCategorys } from "../../features/customer/category/categorySlice";
-import { getModels } from "features/models/modelsSlice";
-import Color from "components/Color";
 
 const SingleCollection = () => {
   const [orderProduct, setorderedProduct] = useState(true);

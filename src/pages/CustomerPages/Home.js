@@ -10,6 +10,7 @@ import BlogCard from "../../components/BlogCard";
 import ProductCard from "../../components/ProductCard";
 import SpecialProduct from "../../components/SpecialProduct";
 import ReactStars from "react-stars";
+import { RightOutlined } from '@ant-design/icons';
 
 import { useDispatch, useSelector } from "react-redux";
 // import { getAllBLogs } from "../../features/customer/blogs/blogSlice";
@@ -25,6 +26,7 @@ import { getUserProductWishList } from "../../features/customer/user/authSlice";
 import { getCategories } from "apis";
 import { FaStarHalfAlt } from "react-icons/fa";
 import { formatCurrencyVND } from "utils/formator";
+import { Space } from "antd";
 
 const Home = () => {
   const blogState = useSelector((state) => state?.blog?.blogs);
@@ -93,9 +95,9 @@ const Home = () => {
     <>
       <Meta title={"Hà An Phát"} />
       <section className="home-wrapper-1">
-        <div className="">
+        <div className="col-10 mx-auto">
           <div className="row">
-            <div className="col-12">
+            <div className="col-10 mx-auto" >
               <div
                 id="carouselExampleIndicators"
                 className="carousel slide"
@@ -117,20 +119,16 @@ const Home = () => {
                     data-bs-slide-to="1"
                     aria-label="Slide 2"
                   ></button>
-                  {/* <button
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="2"
-                    aria-label="Slide 3"
-                  ></button> */}
                 </div>
                 <div className="carousel-inner">
                   <div className="carousel-item active">
                     <img
                       src="images\bannertet.jpg"
-                      className="img-fluid"
+                      className="carousel-img"
                       alt="main banner"
-                      height={500}
+                      style={{
+                        height: "500px !important",
+                      }}
                     />
                     {/* <div className="main-banner-content position-absolute">
                       <h4>SUPERCHANGED FOR PROS</h4>
@@ -144,16 +142,16 @@ const Home = () => {
                   <div className="carousel-item">
                     <img
                       src="images\bannertet.jpg"
-                      className="img-fluid"
+                      className="carousel-img"
                       alt="main banner"
                     />
                     <div className="main-banner-content position-absolute">
                       {/* <h4>SUPERCHANGED FOR PROS</h4>
                       <h5>Guitars LakeWood</h5>
                       <p></p> */}
-                      <Link to={"/product"} className="button">
+                      {/* <Link to={"/product"} className="button">
                         Liên hệ ngay
-                      </Link>
+                      </Link> */}
                     </div>
                   </div>
                   {/* <div className="carousel-item">
@@ -212,6 +210,30 @@ const Home = () => {
                   </Link>
                 </div>
               </div> */}
+              <div className="row mx-0 py-3 px-4" style={{
+                background: '#ce1a1a',
+
+              }}>
+                <div className="col-8 d-flex align-items-center">
+                  <h5 className="text-white my-0">
+                    Chào mừng đến với Công ty TNHH PT TM XMK Hà An Phát
+                  </h5>
+                </div>
+                <div className="col-4 mx-auto d-flex align-items-center justify-content-end">
+                  <button
+                    className="button-other"
+                    type="button"
+                    onClick={() => {
+                      navigate("/contact")
+                    }}
+                  >
+                    <Space>
+                      Nhận Báo Giá Ngay
+                      <RightOutlined />
+                    </Space>
+                  </button>
+                </div>
+              </div>
             </div>
             {/* <div className="col-5">
               <div className="d-flex flex-wrap gap-10 justify-content-between align-items">
@@ -343,7 +365,7 @@ const Home = () => {
                   <div className="embed-responsive embed-responsive-16by9 position-relative" style={{ paddingTop: "56.25%" }}>
                     <iframe
                       loading="lazy"
-                      title="THU HANG GLASS - CÔNG TY HÀ AN PHÁT"
+                      title="THU HẰNG THĂM CƠ SỞ SX ĐÁ MINH QUỲNH VĨNH PHÚC - PHÚ THỌ."
                       style={{
                         position: "absolute",
                         top: 0,
@@ -362,7 +384,7 @@ const Home = () => {
                   <div className="embed-responsive embed-responsive-16by9 position-relative" style={{ paddingTop: "56.25%" }}>
                     <iframe
                       loading="lazy"
-                      title="THU HẰNG THĂM CƠ SỞ SX ĐÁ MINH QUỲNH VĨNH PHÚC - PHÚ THỌ."
+                      title="CHÚC MỪNG NĂM 2023 - KHAI XUÂN CÔNG TY HÀ AN PHÁT  -  THU HẰNG GLASS HÀ NỘI VIỆT NAM"
                       style={{
                         position: "absolute",
                         top: 0,
@@ -370,7 +392,7 @@ const Home = () => {
                         width: "100%",
                         height: "100%",
                       }}
-                      src="https://www.youtube.com/embed/zN6E51fkvlE?feature=oembed"
+                      src="https://www.youtube.com/embed/b4M4Fz1jMsg?feature=oembed"
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       allowFullScreen=""
@@ -457,16 +479,12 @@ const Home = () => {
                           {item?.image?.length > 0 && (
                             <>
                               <img
-                                width={400}
-                                height={400}
                                 src={item?.image?.[0]?.path}
                                 className="img-fluid mx-auto"
                                 alt="product-image"
                               />
                               {item?.image?.length > 1 && (
                                 <img
-                                  width={400}
-                                  height={400}
                                   src={item?.image?.[1]?.path}
                                   className="img-fluid mx-auto"
                                   alt="product image"
@@ -474,8 +492,6 @@ const Home = () => {
                               )}
                               {item?.image?.length === 1 && (
                                 <img
-                                  width={400}
-                                  height={400}
                                   src={item?.image?.[0]?.path}
                                   className="img-fluid mx-auto"
                                   alt="product image"
@@ -496,7 +512,7 @@ const Home = () => {
                             edit={false}
                             activeColor="#ffd700"
                           /> */}
-                        <p className="price" style={{}}>{formatCurrencyVND(item?.price)}</p>
+                        {/* <p className="price" style={{}}>{formatCurrencyVND(item?.price)}</p> */}
                       </div>
                       <div className="action-bar position-absolute">
                         <div className="d-flex flex-column gap-15">
@@ -547,9 +563,9 @@ const Home = () => {
       <section className="popular-wrapper py-5 home-wrapper-2">
         <div className="container-xxl">
           <div className="row ">
-            <div className="col-12">
+            {/* <div className="col-12">
               <h3 className="section-heading">Our Popular Products</h3>
-            </div>
+            </div> */}
             <div className="row ">
               {productState &&
                 productState

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable no-script-url */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -8,14 +9,15 @@ import ReactStars from "react-stars";
 import BreadCrumb from "../../components/BreadCrumb";
 import Meta from "../../components/Meta";
 
+import { Divider, Radio } from "antd";
 import Color from "components/Color";
+import InformPrice from "components/InformPrice";
+import ScrollToTopOnMount from "components/ScrollToTopOnMount";
+import { Tab } from "components/Tabs/Tabs";
 import { getModels } from "features/models/modelsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import {
-  getAProduct, resetState,
-} from "../../features/product/productSlice";
 import {
   addRating,
 } from "../../features/customer/products/productSlice";
@@ -23,10 +25,9 @@ import {
   addProdToCart,
   getUserCart,
 } from "../../features/customer/user/authSlice";
-import { Button, Divider, Radio } from "antd";
-import { formatCurrencyVND } from "utils/formator";
-import { AiOutlineHeart } from "react-icons/ai";
-import { Tab } from "components/Tabs/Tabs";
+import {
+  getAProduct, getProducts, resetState,
+} from "../../features/product/productSlice";
 import { paymentInfo } from "./constant";
 
 const SingleProduct = () => {
@@ -35,6 +36,7 @@ const SingleProduct = () => {
   const [alreadyAddCart, setAlreadyAddCart] = useState(false);
   const [star, setStar] = useState(null);
   const [comment, setComment] = useState(null);
+  const productsState = useSelector((state) => state.product.products);
 
   const location = useLocation();
   const getProductId = location.pathname.split("/")[2];
@@ -47,7 +49,7 @@ const SingleProduct = () => {
   const userState = useSelector((state) => state?.auth.user);
   const fullname = userState?.firstname + " " + userState?.lastname;
   const modelState = useSelector((state) => state.models.models);
-
+  const [openInformPrice, setOpenInformPrice] = useState(false);
   const [selectedModelColor, setSelectedModelColor] = useState("");
 
   useEffect(() => {
@@ -74,7 +76,7 @@ const SingleProduct = () => {
     return () => {
       dispatch(resetState());
     }
-  }, []);
+  }, [getProductId]);
 
   useEffect(() => {
     for (let index = 0; index < cartState?.length; index++) {
@@ -82,7 +84,7 @@ const SingleProduct = () => {
         setAlreadyAddCart(true);
       }
     }
-  });
+  }, [cartState]);
   const hexToRgb = (hex) => {
     hex = hex.replace("#", "");
     const r = parseInt(hex.substring(0, 2), 16);
@@ -98,6 +100,8 @@ const SingleProduct = () => {
     dispatch(getAProduct(getProductId));
     dispatch(getUserCart());
     dispatch(getModels(getProductId));
+    dispatch(getProducts(1));
+
   };
 
   const uploadCart = () => {
@@ -185,8 +189,9 @@ const SingleProduct = () => {
 
   return (
     <>
+      <ScrollToTopOnMount key={getProductId} />
       <Meta title={"Chi tiết sản phẩm"} />
-      <BreadCrumb title={productState?.productName} />
+      <BreadCrumb title={productState?.productName} imageUrl={productState?.image} />
       <div className="main-product-wrapper home-wrapper-2 py-5">
         <div className="container-xxl">
           <div className="row">
@@ -195,12 +200,10 @@ const SingleProduct = () => {
                 <div
                   className="main-product-image-main"
                   style={{
-                    // width: "500px",
-                    // height: "500px",
                     width: "100%",
                     height: "100%",
                     position: "relative",
-                    zIndex: 1,
+                    zIndex: 100,
                   }}
                 >
                   <ReactImageMagnify
@@ -280,13 +283,13 @@ const SingleProduct = () => {
                             {/* <p className="mb-0 t-review">(2 Reviews)</p> */}
                           </div>
                         </div>
-                        <div className=" py-2 mt-2 mb-4" style={{ backgroundColor: "#f9f9f9" }}>
-                          <p className="price mb-0 fw-bold mx-2" style={{
-                            fontSize: "26px",
-                            color: "#e65e51"
+                        {/* <div className=" py-2 mt-2 mb-4" style={{ backgroundColor: "#f9f9f9" }}>
+                            <p className="price mb-0 fw-bold mx-2" style={{
+                              fontSize: "26px",
+                              color: "#e65e51"
 
-                          }}> {formatCurrencyVND(model?.primaryPrice || 0)}</p>
-                        </div>
+                            }}> {formatCurrencyVND(model?.primaryPrice || 0)}</p>
+                          </div> */}
 
 
                         <div className="border-bottom py-3">
@@ -323,7 +326,7 @@ const SingleProduct = () => {
                               <h3 className="product-data">Hết hàng</h3>
                             )}
                           </div>
-                          <div className="d-flex gap-15 align-items-center flex-row my-2 mb-3">
+                          {/* <div className="d-flex gap-15 align-items-center flex-row my-2 mb-3">
                             {alreadyAddCart === false &&
                               model?.available > 0 && (
                                 <>
@@ -375,15 +378,8 @@ const SingleProduct = () => {
                                 </a>
                               )}
                             </div>
-                          </div>
-                          <div className="d-flex align-items-center gap-15">
-                            <div>
-                              <a href="">
-                                <AiOutlineHeart className="fs-5 me-2" />
-                                Yêu thích
-                              </a>
-                            </div>
-                          </div>
+                          </div> */}
+
                           <div className="d-flex gap-10 flex-column my-3">
                             <h3 className="product-heading text-muted">
                               Vận Chuyển & Hoàn Trả:
@@ -391,6 +387,23 @@ const SingleProduct = () => {
                             <p class="product-data">
                               Free Shipping and returns available on all orders!
                             </p>
+                          </div>
+                          <div className="d-flex align-items-center gap-15">
+                            <div>
+                              <button
+                                className="button border-0"
+                                type="button"
+                                onClick={() => {
+                                  setOpenInformPrice(true);
+                                }}
+                              >
+                                Nhận Báo Giá
+                              </button>
+                              {/* <a href="">
+                                <AiOutlineHeart className="fs-5 me-2" />
+                                Yêu thích
+                              </a> */}
+                            </div>
                           </div>
                           {/* <div className="d-flex gap-10 align-items-center my-3">
                             <h3 className="product-heading text-muted">Copy Product Link </h3>
@@ -426,6 +439,7 @@ const SingleProduct = () => {
           </div>
         </div>
       </div>
+
       <section className="reviews-wrapper home-wrapper-2 py-5">
         <div className="container-xxl">
           <div className="row">
@@ -521,6 +535,69 @@ const SingleProduct = () => {
           </div>
         </div>
       </section>
+      <section className="featured-wrapper py-5 home-wrapper-2 mb-3">
+        <div className="container-xxl">
+          <div className="row ">
+            <div className="col-12">
+              <h4 className="">Các Sản Phẩm Khác của Hà An Phát</h4>
+            </div>
+            {productsState?.length ?
+              productsState?.filter((item) => item?.productId !== productState?.productId).slice(0, 4).map((item, index) => {
+                return (
+                  <div key={index} className={`${"col-3"}`}>
+                    <Link className="product-card-small position-relative">
+                      <Link
+                        to={"/product/" + item?.productId}
+                        className="product-card-small position-relative"
+                      >
+                        <div className="product-image">
+                          {item?.image?.length > 0 && (
+                            <>
+                              <img
+                                src={item?.image?.[0]?.path}
+                                className="img-fluid mx-auto"
+                                alt="product-image"
+                              />
+                              {item?.image?.length > 1 && (
+                                <img
+                                  src={item?.image?.[1]?.path}
+                                  className="img-fluid mx-auto"
+                                  alt="product image"
+                                />
+                              )}
+                              {item?.image?.length === 1 && (
+                                <img
+                                  src={item?.image?.[0]?.path}
+                                  className="img-fluid mx-auto"
+                                  alt="product image"
+                                />
+                              )}
+                            </>
+                          )}
+                        </div>
+                      </Link>
+
+                      <div className="product-details">
+                        <h6 className="brand">{item?.category?.categoryName}</h6>
+                        <h5 className="product-title">{item?.productName}</h5>
+                        {/* <ReactStars
+                            count={5}
+                            size={18}
+                            value={item?.voteStar?.toString()}
+                            edit={false}
+                            activeColor="#ffd700"
+                          /> */}
+                        {/* <p className="price" style={{}}>{formatCurrencyVND(item?.price)}</p> */}
+                      </div>
+
+                    </Link>
+                  </div>
+                );
+              }) : null}
+          </div>
+        </div>
+      </section>
+      <InformPrice isOpened={openInformPrice} onClose={() => setOpenInformPrice(false)} productId={productState?.productId} />
     </>
   );
 };

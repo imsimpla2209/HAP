@@ -118,7 +118,6 @@ const ProductCard = (props) => {
                       }`}
                     dangerouslySetInnerHTML={{ __html: item?.description }}
                   ></p>
-                  <p className="price">{formatCurrencyVND(item?.price)}</p>
                 </div>
                 <div className="action-bar position-absolute">
                   <div className="d-flex flex-column gap-15">
