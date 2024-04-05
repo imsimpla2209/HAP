@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios'
 
 export const instance = axios.create({
-  baseURL: 'http://haanphat.somee.com/api/',
+  baseURL: 'https://haanphat.somee.com/api/',
 });
 
 
