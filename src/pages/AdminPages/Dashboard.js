@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import { Column } from "@ant-design/plots";
+// import { Column } from "@ant-design/plots";
 import { Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -198,13 +198,13 @@ const Dashboard = () => {
         <div className="mt-4 flex-grow w-50">
           <h3 className="mb-5 title">Income Static</h3>
           <div>
-            <Column {...config} />
+            {/* <Column {...config} /> */}
           </div>
         </div>
         <div className="mt-4 flex-grow w-50">
           <h3 className="mb-5 title">Sales Static</h3>
           <div>
-            <Column {...config2} />
+            {/* <Column {...config2} /> */}
           </div>
         </div>
       </div>
