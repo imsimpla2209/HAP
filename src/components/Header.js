@@ -115,7 +115,9 @@ const Header = ({ history }) => {
         <div className="container-xxl">
           <div className="row">
             <div className="col-6">
-
+              <h5 className="gradient-yellow-text mb-0">
+                Hà An Phát
+              </h5>
             </div>
             <div className="col-6 text-end align-items-end d-flex justify-content-end gap-3">
               <div className="menu-links">
@@ -201,7 +203,7 @@ const Header = ({ history }) => {
                   placeholder="Tìm kiếm sản phẩm tại đây..."
                 />
                 <span className="input-group-text p-3" id="basic-addon2">
-                  <BsSearch className="fs-8" />
+                  <BsSearch className="fs-8 text-light" />
                 </span>
               </div>
             </div>
@@ -238,7 +240,7 @@ const Header = ({ history }) => {
 
                 <div>
                   <Badge showZero>
-                    <Tooltip title="Giỏ hàng" color={"#c44135"} key={"#c44135"}>
+                    <Tooltip title="Giỏ hàng" color={"#1597E5"} key={"#1597E5"}>
                       <Link to="cart" className="d-flex align-items-center gap-10">
                         <TiShoppingCart className="fs-4 black-text" />
                         <div className="d-flex flex-column">

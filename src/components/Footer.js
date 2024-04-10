@@ -11,7 +11,7 @@ const Footer = () => {
             <div className="col-5">
               <div className="footer-top-data d-flex gap-30 align-items-center">
                 <img src="images\newsletter.png" alt='newsleter' />
-                <h2 className='mb-0 text-white'>Đăng ký để nhận bản tin </h2>
+                <h2 className='mb-0 text-white'>Đăng ký để nhận báo giá </h2>
               </div>
             </div>
             <div className="col-7">
@@ -33,11 +33,11 @@ const Footer = () => {
       <footer className='footer py-3'>
         <div className="container-xxl">
           <div className="row">
-            <div className="col-4">
+            <div className="col-5">
               <h4 className='text-white mb-4'>Liên hệ</h4>
               <div >
                 <a className="text-white fs-6">Cửa hàng </a>
-                <address className="text-white py-2 mb-1"><br />Địa chỉ: 102 Vũ Phạm Hàm</address>
+                <address className="text-white py-2 mb-1"><br />Địa chỉ: 112 đường Nước Phần Lan, Tứ Liên, Tây Hồ, Hà Nội</address>
                 <a href="tel: +84345532150"
                   className="mt-4 d-block mb-2 text-white">Số điện thoại: +84345532150</a>
                 <a href="mailto: hdhien2002@gmail.com"
@@ -50,7 +50,7 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-            <div className="col-3">
+            <div className="col-4">
               <h4 className='text-white mb-4'>Thông tin</h4>
               <div className="footer-link d-flex flex-column">
                 <Link className="text-white py-2 mb-1">Chính sách bảo mật</Link>
@@ -65,23 +65,14 @@ const Footer = () => {
                 <Link className="text-white py-2 mb-1">Liên hệ</Link>
               </div>
             </div>
-            <div className="col-2">
-              <h4 class className="text-white py-2 mb-1">Đường dẫn nhanh</h4>
-              <div className="footer-link d-flex flex-column">
-                <Link className="text-white py-2 mb-1">Piano</Link>
-                <Link className="text-white py-2 mb-1">Guitar</Link>
-                <Link className="text-white py-2 mb-1">Organs</Link>
-                <Link className="text-white py-2 mb-1">Ukulele</Link>
-              </div>
-            </div>
           </div>
         </div>
       </footer>
       <footer className='footer py-4'>
         <div className='container-xxl'>
           <div className="row">
-            <div className="col-2 mb-0 text-white ">
-              <p className="text-center">&copy; {new Date().getFullYear()}; Powered by Me</p>
+            <div className="col-12 mb-0 text-white ">
+              <p className="text-end">&copy; {new Date().getFullYear()} Powered by Thu Hằng Glass</p>
             </div>
           </div>
         </div>

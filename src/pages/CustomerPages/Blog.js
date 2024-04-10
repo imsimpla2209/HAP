@@ -24,8 +24,8 @@ const Blog = () => {
 
   return (
     <>
-      <Meta title={"Blogs"} />
-      <BreadCrumb title="Blogs" />
+      <Meta title={"Bài Đăng"} />
+      <BreadCrumb title="Bài Đăng" />
       <div className="blog-wrapper home-wrapper-2 py-5">
         <div className="container-xxl">
           <div className="">
@@ -40,7 +40,7 @@ const Blog = () => {
                         postId={item?.postId}
                         title={item?.title}
                         content={item?.content}
-                        image = "https://img.freepik.com/premium-vector/global-network-connection-world-map-point-line-composition-concept-global-business-internet-technology-social-network-vector-illustration_230610-458.jpg"
+                        image="https://img.freepik.com/premium-vector/global-network-connection-world-map-point-line-composition-concept-global-business-internet-technology-social-network-vector-illustration_230610-458.jpg"
                       />
                     </div>
                   ))}

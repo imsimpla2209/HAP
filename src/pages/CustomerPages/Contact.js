@@ -25,7 +25,7 @@ const Contact = () => {
       name: "",
       comment: "",
       email: "",
-      mobile:""
+      mobile: ""
     },
     validationSchema: contactSchema,
     onSubmit: (values) => {
@@ -41,8 +41,8 @@ const Contact = () => {
   });
   return (
     <>
-      <Meta title={"Our Store"} />
-      <BreadCrumb title="Our Store" />
+      <Meta title={"Liên hệ"} />
+      <BreadCrumb title="Liên hệ" />
       <div className="contact-wrapper py-2 home-wrapper-2">
         <div className="container-xxl">
           <div className="row">
@@ -54,7 +54,7 @@ const Contact = () => {
                 loading="lazy"
                 allowfullscreen=""
                 referrerpolicy="no-referrer-when-downgrade"
-                src="https://maps.google.com/maps?q=102%20v%C5%A9%20ph%E1%BA%A1m%20h%C3%A0m&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.219151143882!2d105.83283957505729!3d21.0639075805942!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135aa50d6218a27%3A0x2f730346a4edc086!2zMTEyIE5nLiA1NiBQLiBU4bupIExpw6puLCBU4bupIExpw6puLCBUw6J5IEjhu5MsIEjDoCBO4buZaSAxMDAwMDAsIFZpZXRuYW0!5e0!3m2!1sen!2s!4v1712633926060!5m2!1sen!2s"
               ></iframe>
             </div>
             <div className="col-12 mt-5">
@@ -126,12 +126,12 @@ const Contact = () => {
                   </form>
                 </div>
                 <div>
-                  <h3 className="contact-title mb-4">Get in touch with us</h3>
+                  <h3 className="contact-title mb-4">Hãy liên lạc với chúng tôi</h3>
                   <div>
                     <ul className="ps-0">
                       <li className="mb-3 d-flex gap-15 align-items-center">
                         <AiOutlineHome className="fs-5" />
-                        <address className="mb-0">102 Vu Pham Ham</address>
+                        <address className="mb-0">112 đường Nước Phần Lan, Tứ Liên, Tây Hồ, Hà Nội</address>
                       </li>
                       <li className="mb-3 d-flex gap-15 align-items-center">
                         <BiPhoneCall className="fs-5" />
@@ -140,12 +140,12 @@ const Contact = () => {
                       <li className="mb-3 d-flex gap-15 align-items-center">
                         <AiOutlineMail className="fs-5" />
                         <a href="mailto:hdhien2002@gmail.com">
-                          hdhien2002@gmail.com
+                          haanphatgroup@gmail.com
                         </a>
                       </li>
                       <li className="mb-3 d-flex gap-15 align-items-center">
                         <BiInfoCircle className="fs-5" />
-                        <p className="mb-0">Monday - Friday 10Am-8PM</p>
+                        <p className="mb-0">Thứ 2 - Thứ 7, 10am-8pm</p>
                       </li>
                     </ul>
                   </div>

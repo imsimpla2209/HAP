@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../features/customer/user/authSlice";
 import { useNavigate } from "react-router-dom";
+import { authService } from "features/customer/user/authService";
 
 const signUpSchema = yup.object({
   firstname: yup.string().required("Yêu cầu nhập tên"),
@@ -30,9 +31,14 @@ function Signup() {
       password: "",
     },
     validationSchema: signUpSchema,
-    onSubmit: (values) => {
-      dispatch(registerUser(values));
-      navigate("/login");
+    onSubmit: async (values) => {
+      // dispatch(registerUser(values));
+      try {
+        await authService.register(values);
+        navigate("/login");
+      } catch (error) {
+
+      }
     },
   });
   useState(() => {

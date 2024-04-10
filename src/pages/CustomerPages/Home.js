@@ -211,7 +211,7 @@ const Home = () => {
                 </div>
               </div> */}
               <div className="row mx-0 py-3 px-4" style={{
-                background: '#ce1a1a',
+                background: '#193498',
 
               }}>
                 <div className="col-8 d-flex align-items-center">
