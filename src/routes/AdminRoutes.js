@@ -39,7 +39,7 @@ import WarehouseList from 'pages/AdminPages/Warehouse/WarehouseList';
 function AdminRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<OpenRoutes><Login /> </OpenRoutes>} />
+      <Route path="/" element={<OpenRoutes> </OpenRoutes>} />
       <Route path="/admin" element={<MainLayout />} >
         <Route index element={<Dashboard />} />
         <Route path="product" element={<Addproduct />} />
