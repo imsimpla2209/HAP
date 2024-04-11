@@ -12,16 +12,17 @@ const SpecialProduct = (props) => {
     quantity,
     collectionId,
     image,
+    width,
   } = props;
   // console.log(quantity)
   // console.log("sold",sold)
   return (
-    <div className="col-6 mb-3">
+    <div className={`${width ? '' : 'col-6'} mb-3`} style={{ width: width || 'auto' }}>
       <div className="special-product-card">
         <div className="d-flex justify-content-between">
           <div>
             <img
-              src="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/307773363_500749115391640_3906085054103576647_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFWrlNaYkQUo1Pk0ZnwCdwz10djKjD-dFrXR2MqMP50Wk-rHiPTsE-YhYCE3kOkIkJ6TnOi8yVQwmLYY_Z604U3&_nc_ohc=pDdhRtfhiBIAX_bZsaY&_nc_ht=scontent.fhan2-3.fna&oh=00_AfBEv8jcaxN7_uL0fCztGywUuGG9ZLBwVWkZScLAsGK9Cg&oe=65FEF101"
+              src={image}
               style={{ width: "300px", height: "300px" }}
               className="img-fluid special-img"
               alt="watch"
@@ -64,7 +65,7 @@ const SpecialProduct = (props) => {
                 ></div>
               </div> */}
             </div>
-            <Link className="button" to={"/product/" + collectionId}>
+            <Link className="button" to={"/collection/" + collectionId}>
               Xem chi tiết
             </Link>
           </div>

@@ -54,17 +54,16 @@ const Dashboard = () => {
   const [orderData, setOrderData] = useState([])
 
   const getTokenFromLocalStorage = localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user"))
-  : null;
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
 
- const config3 = {
-  headers: {
-    Authorization: `Bearer ${
-      getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
-    }`,
-    Accept: "application/json",
-  },
-};
+  const config3 = {
+    headers: {
+      Authorization: `Bearer ${getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+        }`,
+      Accept: "application/json",
+    },
+  };
 
   useEffect(() => {
     dispatch(getMonthlyData(config3));
@@ -74,7 +73,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     let monthNames = [
-      
+
       "January",
       "February",
       "March",
@@ -108,10 +107,10 @@ const Dashboard = () => {
     for (let i = 0; i < ordersState?.length; i++) {
       data1.push({
         key: i,
-        name: ordersState[i]?.user?.firstname + " "+  ordersState[i]?.user?.lastname,
+        name: ordersState[i]?.user?.firstname + " " + ordersState[i]?.user?.lastname,
         product: ordersState[i]?.orderItems?.length,
-        price:ordersState[i]?.totalPrice,
-        dprice:ordersState[i]?.totalPriceAfterDiscount,
+        price: ordersState[i]?.totalPrice,
+        dprice: ordersState[i]?.totalPriceAfterDiscount,
         status: ordersState[i]?.orderStatus,
       });
     }
@@ -168,52 +167,222 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
+    // <div>
+    //   <h3 className="mb-4 title">Dashboard</h3>
+    //   <div className="d-flex justify-content-between align-items-center gap-3">
+    //     <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3">
+    //       <div>
+    //         <p className="mb-0 desc">Total revenue</p>
+    //         <h4 className="mb-0 sub-title">
+    //           $ {yearlyDataState && yearlyDataState[0]?.amount}
+    //         </h4>
+    //       </div>
+    //       <div className="d-flex flex-column align-items-end">
+    //         <p className="mb-0 desc">Income in Last Year from Today</p>
+    //       </div>
+    //     </div>
+    //     <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3">
+    //       <div>
+    //         <p className="mb-0 desc">Total Sales</p>
+    //         <h4 className="mb-0 sub-title">
+    //           {yearlyDataState && yearlyDataState[0]?.count}
+    //         </h4>
+    //       </div>
+    //       <div className="d-flex flex-column align-items-end">
+    //         <p className="mb-0 desc">Sales in Last Year from Today</p>
+    //       </div>
+    //     </div>
+    //   </div>
+    //   <div className="d-flex justify-content-between gap-3">
+    //     <div className="mt-4 flex-grow w-50">
+    //       <h3 className="mb-5 title">Income Static</h3>
+    //       <div>
+    //         {/* <Column {...config} /> */}
+    //       </div>
+    //     </div>
+    //     <div className="mt-4 flex-grow w-50">
+    //       <h3 className="mb-5 title">Sales Static</h3>
+    //       <div>
+    //         {/* <Column {...config2} /> */}
+    //       </div>
+    //     </div>
+    //   </div>
+    //   <div className="mt-4">
+    //     <h3 className="mb-4 title">Recent Orders</h3>
+    //     <Table columns={columns} dataSource={orderData} />
+    //   </div>
+
+    // </div>
+    <main role="main" className="col-md-9 ml-sm-auto col-lg-12 px-4">
       <h3 className="mb-4 title">Dashboard</h3>
-      <div className="d-flex justify-content-between align-items-center gap-3">
-        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3">
-          <div>
-            <p className="mb-0 desc">Total revenue</p>
-            <h4 className="mb-0 sub-title">
-              $ {yearlyDataState && yearlyDataState[0]?.amount}
-            </h4>
-          </div>
-          <div className="d-flex flex-column align-items-end">
-            <p className="mb-0 desc">Income in Last Year from Today</p>
+
+      <div className="row mb-3">
+        <div className="col-xl-3 col-sm-6 py-2">
+          <div className="card bg-success text-white h-100">
+            <div className="card-body bg-success">
+              <div className="rotate">
+                <i className="fa fa-user fa-4x"></i>
+              </div>
+              <h6 className="text-uppercase">Người Dùng</h6>
+              <h1 className="display-4">134</h1>
+            </div>
           </div>
         </div>
-        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3">
-          <div>
-            <p className="mb-0 desc">Total Sales</p>
-            <h4 className="mb-0 sub-title">
-              {yearlyDataState && yearlyDataState[0]?.count}
-            </h4>
+        <div className="col-xl-3 col-sm-6 py-2">
+          <div className="card text-white bg-danger h-100">
+            <div className="card-body bg-danger">
+              <div className="rotate">
+                <i className="fa fa-list fa-4x"></i>
+              </div>
+              <h6 className="text-uppercase">Bài Viết</h6>
+              <h1 className="display-4">87</h1>
+            </div>
           </div>
-          <div className="d-flex flex-column align-items-end">
-            <p className="mb-0 desc">Sales in Last Year from Today</p>
+        </div>
+        <div className="col-xl-3 col-sm-6 py-2">
+          <div className="card text-white bg-info h-100">
+            <div className="card-body bg-info">
+              <div className="rotate">
+                <i className="fa fa-cubes fa-4x"></i>
+              </div>
+              <h6 className="text-uppercase">Sản Phẩm</h6>
+              <h1 className="display-4">125</h1>
+            </div>
+          </div>
+        </div>
+        <div className="col-xl-3 col-sm-6 py-2">
+          <div className="card text-white bg-warning h-100">
+            <div className="card-body">
+              <div className="rotate">
+                <i className="fa fa-share fa-4x"></i>
+              </div>
+              <h6 className="text-uppercase">Liên Hệ</h6>
+              <h1 className="display-4">36</h1>
+            </div>
           </div>
         </div>
       </div>
-      <div className="d-flex justify-content-between gap-3">
-        <div className="mt-4 flex-grow w-50">
-          <h3 className="mb-5 title">Income Static</h3>
-          <div>
-            {/* <Column {...config} /> */}
+
+
+
+      <h2>Recent Subscribers</h2>
+      <nav aria-label="Subscribers Pagination">
+        <ul className="pagination float-right">
+          <li className="page-item"><a className="page-link" href="#">Previous</a></li>
+          <li className="page-item"><a className="page-link" href="#">1</a></li>
+          <li className="page-item"><a className="page-link" href="#">2</a></li>
+          <li className="page-item"><a className="page-link" href="#">3</a></li>
+          <li className="page-item"><a className="page-link" href="#">Next</a></li>
+        </ul>
+      </nav>
+      <div className="table-responsive">
+
+
+
+        <div className="card">
+
+          <div className="card-body p-0">
+            <table className="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>First name</th>
+                  <th>Last name</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>tori.kelly@gmail.com</td>
+                  <td>Lorem</td>
+                  <td>ipsum</td>
+                  <td>ipsum</td>
+
+                </tr>
+                <tr>
+                  <td>1,002</td>
+                  <td>amet</td>
+                  <td>consectetur</td>
+                  <td>adipiscing</td>
+                </tr>
+                <tr>
+                  <td>1,003</td>
+                  <td>Integer</td>
+                  <td>nec</td>
+                  <td>odio</td>
+                </tr>
+                <tr>
+                  <td>1,003</td>
+                  <td>libero</td>
+                  <td>Sed</td>
+                  <td>cursus</td>
+                </tr>
+                <tr>
+                  <td>1,004</td>
+                  <td>dapibus</td>
+                  <td>diam</td>
+                  <td>Sed</td>
+                </tr>
+                <tr>
+                  <td>1,005</td>
+                  <td>Nulla</td>
+                  <td>quis</td>
+                  <td>sem</td>
+                </tr>
+                <tr>
+                  <td>1,006</td>
+                  <td>nibh</td>
+                  <td>elementum</td>
+                  <td>imperdiet</td>
+                </tr>
+                <tr>
+                  <td>1,007</td>
+                  <td>sagittis</td>
+                  <td>ipsum</td>
+                  <td>Praesent</td>
+                </tr>
+                <tr>
+                  <td>1,008</td>
+                  <td>Fusce</td>
+                  <td>nec</td>
+                  <td>tellus</td>
+                </tr>
+                <tr>
+                  <td>1,009</td>
+                  <td>augue</td>
+                  <td>semper</td>
+                  <td>porta</td>
+                </tr>
+                <tr>
+                  <td>1,010</td>
+                  <td>massa</td>
+                  <td>Vestibulum</td>
+                  <td>lacinia</td>
+                </tr>
+
+              </tbody>
+            </table>
+
+
+
+
           </div>
         </div>
-        <div className="mt-4 flex-grow w-50">
-          <h3 className="mb-5 title">Sales Static</h3>
-          <div>
-            {/* <Column {...config2} /> */}
-          </div>
-        </div>
+
       </div>
-      <div className="mt-4">
-        <h3 className="mb-4 title">Recent Orders</h3>
-        <Table columns={columns} dataSource={orderData} />
-      </div>
-    
-    </div>
+
+      <nav aria-label="Subscribers Pagination">
+        <ul className="pagination float-right">
+          <li className="page-item"><a className="page-link" href="#">Previous</a></li>
+          <li className="page-item"><a className="page-link" href="#">1</a></li>
+          <li className="page-item"><a className="page-link" href="#">2</a></li>
+          <li className="page-item"><a className="page-link" href="#">3</a></li>
+          <li className="page-item"><a className="page-link" href="#">Next</a></li>
+        </ul>
+      </nav>
+
+
+    </main>
   );
 };
 

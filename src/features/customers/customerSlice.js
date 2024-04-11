@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import customerService from "./customerService";
+import { authService } from "features/customer/user/authService";
 
 
 const initialState = {
@@ -14,7 +15,7 @@ export const getUsers = createAsyncThunk(
   "customer/get-customers",
   async (thunkAPI) => {
     try {
-      return await customerService.getUsers();
+      return await authService.getUsers();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -33,7 +34,7 @@ export const customerSlice = createSlice({
       .addCase(getUsers.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.customers = action.payload
+        state.users = action.payload
         state.message = "success"
       })
       .addCase(getUsers.rejected, (state, action) => {

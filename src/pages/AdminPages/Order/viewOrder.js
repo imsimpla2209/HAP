@@ -19,7 +19,7 @@ const ViewOrder = () => {
 
   return (
     <div>
-      <h3 className="mb-4 title">View Order</h3>
+      <h3 className="mb-4 title">Danh Sách Đơn Hnagf</h3>
 
       <div class="table-order-detail">
         <table class="m-0 table table-sm">
@@ -68,7 +68,7 @@ const ViewOrder = () => {
                 <div class="d-flex flex-column gap-3">
                   <span>{orderState?.totalPrice}</span>
                   <span>
-                  <span>{displayDiscount}</span>
+                    <span>{displayDiscount}</span>
                     {/* {orderState?.totalPrice -
                       orderState?.totalPriceAfterDiscount} */}
                   </span>

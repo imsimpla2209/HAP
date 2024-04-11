@@ -64,11 +64,11 @@ const Addblogcat = () => {
   return (
     <div>
       <h3 className="mb-4 title">
-        {getBlogcatId !== undefined ? "Edit" : "Add"} Blog
+        {getBlogcatId !== undefined ? "Edit" : "Add"} Bài Viết
       </h3>
       <div className="form-group">
         <form action="" onSubmit={formik.handleSubmit} className="add-product-form">
-        <label htmlFor="title">Blog category Title</label>
+          <label htmlFor="title">Blog category Title</label>
           <CustomInput
             type="text"
             id="title"

@@ -549,9 +549,9 @@ const Home = () => {
                     description={item?.description}
                     collectionName={item?.collectionName}
                     quantity={10}
-                  // sold={3}
-                  // price={200}
-                  // image="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/307773363_500749115391640_3906085054103576647_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFWrlNaYkQUo1Pk0ZnwCdwz10djKjD-dFrXR2MqMP50Wk-rHiPTsE-YhYCE3kOkIkJ6TnOi8yVQwmLYY_Z604U3&_nc_ohc=pDdhRtfhiBIAX_bZsaY&_nc_ht=scontent.fhan2-3.fna&oh=00_AfBEv8jcaxN7_uL0fCztGywUuGG9ZLBwVWkZScLAsGK9Cg&oe=65FEF101"
+                    // sold={3}
+                    // price={200}
+                    image={item?.thumbnail ? item?.thumbnail : "https://st4.depositphotos.com/1393072/39779/v/450/depositphotos_397791404-stock-illustration-tool-box-line-icon-house.jpg"}
                   // totalrating={3}
                   />
                 );

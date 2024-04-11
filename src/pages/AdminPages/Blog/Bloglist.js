@@ -45,7 +45,7 @@ const Bloglist = () => {
     dispatch(getBlogs());
     // dispatch(getBlogcats())  
   }, [dispatch]);
-  
+
   const deleteABlog = (e) => {
     dispatch(deleteBlog(e));
     setOpen(false);
@@ -56,7 +56,7 @@ const Bloglist = () => {
 
   const blogstate = useSelector((state) => state.blog.blogs);
 
-  
+
   const data1 = [];
   console.log(blogstate)
   for (let i = 0; i < blogstate.length; i++) {
@@ -86,7 +86,7 @@ const Bloglist = () => {
 
   return (
     <div>
-      <h3 className="mb-4 title">blog List</h3>
+      <h3 className="mb-4 title">Danh Sách Bài Đăng</h3>
       <Table columns={columns} dataSource={data1} />
       <CustomModal
         hideModal={hideModal}

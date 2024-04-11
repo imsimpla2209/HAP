@@ -1,117 +1,91 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import BreadCrumb from "../../components/BreadCrumb";
 import Meta from "../../components/Meta";
 import ProductCard from "../../components/ProductCard";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../../features/customer/products/productSlice";
 import { getBrands } from "../../features/customer/brand/brandSlice";
 import { getCategorys } from "../../features/customer/category/categorySlice";
 import { getProducts } from "features/product/productSlice";
+import productService from "features/product/productService";
+import { Button, Pagination } from "antd";
+import { getCollections } from "features/collections/collectionsSlice";
+import SpecialProduct from "components/SpecialProduct";
+import ScrollToTopOnMount from "components/ScrollToTopOnMount";
 
 
 
 const OurStore = () => {
   const [grid, setGrid] = useState(4);
-  // const productState = useSelector((state) => state?.product?.product);
-  const brandState = useSelector((state) => state.brand.brands);
   const categoryState = useSelector((state) => state.category.categorys);
-  const productState = useSelector((state) => state.product.products);
+  const collectionsState = useSelector((state) => state.collections.collections);
   const dispatch = useDispatch();
-
-  const [brand, setBrand] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [tags, setTags] = useState([]);
+  const [products, setProducts] = useState([]);
 
   //Filter State
-  const [brands, setBrands] = useState(null);
+  const [collection, setSelectedCollection] = useState(null);
   const [pcategories, setCategory] = useState(null);
-  const [tag, setTag] = useState(null);
-  const [minPrice, setMinPrice] = useState(null);
-  const [maxPrice, setMaxPrice] = useState(null);
   const [sort, setSort] = useState(null);
+  const [viewCollectionMode, setViewCollectionMode] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(3);
 
   useEffect(() => {
-    dispatch(getBrands());
     dispatch(getCategorys());
-    getProducts();
+    dispatch(getCollections());
   }, []);
 
   useEffect(() => {
-    dispatch(getProducts(1));
+    productService.getProducts(0).then((res) => {
+      setProducts(res);
+    })
   }, [dispatch]);
 
-  const totalProducts = productState ? productState.length : 0;
-  useEffect(() => {
-    let newBrand = [];
-    let newCategories = [];
-    let newTags = [];
-    for (let i = 0; i < productState.length; i++) {
-      const element = productState[i];
-      // for (let i = 0; i < brandState.length; i++) {
-      //   const brand = brandState[i];
-      //   newBrand.push(brand?._id);
-      // }
-      // for (let k = 0; k < categoryState.length; k++) {
-      //   const categories = categoryState[k];
-      //   newCategories.push(categories?._id);
-      // }
-      newCategories.push(element.pcategories);
-      newBrand.push(element.brands);
-      newTags.push(element.tags);
-    }
-
-    setCategories(newCategories);
-    setTags(newTags);
-    setBrand(newBrand);
-  }, [productState]);
-
-  useEffect(() => {
-    getProducts();
-  }, [sort, tag, brands, pcategories, minPrice, maxPrice, currentPage]);
-
-  // const getProducts = () => {
-  //   dispatch(
-  //     getAllProducts(1)
-  //   );
-  // };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
-    }
+  const onChangePage = (page) => {
+    setCurrentPage(page);
   };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage((prevPage) => prevPage + 1);
+  const filteredProducts = useMemo(() => {
+    let productsFiltered = products?.slice(currentPage * 12 - 12, currentPage * 12)
+    if (sort?.includes("productName")) {
+      productsFiltered = productsFiltered?.sort((a, b) => (sort?.startsWith("-") ? -1 : 1) * a.productName.localeCompare(b.productName))
     }
-  };
+    if (pcategories) {
+      productsFiltered = productsFiltered?.filter(product => product.category?.categoryName === pcategories?.categoryName)
+    }
+    if (collection) {
+      productsFiltered = productsFiltered?.filter(product => product?.collection?.find(item => item?.collectionId === collection?.collectionId))
+    }
+    return productsFiltered
+  }, [sort, currentPage, pcategories, products, collection])
+
+  const filteredCollections = useMemo(() => {
+    if (!viewCollectionMode) return collectionsState
+    let filteredCollections = collectionsState?.slice(currentPage * 12 - 12, currentPage * 12)
+    if (sort?.includes("productName")) {
+      filteredCollections = filteredCollections?.sort((a, b) => (sort?.startsWith("-") ? -1 : 1) * a.collectionName.localeCompare(b.collectionName))
+    }
+    return filteredCollections
+  }, [sort, currentPage, pcategories, products, collection])
 
   return (
     <>
-      <Meta title={"Our Store"} />
+      <ScrollToTopOnMount />
+      <Meta title={"Gian Hàng"} />
       <BreadCrumb title="Gian Hàng" />
       <div className="store-wrapper home-wrapper-2 py-5">
         <div className="container-xxl">
           <div className="row">
             <div className="col-3">
-              <div className="filter-card mb-3">
+              {!viewCollectionMode && <div className="filter-card mb-3">
                 <h3 className="filter-title">Lọc Theo Danh Mục</h3>
                 <div>
                   <div className="product-tags d-flex flex-wrap align-content-center gap-10">
-                    {categories &&
-                      [...new Set(categories)].map((item, index) => {
-                        const categoryInfo = categoryState.find(
-                          (categoryItem) => categoryItem._id === item
-                        );
-
+                    {categoryState &&
+                      [...new Set(categoryState)].map((item, index) => {
                         return (
                           <span
                             key={index}
@@ -121,15 +95,21 @@ const OurStore = () => {
                             className={`btn ${pcategories === item ? "btn-primary" : "btn-light"
                               } fst-italic py-2 px-3`}
                           >
-                            {categoryInfo ? categoryInfo.categoryName : ""}
+                            {item ? item.categoryName : ""}
                           </span>
                         );
                       })}
                   </div>
                 </div>
-              </div>
-              <div className="filter-card mb-3">
-                <h3 className="filter-title">Filter By</h3>
+              </div>}
+              {
+                viewCollectionMode && <div className="filter-card mb-3">
+                  <h3 className="filter-title">Bộ Sản Phẩm</h3>
+                  <Button type="primary" onClick={() => setViewCollectionMode(false)}>Trở về danh sách sản phẩm</Button>
+                </div>
+              }
+              {/* <div className="filter-card mb-3">
+                <h3 className="filter-title">Locj</h3>
                 <div>
                   <h5 className="sub-title">Price</h5>
                   <div className="d-flex align-items-center gap-10">
@@ -155,62 +135,43 @@ const OurStore = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="filter-card mb-3">
-                <h3 className="filter-title">Product Brands</h3>
-                <div>
-                  <div className="product-tags d-flex flex-wrap align-content-center gap-10">
-                    {brand &&
-                      [...new Set(brand)].map((item, index) => {
-                        const brandInfo = brandState.find(
-                          (brandItem) => brandItem._id === item
-                        );
+              </div> */}
+              {
+                !viewCollectionMode && <div className="filter-card mb-3">
+                  <div className="d-flex align-items-baseline justify-content-between">
+                    <h3 className="filter-title">Bộ Sản Phẩm</h3>
+                    <Button type="link" className="py-0" onClick={() => setViewCollectionMode(true)}>Xem Tất Cả</Button>
+                  </div>
+                  <div>
+                    <div className="product-tags d-flex flex-wrap align-content-center gap-10">
+                      {collectionsState &&
+                        [...new Set(collectionsState)]?.map((item, index) => {
 
-                        return (
-                          <span
-                            key={index}
-                            onClick={() =>
-                              setBrands(brands === item ? null : item)
-                            }
-                            // className="badge bg-light text-muted fst-italic py-2 px-3"
-                            className={`btn ${brands === item ? "btn-primary" : "btn-light"
-                              } fst-italic py-2 px-3`}
-                          >
-                            {brandInfo ? brandInfo.title : ""}
-                          </span>
-                        );
-                      })}
+                          return (
+                            <span
+                              key={index}
+                              onClick={() =>
+                                setSelectedCollection(collection?.collectionId === item?.collectionId ? null : item)
+                              }
+                              // className="badge bg-light text-muted fst-italic py-2 px-3"
+                              className={`btn ${collection?.collectionId === item?.collectionId ? "btn-primary" : "btn-light"
+                                } fst-italic py-2 px-3`}
+                            >
+                              {item ? item.collectionName : ""}
+                            </span>
+                          );
+                        })}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="filter-card mb-3">
-                <h3 className="filter-title">Product Tags</h3>
-                <div>
-                  <div className="product-tags d-flex flex-wrap align-content-center gap-10">
-                    {tags &&
-                      [...new Set(tags)].map((item, index) => {
-                        return (
-                          <span
-                            key={index}
-                            onClick={() => setTag(tag === item ? null : item)}
-                            // className="badge bg-light text-muted fst-italic py-2 px-3"
-                            className={`btn ${tag === item ? "btn-primary" : "btn-light"
-                              } fst-italic py-2 px-3`}
-                          >
-                            {item}
-                          </span>
-                        );
-                      })}
-                  </div>
-                </div>
-              </div>
+              }
             </div>
             <div className="col-9">
               <div className="filter-sort-grid">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="d-flex align-items-center gap-10">
                     <p className="mb-0 d-block" style={{ width: "100px" }}>
-                      Sort By:
+                      Sắp xếp theo:
                     </p>
                     <select
                       name=""
@@ -218,28 +179,22 @@ const OurStore = () => {
                       id=""
                       onChange={(e) => setSort(e.target.value)}
                     >
-                      <option value="title" selected="selected">
-                        Alphabetically, A-Z
+                      <option value="productName" selected="selected">
+                        Tên Sản Phẩm, A-Z
                       </option>
-                      <option value="-title" selected="selected">
-                        Alphabetically, Z-A
+                      <option value="-productName" selected="selected">
+                        Tên Sản Phẩm, Z-A
                       </option>
-                      <option value="price" selected="selected">
-                        Price, Low to High
-                      </option>
-                      <option value="-price" selected="selected">
-                        Price, High to Low
-                      </option>
-                      <option value="created" selected="selected">
-                        Date, old to new
+                      {/* <option value="created" selected="selected">
+                        Ngày Đăng, cũ nhất
                       </option>
                       <option value="-created" selected="selected">
-                        Date, new to old
-                      </option>
+                        Ngày Đăng, mới nhất
+                      </option> */}
                     </select>
                   </div>
                   <div className="d-flex align-items-center gap-10">
-                    <p className="total-products mb-0">{totalProducts} Sản Phẩm</p>
+                    <p className="total-products mb-0">{viewCollectionMode ? `Tất cả ${collectionsState?.length} bộ sản phẩm` : `Tất cả ${products?.length} sản phẩm`}</p>
                     <div className="d-flex gap-10 align-items-center grid">
                       <img
                         onClick={() => {
@@ -267,26 +222,42 @@ const OurStore = () => {
                         className="d-block img-fluid"
                         alt="grid"
                       />
-                      <img
+                      {/* <img
                         onClick={() => {
                           setGrid(12);
                         }}
                         src="images/gr4.svg"
                         className="d-block img-fluid"
                         alt="grid"
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
               </div>
               <div className="product-list pb-5">
                 <div className="d-flex gap-10 flex-wrap">
-                  <ProductCard
-                    data={productState ? productState : []}
+                  {!viewCollectionMode ? <ProductCard
+                    data={filteredProducts ? filteredProducts : []}
                     grid={grid}
-                  />
+                  /> : filteredCollections &&
+                  filteredCollections?.map((item, index) => {
+                    return (
+                      <SpecialProduct
+                        key={index}
+                        width={'49%'}
+                        collectionId={item?.collectionId}
+                        description={item?.description}
+                        collectionName={item?.collectionName}
+                        // sold={3}
+                        // price={200}
+                        image={item?.thumbnail ? item?.thumbnail : "https://st4.depositphotos.com/1393072/39779/v/450/depositphotos_397791404-stock-illustration-tool-box-line-icon-house.jpg"}
+                      // totalrating={3}
+                      />
+                    );
+                  })}
                 </div>
               </div>
+              <Pagination defaultCurrent={currentPage || 1} current={currentPage} total={products?.length} onChange={(page) => onChangePage(page)} />
 
             </div>
           </div>

@@ -113,19 +113,19 @@ const Enquiries = () => {
   };
   return (
     <div>
-    <h3 className="mb-4 title">Enquiries</h3>
-    <div>
-      <Table columns={columns} dataSource={data1} />
+      <h3 className="mb-4 title">Liên Hệ/Yêu Cầu Báo Giá</h3>
+      <div>
+        <Table columns={columns} dataSource={data1} />
+      </div>
+      <CustomModal
+        hideModal={hideModal}
+        open={open}
+        performAction={() => {
+          deleteEnq(enqId);
+        }}
+        title="Are you sure you want to delete this enquiry?"
+      />
     </div>
-    <CustomModal
-      hideModal={hideModal}
-      open={open}
-      performAction={() => {
-        deleteEnq(enqId);
-      }}
-      title="Are you sure you want to delete this enquiry?"
-    />
-  </div>
   );
 };
 

@@ -46,6 +46,13 @@ const getUser = async (id) => {
   }
 };
 
+const getUsers = async () => {
+  const response = await instance.get(`/Admin/users?page=0`, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
 const getUserProf = async () => {
   const response = await instance.get(`/Customer/my`, config);
   if (response.data) {
@@ -177,5 +184,6 @@ export const authService = {
   getOrder,
   updateOrder,
   updateUserPassword,
-  getUserProf
+  getUserProf,
+  getUsers
 };

@@ -50,7 +50,7 @@ const Blogcatlist = () => {
     }, 100);
   };
 
- 
+
   const blogcatstate = useSelector((state) => state.blogcat.blogcats);
   const data1 = [];
   for (let i = 0; i < blogcatstate.length; i++) {
@@ -77,7 +77,7 @@ const Blogcatlist = () => {
   }
   return (
     <div>
-      <h3 className="mb-4 title">Blogcat List</h3>
+      <h3 className="mb-4 title">Danh Sách Bài Đăng</h3>
       <Table columns={columns} dataSource={data1} />
       <CustomModal
         hideModal={hideModal}

@@ -121,9 +121,8 @@ export const collectionSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.collectionName = action.payload.collectionName;
-        state.Description = action.payload.description;
-        // state.collectionImages = action.payload.images;
+        state.singleCollection = action.payload;
+
       })
       .addCase(getACollection.rejected, (state, action) => {
         state.isLoading = false;

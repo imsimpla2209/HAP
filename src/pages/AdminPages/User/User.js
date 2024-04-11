@@ -1,45 +1,71 @@
-import React, { useEffect, useState } from "react";
-import { Table } from "antd";
+import { Table } from 'antd';
+import React, { useEffect, useRef, useState } from "react";
+import { AiFillDelete } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { getUsers } from "../../../features/customers/customerSlice";
-import { deleteAUser, updateUserRole } from "../../../features/auth/authSlice";
 import CustomModal from "../../../components/CustomModal";
+import { deleteAUser, updateUserRole } from "../../../features/auth/authSlice";
+import { getUsers } from "../../../features/customers/customerSlice";
+import { getColumnSearchProps } from 'utils'
 
-const columns = [
-  {
-    title: "SNo",
-    dataIndex: "key",
-  },
-  {
-    title: "Name",
-    dataIndex: "name",
-    sorter: (a, b) => a.name.length - b.name.length,
-  },
-  {
-    title: "Email",
-    dataIndex: "email",
-  },
-  {
-    title: "Mobile",
-    dataIndex: "mobile",
-  },
-  {
-    title: "Role",
-    dataIndex: "role",
-  },
-  {
-    title: "Action",
-    dataIndex: "action",
-  },
-];
+
 
 const User = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [userId, setUserId] = useState("");
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef(null);
+  const handleSearch = (
+    selectedKeys,
+    confirm,
+    dataIndex,
+  ) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setSearchText('');
+  };
+  const columns = [
+    {
+      title: "No.",
+      dataIndex: "key",
+    },
+    {
+      title: "Tên",
+      dataIndex: "name",
+      sorter: (a, b) => (a.firstName + " " + a.lastName).length - (b.firstName + " " + b.lastName).length,
+      ...getColumnSearchProps({ dataIndex: 'firstName', searchInput, setSearchText, searchedColumn, setSearchedColumn, handleSearch, handleReset, searchText })
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+    },
+    {
+      title: "Số Điện Thoại",
+      dataIndex: "phoneNumber",
+    },
+    {
+      title: "Role",
+      dataIndex: "role",
+    },
+    {
+      title: "Địa Chỉ",
+      dataIndex: "address",
+    },
+    {
+      title: "Hành Động",
+      dataIndex: "action",
+    },
+  ];
+
+
 
   const showModal = (e) => {
     setOpen(true);
@@ -64,23 +90,22 @@ const User = () => {
       dispatch(getUsers());
     }, 100);
   };
-  const customerstate = useSelector((state) => state.customer.customers);
+  const usersState = useSelector((state) => state.customer.users);
   const data1 = [];
-  console.log(customerstate[0]?._id)
-  console.log(customerstate[1]?._id)
   console.log(userId)
-  for (let i = 0; i < customerstate.length; i++) {
+  for (let i = 0; i < usersState?.length; i++) {
     data1.push({
       key: i + 1,
-      name: customerstate[i].firstname + " " + customerstate[i].lastname,
-      email: customerstate[i].email,
-      mobile: customerstate[i].mobile,
+      name: usersState[i].firstname + " " + usersState[i].lastname,
+      email: usersState[i].email,
+      mobile: usersState[i].mobile,
+      ...usersState,
       role: (
         <>
           <select
             name=""
-            defaultValue={customerstate[i]?.role}
-            onChange={(e) => updateRole(customerstate[i]?._id, e.target.value)}
+            defaultValue={usersState[i]?.role}
+            onChange={(e) => updateRole(usersState[i]?._id, e.target.value)}
             id=""
             className="form-control form-select"
           >
@@ -93,14 +118,14 @@ const User = () => {
         <>
           <Link
             className="ms-3 fs-3 text-danger"
-            to={`/admin/user/${customerstate[i]._id}`}
+            to={`/admin/user/${usersState[i]._id}`}
           >
             <BiEdit />
           </Link>
 
           <button
             className="ms-3 fs-3 text-danger bg-transparent border-0"
-            onClick={() => showModal(customerstate[i]._id)}
+            onClick={() => showModal(usersState[i]._id)}
           >
             <AiFillDelete />
           </button>
@@ -111,7 +136,7 @@ const User = () => {
 
   return (
     <div>
-      <h3 className="mb-4 title">User</h3>
+      <h3 className="mb-4 title">Người Dùng</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
         <CustomModal
@@ -120,7 +145,7 @@ const User = () => {
           performAction={() => {
             deleteUser(userId);
           }}
-          title="Are you sure you want to delete this brand?"
+          title="Xóa người dùng này?"
         />
       </div>
     </div>

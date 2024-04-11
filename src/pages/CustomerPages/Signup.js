@@ -1,13 +1,13 @@
+import { authService } from "features/customer/user/authService";
+import { useFormik } from "formik";
 import React, { useState } from "react";
-import Meta from "../../components/Meta";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
 import BreadCrumb from "../../components/BreadCrumb";
 import CustomInput from "../../components/CustomInput";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../../features/customer/user/authSlice";
-import { useNavigate } from "react-router-dom";
-import { authService } from "features/customer/user/authService";
+import Meta from "../../components/Meta";
+import { message } from "antd";
 
 const signUpSchema = yup.object({
   firstname: yup.string().required("Yêu cầu nhập tên"),
@@ -21,6 +21,7 @@ const signUpSchema = yup.object({
 
 function Signup() {
   const dispatch = useDispatch();
+  const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
   const authState = useSelector((state) => state.auth);
   const formik = useFormik({
@@ -37,7 +38,10 @@ function Signup() {
         await authService.register(values);
         navigate("/login");
       } catch (error) {
-
+        messageApi.open({
+          type: 'error',
+          content: `Đăng ký tài khoản thất bại!\n Chi tiết: ${error.message}`,
+        });
       }
     },
   });

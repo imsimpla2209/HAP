@@ -10,6 +10,7 @@ import { RiCouponLine } from "react-icons/ri"
 import { FaClipboardList, FaWarehouse } from "react-icons/fa";
 import { TbBrandBlogger, TbBrandBootstrap, TbCategory } from "react-icons/tb";
 import { BiSolidCollection } from "react-icons/bi";
+import { RiCustomerService2Line } from "react-icons/ri";
 
 import {
   AiOutlineDashboard,
@@ -33,10 +34,10 @@ const MainLayout = () => {
   const navigate = useNavigate();
   return (
     <Layout>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Sider trigger={null} collapsible collapsed={collapsed} style={{ minHeight: "100vh" }}>
         <div className="logo">
           <h2 className="text-white fs-5 text-center py-3 mb-0">
-            <span className="sm-logo">HAP</span>
+            <span className="sm-logo">Hà An Phát</span>
             <span className="lg-logo"></span>
           </h2>
         </div>
@@ -60,7 +61,7 @@ const MainLayout = () => {
             },
             {
               key: "customers",
-              icon: <AiOutlineUser className="fs-4" />,
+              icon: <RiCustomerService2Line className="fs-4" />,
               label: "Khách Hàng",
             },
             {
@@ -252,7 +253,7 @@ const MainLayout = () => {
           <Outlet />
         </Content>
       </Layout>
-    </Layout>
+    </Layout >
   );
 };
 
