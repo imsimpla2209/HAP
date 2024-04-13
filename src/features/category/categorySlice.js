@@ -58,10 +58,10 @@ export const updateCategory = createAsyncThunk(
 
 export const deleteCategory = createAsyncThunk(
   "category/delete-category",
-  async(id, thunkAPI)=>{
-    try{
+  async (id, thunkAPI) => {
+    try {
       return await categoryService.deleteCategory(id)
-    }catch (error) {
+    } catch (error) {
       return thunkAPI.rejectWithValue(error)
     }
   }
@@ -143,7 +143,7 @@ export const categorySlice = createSlice({
         state.isSuccess = false;
         state.message = action.error
         if (state.isError === true) {
-          toast.info("Something Error!");
+          toast.info("Có lỗi xảy ra vui lòng thử lại!");
         }
       })
       .addCase(deleteCategory.pending, (state) => {

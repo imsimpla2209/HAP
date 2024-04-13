@@ -109,7 +109,7 @@ export const colorSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error
         if (state.isError === true) {
-          toast.info("Something error");
+          toast.info(`Có lỗi xảy ra vui lòng thử lại, ${action.error}`);
         }
       }).addCase(getAUnit.pending, (state) => {
         state.isLoading = true;
@@ -145,7 +145,7 @@ export const colorSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error
         if (state.isError === true) {
-          toast.info("Something error");
+          toast.info(`Có lỗi xảy ra vui lòng thử lại, ${action.error}`);
         }
 
       })
@@ -167,7 +167,7 @@ export const colorSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
         if (state.isError === true) {
-          toast.info("Something error");
+          toast.info(`Có lỗi xảy ra vui lòng thử lại, ${action.error}`);
         }
       })
       .addCase(resetState, () => initialState)

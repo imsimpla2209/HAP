@@ -1,15 +1,14 @@
 /* eslint-disable no-unused-vars */
+import { Table } from "antd";
 import React, { useEffect } from "react";
-import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
-import { Segmented, Space, Switch, Table, Typography } from "antd";
+import { BiEdit } from "react-icons/bi";
 // import { deleteCollection, getCollections } from "../../../features/blog/blogSlice";
-import { getCollections, deleteCollection } from "features/collections/collectionsSlice";
+import { deleteCollection, getCollections } from "features/collections/collectionsSlice";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CustomModal from "../../../components/CustomModal";
-import { resetState } from "../../../features/blog/blogSlice";
-import { useState } from "react";
 // import { getBlogcats } from "../../../features/admin/blogcat/blogcatSlice";
 
 const columns = [
@@ -18,17 +17,17 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Title",
+    title: "Tên",
     dataIndex: "title",
     sorter: (a, b) => a.title.length - b.title.length,
   },
   {
-    title: "Description",
+    title: "Mô tả",
     dataIndex: "description",
     // sorter: (a, b) => a.title.length - b.title.length,
   },
   {
-    title: "Action",
+    title: "",
     width: 150,
     dataIndex: "action",
   },
@@ -46,11 +45,9 @@ const CollectionList = () => {
     setOpen(false);
   };
   useEffect(() => {
-    // dispatch(resetState());
     dispatch(getCollections());
-    // dispatch(getBlogcats())  
   }, [dispatch]);
-  
+
   const deleteABlog = (e) => {
     dispatch(deleteCollection(e));
     setOpen(false);
@@ -61,7 +58,7 @@ const CollectionList = () => {
 
   const collectionState = useSelector((state) => state.collections.collections);
 
-  
+
   const data1 = [];
   console.log(collectionState)
   for (let i = 0; i < collectionState.length; i++) {
@@ -92,7 +89,7 @@ const CollectionList = () => {
 
   return (
     <div>
-      <h3 className="mb-4 title">Collection List</h3>
+      <h3 className="mb-4 title">Danh Sách Bộ Sản Phẩm</h3>
       <Table columns={columns} dataSource={data1} />
       <CustomModal
         hideModal={hideModal}

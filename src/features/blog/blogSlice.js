@@ -58,10 +58,10 @@ export const updateBlog = createAsyncThunk(
 
 export const deleteBlog = createAsyncThunk(
   "blog/delete-blog",
-  async(id, thunkAPI)=>{
-    try{
+  async (id, thunkAPI) => {
+    try {
       return await blogService.deleteBlog(id)
-    }catch (error) {
+    } catch (error) {
       return thunkAPI.rejectWithValue(error)
     }
   }
@@ -107,7 +107,7 @@ export const blogSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error
         if (state.isError === true) {
-          toast.info("Something Error!");
+          toast.info("Có lỗi xảy ra vui lòng thử lại!");
         }
       }).addCase(getABlog.pending, (state) => {
         state.isLoading = true;

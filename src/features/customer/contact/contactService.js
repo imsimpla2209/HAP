@@ -1,8 +1,9 @@
 import axios from "axios";
 import { base_url } from "../../../utils/axiosConfig";
+import { instance } from "apis/http";
 
 const postQuery = async (contactData) => {
-  const respone = await axios.post(`${base_url}enquiry`,contactData);
+  const respone = await instance.post(`/Guest/enquiries/add`, contactData);
   if (respone.data) {
     return respone.data;
   }
@@ -10,5 +11,5 @@ const postQuery = async (contactData) => {
 
 
 export const contactService = {
-    postQuery,
+  postQuery,
 };

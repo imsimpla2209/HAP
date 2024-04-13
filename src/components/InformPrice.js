@@ -1,4 +1,6 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
+import { getCollections } from "features/collections/collectionsSlice";
+import { contactService } from "features/customer/contact/contactService";
 import { createQuery } from "features/customer/contact/contactSlice";
 import { getProducts } from "features/product/productSlice";
 import { useFormik } from "formik";
@@ -16,16 +18,18 @@ const contactSchema = yup.object({
   email: yup.string().nullable().email("Email should be valid").required("Yêu cầu nhập Email "),
   mobile: yup.number().default('').nullable().required("Yêu cầu nhập số điện thoại ").typeError("Yêu cầu nhập số điện thoại "),
   comment: yup.string().default('').nullable(),
-  productId: yup.number().default('').nullable().required("Yêu cầu nhap vao productId"),
 })
 
 const InformPrice = ({
   productId,
+  collection,
+  model,
   isOpened,
   onClose = () => { },
 }) => {
   const dispatch = useDispatch()
   const productState = useSelector((state) => state.product.products);
+  const collectionState = useSelector((state) => state.collections.collections);
 
   const formik = useFormik({
     initialValues: {
@@ -35,20 +39,28 @@ const InformPrice = ({
       mobile: ""
     },
     validationSchema: contactSchema,
-    onSubmit: (values) => {
-      dispatch(createQuery({
-        name: values.name,
-        email: values.email,
-        comment: values.comment,
-        mobile: values.mobile,
-        productId: productId
-      }))
-      formik.resetForm();
-      toast.info("Send Enquiry Successfully");
+    onSubmit: async (values) => {
+      try {
+        await contactService.postQuery({
+          guestName: values.name,
+          email: values.email,
+          comment: values.comment,
+          phoneNumber: values.mobile,
+          productId: productId || null,
+          collectionId: collection?.collectionId || null,
+          modelId: model?.modelId || null
+        })
+        formik.resetForm();
+        onClose();
+        toast.info("Gửi yêu cầu báo giá thành công");
+      } catch (error) {
+        toast.error("Có lỗi xảy ra vui lòng thử lại");
+      }
     },
   });
   useEffect(() => {
-    dispatch(getProducts(1));
+    dispatch(getProducts(0));
+    dispatch(getCollections());
   }, [])
   return (
     <Modal
@@ -121,16 +133,18 @@ const InformPrice = ({
                       <select
                         id="productId"
                         name="productId"
-                        disabled={!!productId}
+                        disabled={!!productId || !!model || !!collection?.collectionId}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.productId || productId}
+                        value={formik.values.productId || productId || model?.modelId || collection?.collectionId}
                         className="form-select"
                         style={{
                           borderRadius: "0.5rem",
                           border: 0,
                         }}
                       >
+                        {model && <option value={model?.modelId}>{model?.modelName}</option>}
+                        {collection && <option value={collection?.collectionId}>{collection?.collectionName}</option>}
                         <option value="">Lựa chọn sản phẩm</option>
                         {productState?.map((item, index) => (
                           <option key={index} value={item.productId}>

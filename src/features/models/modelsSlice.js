@@ -137,7 +137,7 @@ export const collectionSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error
         if (state.isError === true) {
-          toast.info("Something error");
+          toast.info(`Có lỗi xảy ra vui lòng thử lại, ${action.error}`);
         }
       }).addCase(getAModel.pending, (state) => {
         state.isLoading = true;
@@ -182,7 +182,7 @@ export const collectionSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error
         if (state.isError === true) {
-          toast.info("Something error");
+          toast.info(`Có lỗi xảy ra vui lòng thử lại, ${action.error}`);
         }
 
       })
@@ -204,7 +204,7 @@ export const collectionSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
         if (state.isError === true) {
-          toast.info("Something error");
+          toast.info(`Có lỗi xảy ra vui lòng thử lại, ${action.error}`);
         }
       })
       .addCase(resetState, () => initialState)

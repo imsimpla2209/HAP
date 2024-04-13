@@ -1,24 +1,25 @@
 import axios from "axios";
 import { base_url } from "../../../utils/base_url"
 import { config } from "../../../utils/axiosConfig"
+import { instance } from "apis/http";
 
 
 const getEnquiries = async () => {
-  const response = await axios.get(`${base_url}enquiry/`);
+  const response = await instance.get(`Admin/enquiries?page=0`);
 
   return response.data;
 };
 const deleteEnquiry = async (id) => {
-  const response = await axios.delete(`${base_url}enquiry/${id}`, config);
+  const response = await instance.delete(`Admin/enquiries/remove/${id}`, config);
   return response.data;
 };
 const getEnquiry = async (id) => {
-  const response = await axios.get(`${base_url}enquiry/${id}`);
+  const response = await instance.get(`Admin/enquiries/${id}`);
   return response.data;
 };
 const udpateEnquiry = async (enq) => {
-  const response = await axios.put(
-    `${base_url}enquiry/${enq.id}`,
+  const response = await instance.put(
+    `Admin/enquiries/edit/${enq.enquiryId}`,
     { status: enq.enqData },
     config
   );

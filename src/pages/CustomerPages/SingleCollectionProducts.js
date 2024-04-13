@@ -1,6 +1,5 @@
-import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
+import { List, Space } from 'antd';
 import React from 'react';
-import { Avatar, List, Space } from 'antd';
 import { Link } from 'react-router-dom';
 
 const IconText = ({ icon, text }) => (

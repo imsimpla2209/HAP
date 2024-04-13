@@ -108,7 +108,7 @@ export const brandSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error
         if (state.isSuccess === true) {
-          toast.info("Something Error!");
+          toast.info("Có lỗi xảy ra vui lòng thử lại!");
         }
       })
       .addCase(getABrand.pending, (state) => {
@@ -144,7 +144,7 @@ export const brandSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error
         if (state.isError === true) {
-          toast.info("Something Error!");
+          toast.info("Có lỗi xảy ra vui lòng thử lại!");
         }
       })
       .addCase(deleteABrand.pending, (state) => {

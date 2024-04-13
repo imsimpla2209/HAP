@@ -192,8 +192,6 @@ const AddModel = (
     },
   });
 
-  console.log("modelData", files);
-
   useEffect(() => {
     return () => {
       dispatch(resetState());

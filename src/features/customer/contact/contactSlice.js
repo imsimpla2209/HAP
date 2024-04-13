@@ -45,7 +45,7 @@ export const contactSlice = createSlice({
         state.isTrue = false;
         state.isError = true;
         if (state.isError === true) {
-          toast.info("Something went wrong");
+          toast.info("Có lỗi xảy ra vui lòng thử lại");
         }
       });
   },

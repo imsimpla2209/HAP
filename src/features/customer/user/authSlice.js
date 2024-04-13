@@ -501,7 +501,7 @@ export const authSlice = createSlice({
           logout();
         }
         if (state.isError === true) {
-          toast.info("Something Error");
+          toast.info(`Có lỗi xảy ra vui lòng thử lại, ${action.error}`);
         }
       }).addCase(resetState, () => initialState)
       .addCase(updateUserPass.pending, (state) => {

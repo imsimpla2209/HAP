@@ -7,9 +7,9 @@
 :root {
   --color-131921: #131921;
   --color-3b4149: #3b4149;
-  --color-febd69: #69DADB;
+  --color-febd69: #E09122ff;
   --color-232f3e: #232f3e;
-  --color-bf4800: #1597E5;
+  --color-bf4800: #D26522ff;
   --color-f5f5f7: #f5f5f7;
   --color-ededed: #ededed;
   --color-777777: #777777;
@@ -56,10 +56,10 @@ a {
 }
 
 .carousel-img {
-  max-height: 500px !important;
+  /* max-height: 500px !important; */
   object-fit: contain !important;
   width: 100% !important;
-  background-color: #1597E5;
+  background-color: #D26522ff;
 }
 
 .section-heading {
@@ -67,7 +67,7 @@ a {
   line-height: 32px;
   font-weight: 500;
   margin-bottom: 30px;
-  color: #193498;
+  color: #8C1900ff;
 
 }
 
@@ -121,10 +121,11 @@ a {
 /*////////////////////////////////////////////////////////////////*/
 /*Header Start*/
 .gradient-yellow-text {
-  background: -webkit-linear-gradient(90deg, #113CFC, #1597E5);
+  background: -webkit-linear-gradient(90deg, #FFFFFF, #F8AB49);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 600;
+  font-size: 22px;
 }
 
 .black-text {
@@ -132,45 +133,45 @@ a {
 }
 
 .black-text :hover {
-  color: #69DADB;
+  color: #E09122ff;
 }
 
 .orange-text {
   color: #ffffff;
 }
 .orange-text :hover {
-  color: #69DADB;
+  color: #E09122ff;
 }
 .header-top-strip {
-  background: radial-gradient(circle at 10% 20%, #69DADB 0%, #193498 90%);
+  background: radial-gradient(circle at 10% 20%, #8C1900 0%, #8C1900ff 90%);
 }
 .header-upper {
   background-color: white;
 }
 .header-upper .input-group-text {
-  background-color: #193498;
+  background-color: #8C1900ff;
 }
 .header-upper .header-upper-links img {
   width: 35px;
   height: 35px;
 }
 .header-upper .header-upper-links p {
-  color: #193498;
+  color: #8C1900ff;
 }
 
 .header-upper .header-upper-links p:hover {
-  color: #69DADB;
+  color: #E09122ff;
 }
 
 .header-upper .nav-link {
-  color: #193498;
+  color: #8C1900ff;
   font-weight: 600;
   font-size: 19px !important;
 
 }
 
 .header-upper .nav-link:hover {
-  color: #1597E5;
+  color: #D26522ff;
 }
 
 /* .header-upper {
@@ -210,7 +211,7 @@ a {
 /*////////////////////////////////////////////////////////////////*/
 /*Footer Start */
 .footer {
-  background-color: #193498;
+  background-color: #8C1900ff;
 }
 
 .footer:not(:first-child) {

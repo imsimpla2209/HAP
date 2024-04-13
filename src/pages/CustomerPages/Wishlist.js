@@ -30,8 +30,8 @@ const Wishlist = () => {
 
   return (
     <>
-      <Meta title={"Wish List"} />
-      <BreadCrumb title="Wish List" />
+      <Meta title={"Danh sách yêu thích"} />
+      <BreadCrumb title="Danh sách yêu thích" />
       <div className="compare-wishlist-wrapper py-2 home-wrapper-2">
         <div className="container-xxl">
           <div className="row ">

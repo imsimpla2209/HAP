@@ -33,7 +33,7 @@ const Orders = () => {
 
   return (
     <>
-      <BreadCrumb title="My Orders" />
+      <BreadCrumb title="Đơn hàng của tôi" />
       <Container class="cart-wrapper home-wrapper-2 py-5">
         <div className="row">
           {Array.isArray(orderState) &&

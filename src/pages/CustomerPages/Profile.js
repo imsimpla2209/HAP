@@ -24,10 +24,10 @@ const profileSchema = yup.object({
   firstName: yup.string().required("Nhập họ"),
   lastName: yup.string().required("Nhập tên"),
   mobile: yup
-  .string()
-  .matches(phoneRegExp, "Phone number is not valid")
-  .min(10, "too short")
-  .max(10, "too long"),
+    .string()
+    .matches(phoneRegExp, "Phone number is not valid")
+    .min(10, "too short")
+    .max(10, "too long"),
   address: yup.string(),
   dob: yup.string(),
   gender: yup.string(),
@@ -74,7 +74,7 @@ const Profile = () => {
   });
   return (
     <>
-      <BreadCrumb title="Profile" />
+      <BreadCrumb title="Thông tin cá nhân" />
       <Container class1="cart-wrapper home-wrapper-2 ">
         <div>
           <Link to="/update-password" className="btn btn-secondary">

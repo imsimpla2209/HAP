@@ -29,7 +29,6 @@ const MainLayout = () => {
     token: { colorBgContainer },
   } = theme.useToken();
 
-
   const userState = useSelector((state) => state?.auth?.user);
   const navigate = useNavigate();
   return (
@@ -188,7 +187,7 @@ const MainLayout = () => {
             {
               key: "enquiries",
               icon: <FaClipboardList className="fs-4" />,
-              label: "Enquiries",
+              label: "Liên Hệ/Báo Giá",
             }, {
               key: "signout",
               icon: <AiOutlineLogout className="fs-4" />,

@@ -1,19 +1,17 @@
 // @ts-nocheck
+import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
+import { FiEdit } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import * as yup from "yup";
 import BreadCrumb from "../../components/BreadCrumb";
 import Container from "../../components/Container";
-import { Link } from "react-router-dom";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
 import CustomInput from "../../components/CustomInput";
 import {
   getAUser,
   updateUserPass,
 } from "../../features/customer/user/authSlice";
-import { FiEdit } from "react-icons/fi";
-import { useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
 
 const profileSchema = yup.object({
   oldPassword: yup.string().required("Nhập mật khẩu cũ"),

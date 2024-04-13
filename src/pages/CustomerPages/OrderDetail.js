@@ -52,7 +52,7 @@ const OrderDetail = () => {
 
   return (
     <>
-      <BreadCrumb title="My OrderDetail" />
+      <BreadCrumb title="Chi tiết đơn hàng" />
       <Container class="cart-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div class="col-rg-12 mb-5">
@@ -106,14 +106,14 @@ const OrderDetail = () => {
                     disabled={
                       isCancelClicked ||
                       orderState?.isDelivered ||
-                      orderState?.orderStatus === "Cancelled" 
+                      orderState?.orderStatus === "Cancelled"
                     }
                   >
                     {orderState?.orderStatus === "Cancelled"
                       ? "Order Cancelled"
                       : orderState?.isDelivered
-                      ? "Cannot Cancel Delivered Order"
-                      : "Cancel Order"}
+                        ? "Cannot Cancel Delivered Order"
+                        : "Cancel Order"}
                   </div>
                 </div>
               </span>

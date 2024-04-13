@@ -39,7 +39,6 @@ const Home = () => {
     getAllBlogs();
     getProducts();
     getCategories();
-    getCollections();
   }, []);
 
   useEffect(() => {
@@ -95,9 +94,9 @@ const Home = () => {
     <>
       <Meta title={"Hà An Phát"} />
       <section className="home-wrapper-1">
-        <div className="col-10 mx-auto">
+        <div className="col-12 mx-auto">
           <div className="row">
-            <div className="col-10 mx-auto" >
+            <div className="col-12 mx-auto" >
               <div
                 id="carouselExampleIndicators"
                 className="carousel slide"
@@ -127,7 +126,7 @@ const Home = () => {
                       className="carousel-img"
                       alt="main banner"
                       style={{
-                        height: "500px !important",
+                        height: "auto !important",
                       }}
                     />
                     {/* <div className="main-banner-content position-absolute">
@@ -211,7 +210,7 @@ const Home = () => {
                 </div>
               </div> */}
               <div className="row mx-0 py-3 px-4" style={{
-                background: '#193498',
+                background: '#8C1900ff',
 
               }}>
                 <div className="col-8 d-flex align-items-center">
@@ -413,35 +412,35 @@ const Home = () => {
                   <img src="images/service.png" alt="services" />
                   <div>
                     <h6>Miễn Phí Vận Chuyển</h6>
-                    <p className="mb-0">From all order over $5</p>
+                    <p className="mb-0">Bảo hộ đồ dễ vỡ</p>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
                   <img src="images/service-02.png" alt="services" />
                   <div>
                     <h6>Nhiều Ưu Đãi Hấp Dẫn</h6>
-                    <p className="mb-0">Save up to 25%</p>
+                    <p className="mb-0">Tiết kiệm lên tới 25%</p>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
                   <img src="images/service-03.png" alt="services" />
                   <div>
                     <h6>Hỗ Trợ 24/7</h6>
-                    <p className="mb-0">Shop with an expert</p>
+                    <p className="mb-0">Tư vấn bởi chuyên gia tại xưởng</p>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
                   <img src="images/service-04.png" alt="services" />
                   <div>
                     <h6>Giá cả phải chăng</h6>
-                    <p className="mb-0">Get Factory Default Price</p>
+                    <p className="mb-0">Sát với giá nhập</p>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
                   <img src="images/service-05.png" alt="services" />
                   <div>
                     <h6>Thanh toán an toàn</h6>
-                    <p className="mb-0">100% Protected Payment</p>
+                    <p className="mb-0">Đảm bảo hợp đồng, hoá đơn</p>
                   </div>
                 </div>
               </div>

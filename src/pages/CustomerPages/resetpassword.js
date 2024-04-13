@@ -26,7 +26,7 @@ const ResetPassword = () => {
       password: "",
     },
     validationSchema: resetPasswordSchema,
-    
+
     onSubmit: (values) => {
       dispatch(resetPassword({ token: getToken, password: values.password }));
       navigate("/login");
@@ -34,8 +34,8 @@ const ResetPassword = () => {
   });
   return (
     <>
-      <Meta title={"Reset Password"} />
-      <BreadCrumb title="Reset Password" />
+      <Meta title={"Đặt lại mật khẩu"} />
+      <BreadCrumb title="Đặt lại mật khẩu" />
       <div className="login-wrapper py-2 home-wrapper-2">
         <div className="container-xxl">
           <div className="row">

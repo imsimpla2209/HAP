@@ -18,19 +18,19 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Name",
-    dataIndex: "name",
+    title: "Tên khách hàng",
+    dataIndex: "guestName",
   },
   {
     title: "Email",
     dataIndex: "email",
   },
   {
-    title: "Mobile",
-    dataIndex: "mobile",
+    title: "Số điện thoại",
+    dataIndex: "phoneNumber",
   },
   {
-    title: "Status",
+    title: "Trạng thái",
     dataIndex: "status",
   },
 

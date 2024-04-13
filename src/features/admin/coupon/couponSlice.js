@@ -100,7 +100,7 @@ export const couponSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
         if (state.isSuccess === true) {
-          toast.info("Something Error!");
+          toast.info("Có lỗi xảy ra vui lòng thử lại!");
         }
       })
       .addCase(deleteACoupon.pending, (state) => {
@@ -155,7 +155,7 @@ export const couponSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
         if (state.isSuccess === true) {
-          toast.info("Something Error!");
+          toast.info("Có lỗi xảy ra vui lòng thử lại!");
         }
       })
       .addCase(resetState, () => initialState);

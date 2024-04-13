@@ -36,6 +36,7 @@ const Header = ({ history }) => {
     null
   );
   const [visible, setVisible] = useState(true);
+  const getTokenFromLocalStorage = JSON.parse(localStorage.getItem("customer"))
 
 
   useEffect(() => {
@@ -219,10 +220,15 @@ const Header = ({ history }) => {
                 {/* <NavLink className="fs-5 nav-link" to="/product">Sản phẩm</NavLink> */}
                 <NavLink className="fs-5 nav-link" to="/blogs">Tin tức</NavLink>
                 <NavLink className="fs-5 nav-link" to="/contact">Liên hệ</NavLink>
-                {authState?.user === null ? (
+                {getTokenFromLocalStorage.role === 'ADMIN' || authState?.user === null ? (
                   <p className="mb-0"></p>
                 ) : (
                   <NavLink className="nav-link fs-5" to="/my-orders">Lịch sử mua</NavLink>
+                )}
+                {getTokenFromLocalStorage.role === 'ADMIN' && authState?.user === null ? (
+                  <p className="mb-0"></p>
+                ) : (
+                  <NavLink className="nav-link fs-5" to="/admin">Quản Lý</NavLink>
                 )}
                 {/* </div> */}
                 {/* </div> */}
@@ -240,7 +246,7 @@ const Header = ({ history }) => {
 
                 <div>
                   <Badge showZero>
-                    <Tooltip title="Giỏ hàng" color={"#1597E5"} key={"#1597E5"}>
+                    <Tooltip title="Giỏ hàng" color={"#D26522ff"} key={"#D26522ff"}>
                       <Link to="cart" className="d-flex align-items-center gap-10">
                         <TiShoppingCart className="fs-4 black-text" />
                         <div className="d-flex flex-column">

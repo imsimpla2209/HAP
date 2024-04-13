@@ -31,7 +31,6 @@ import {
 import { paymentInfo } from "./constant";
 
 const SingleProduct = () => {
-  const [orderProduct, setorderedProduct] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [alreadyAddCart, setAlreadyAddCart] = useState(false);
   const [star, setStar] = useState(null);

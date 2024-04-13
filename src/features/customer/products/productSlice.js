@@ -104,7 +104,7 @@ export const productSlice = createSlice({
         state.isSuccess = false;
         state.isError = true;
         if (state.isSuccess === true) {
-          toast.info("Something Error");
+          toast.info(`Có lỗi xảy ra vui lòng thử lại, ${action.error}`);
         }
       })
       .addCase(removeFromWishlist.pending, (state) => {
@@ -124,10 +124,10 @@ export const productSlice = createSlice({
         state.isSuccess = false;
         state.isError = true;
         if (state.isSuccess === true) {
-          toast.info("Something Error");
+          toast.info(`Có lỗi xảy ra vui lòng thử lại, ${action.error}`);
         }
       })
-      
+
       .addCase(getProduct.pending, (state) => {
         state.isLoading = true;
       })
@@ -162,7 +162,7 @@ export const productSlice = createSlice({
         }
       });
   },
-  
+
 });
 
 export default productSlice.reducer;
