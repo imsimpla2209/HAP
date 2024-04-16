@@ -1,0 +1,150 @@
+/*Login Page*/
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400");
+body,
+html {
+  font-family: "Source Sans Pro", sans-serif;
+  background-color: #1d243d;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  margin: 0;
+  top: 80px;
+  left: 50%;
+  position: absolute;
+  text-align: center;
+  transform: translateX(-50%);
+  background-color: rgb(33, 41, 66);
+  border-radius: 9px;
+  border-top: 10px solid #79a6fe;
+  border-bottom: 10px solid #8bd17c;
+  width: 30%;
+  height: 80%;
+  /* position: relative; Thêm dòng này để sử dụng position relative */
+  box-shadow: 1px 1px 108.8px 19.2px rgb(25, 31, 53);
+}
+
+.box h4 {
+  font-family: "Source Sans Pro", sans-serif;
+  color: #5c6bc0;
+  font-size: 18px;
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+.box h4 span {
+  color: #dfdeee;
+  font-weight: lighter;
+}
+
+.box h5 {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 13px;
+  color: #a1a4ad;
+  letter-spacing: 1.5px;
+  margin-top: -15px;
+  margin-bottom: 35px;
+}
+
+.box input[type="text"],
+.box input[type="password"] {
+  display: block;
+  margin: 50px auto;
+  background: #262e49;
+  border: 0;
+  border-radius: 5px;
+  padding: 14px 10px;
+  width: 320px;
+  outline: none;
+  color: #d6d6d6;
+}
+::-webkit-input-placeholder {
+  color: #565f79;
+}
+
+.form-floating > .form-control:focus,
+.form-floating > .form-control:not(:placeholder-shown) {
+  padding-top: 5px;
+  padding-bottom: 0px;
+}
+
+.form-floating > label {
+  position: absolute;
+  color: white;
+  top: 0;
+  left: 45px;
+  height: 100%;
+  padding: 15px 1px;
+  pointer-events: none;
+  border: 1px solid transparent;
+  transform-origin: 0 0;
+  transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+  opacity: 0.85;
+  transform: scale(0.75) translateY(-0.8rem) translateX(0.15rem);
+}
+
+.box input[type="text"]:focus,
+.box input[type="password"]:focus {
+  border: 1px solid #79a6fe;
+}
+
+.container .a {
+  text-decoration: none;
+}
+
+.container .a:hover {
+  text-decoration: underline;
+}
+
+.btn1 {
+  border: 0;
+  background: #7f5feb;
+  color: #dfdeee;
+  border-radius: 100px;
+  width: 340px;
+  height: 49px;
+  font-size: 16px;
+  position: absolute;
+   /* Điều chỉnh vị trí bottom để nút ở gần đáy container */
+  left: 50%; /* Dùng left và transform để căn giữa theo chiều ngang */
+  transform: translateX(-50%);
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.btn1:hover {
+  background: #5d33e6;
+}
+
+.rmb {
+  position: absolute;
+  margin-left: -24%;
+  margin-top: 0px;
+  color: #dfdeee;
+  font-size: 13px;
+}
+
+.forgetpass {
+  position: relative;
+  float: right;
+  right: 28px;
+  color: #5c7fda;
+}
+
+.dnthave {
+  position: absolute;
+  top: 92%;
+  left: 24%;
+}
+
+.typcn.active {
+  color: #7f60eb;
+}
+
+/*Login Page End*/
