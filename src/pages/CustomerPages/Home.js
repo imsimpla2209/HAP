@@ -209,16 +209,16 @@ const Home = () => {
                   </Link>
                 </div>
               </div> */}
-              <div className="row mx-0 py-3 px-4" style={{
-                background: '#8C1900ff',
+              <div className="row mx-0 py-3 px-4 gap-2" style={{
+                background: '#000000',
 
               }}>
-                <div className="col-8 d-flex align-items-center">
-                  <h5 className="text-white my-0">
+                <div className="col-md-8 col-12">
+                  <h5 className="pattern-text-2 my-0" >
                     Chào mừng đến với Công ty TNHH PT TM XMK Hà An Phát
                   </h5>
                 </div>
-                <div className="col-4 mx-auto d-flex align-items-center justify-content-end">
+                <div className="col-md-4 col-12 mx-auto d-flex align-items-center justify-content-end ">
                   <button
                     className="button-other"
                     type="button"
@@ -226,7 +226,7 @@ const Home = () => {
                       navigate("/contact")
                     }}
                   >
-                    <Space>
+                    <Space className="pattern-text-2">
                       Nhận Báo Giá Ngay
                       <RightOutlined />
                     </Space>
@@ -295,7 +295,7 @@ const Home = () => {
               <h3 className="section-heading">
                 Video Tiêu Biểu</h3>
             </div>
-            <div className="col-6">
+            <div className="col-md-6 col-12">
               <div className="embed-responsive embed-responsive-21by9 position-relative" style={{
                 height: 0,
                 paddingBottom: "56.25%",
@@ -319,7 +319,7 @@ const Home = () => {
                 ></iframe>
               </div>
             </div>
-            <div className="col-6">
+            <div className="col-md-6 d-none d-md-block">
               <div className="d-flex flex-wrap gap-10 justify-content-between align-items">
                 <div className="small-banner position-relative">
                   <div className="embed-responsive embed-responsive-16by9 position-relative" style={{ paddingTop: "57%" }}>
@@ -403,44 +403,44 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="home-wrapper-1 py-5">
-        <div className="container-xxl">
+      <section className="home-wrapper-1 py-5 info-line">
+        <div className="container-xxl ">
           <div className="row">
             <div className="col-12">
               <div className="services d-flex align-center justify-content-between">
                 <div className="d-flex align-items-center gap-15">
                   <img src="images/service.png" alt="services" />
-                  <div>
-                    <h6>Miễn Phí Vận Chuyển</h6>
-                    <p className="mb-0">Bảo hộ đồ dễ vỡ</p>
+                  <div class="d-md-block d-none">
+                    <h6 className="pattern-text-2">Miễn Phí Vận Chuyển</h6>
+                    <p className="mb-0 text-white">Bảo hộ đồ dễ vỡ</p>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
                   <img src="images/service-02.png" alt="services" />
-                  <div>
-                    <h6>Nhiều Ưu Đãi Hấp Dẫn</h6>
-                    <p className="mb-0">Tiết kiệm lên tới 25%</p>
+                  <div class="d-md-block d-none">
+                    <h6 className="pattern-text-2">Nhiều Ưu Đãi Hấp Dẫn</h6>
+                    <p className="mb-0 text-white">Tiết kiệm lên tới 25%</p>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
                   <img src="images/service-03.png" alt="services" />
-                  <div>
-                    <h6>Hỗ Trợ 24/7</h6>
-                    <p className="mb-0">Tư vấn bởi chuyên gia tại xưởng</p>
+                  <div class="d-md-block d-none">
+                    <h6 className="pattern-text-2">Hỗ Trợ 24/7</h6>
+                    <p className="mb-0 text-white">Tư vấn bởi chuyên gia tại xưởng</p>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
                   <img src="images/service-04.png" alt="services" />
-                  <div>
-                    <h6>Giá cả phải chăng</h6>
-                    <p className="mb-0">Sát với giá nhập</p>
+                  <div class="d-md-block d-none">
+                    <h6 className="pattern-text-2">Giá cả phải chăng</h6>
+                    <p className="mb-0 text-white">Sát với giá nhập</p>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
                   <img src="images/service-05.png" alt="services" />
-                  <div>
-                    <h6>Thanh toán an toàn</h6>
-                    <p className="mb-0">Đảm bảo hợp đồng, hoá đơn</p>
+                  <div class="d-md-block d-none">
+                    <h6 className="pattern-text-2">Thanh toán an toàn</h6>
+                    <p className="mb-0 text-white">Đảm bảo hợp đồng, hoá đơn</p>
                   </div>
                 </div>
               </div>
@@ -458,7 +458,7 @@ const Home = () => {
             {productState &&
               productState.slice(0, 4).map((item, index) => {
                 return (
-                  <div key={index} className={`${"col-3"}`}>
+                  <div key={index} className={`${"col-md-3 col-12 mt-md-0 mt-3"}`}>
                     <Link className="product-card position-relative">
                       <div className="wishlist-icon position-absolute">
                         <button

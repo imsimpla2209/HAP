@@ -194,7 +194,7 @@ const SingleProduct = () => {
       <div className="main-product-wrapper home-wrapper-2 py-5">
         <div className="container-xxl">
           <div className="row">
-            <div className="col-6">
+            <div className="col-md-6 col-12">
               <div className="main-product-image">
                 <div
                   className="main-product-image-main"
@@ -241,7 +241,7 @@ const SingleProduct = () => {
                 )}
               </div>
             </div>
-            <div className="col-6">
+            <div className="col-md-6 col-12">
               {selectedModelId && (
                 <div>
                   {modelState
@@ -543,7 +543,7 @@ const SingleProduct = () => {
             {productsState?.length ?
               productsState?.filter((item) => item?.productId !== productState?.productId).slice(0, 4).map((item, index) => {
                 return (
-                  <div key={index} className={`${"col-3"}`}>
+                  <div key={index} className={`${"col-md-3 col-6"}`}>
                     <Link className="product-card-small position-relative">
                       <Link
                         to={"/product/" + item?.productId}

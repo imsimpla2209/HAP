@@ -80,8 +80,8 @@ const SingleCollection = () => {
       <div className="main-product-wrapper home-wrapper-2 py-5">
         <div className="container-xxl">
           <div className="row">
-            <h4 style={{ color: "#D26522ff", fontWeight: "bold" }}>{collectionState?.collectionName}</h4>
-            <div className="col-6">
+            <h4 class="pattern-text" style={{ fontWeight: "bold" }}>{collectionState?.collectionName}</h4>
+            <div className="col-md-6 col-12">
               <div className="main-product-image">
                 <div
                   className="main-product-image-main"
@@ -151,7 +151,7 @@ const SingleCollection = () => {
                 </div>
               </div>
             </div>
-            <div className="col-6 main-product-details">
+            <div className="col-md-6 col-12 main-product-details">
               <h5>Các sản phẩm thuộc {collectionState?.collectionName}</h5>
               <hr />
               {products?.length ? <SingleCollectionProducts data={products} /> : <h5>Bộ Sản Phẩm Trống</h5>}

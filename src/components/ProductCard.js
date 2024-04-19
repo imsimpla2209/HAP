@@ -8,7 +8,6 @@ import {
   removeFromWishlist,
 } from "../features/customer/products/productSlice";
 import { getUserProductWishList } from "../features/customer/user/authSlice";
-import { formatCurrencyVND } from "utils/formator";
 
 const ProductCard = (props) => {
   const { grid, data } = props;
@@ -52,7 +51,7 @@ const ProductCard = (props) => {
           return (
             <div
               key={index}
-              className={`${location.pathname === "/product" ? `gr-${grid}` : "col-3"
+              className={`${location.pathname === "/product" ? `gr-${grid}` : "col-md-3 col-12"
                 }`}
             >
               <Link className="product-card position-relative">

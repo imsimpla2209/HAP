@@ -15,6 +15,7 @@ import { Button, Pagination } from "antd";
 import { getCollections } from "features/collections/collectionsSlice";
 import SpecialProduct from "components/SpecialProduct";
 import ScrollToTopOnMount from "components/ScrollToTopOnMount";
+import { getWindowDimensions } from "utils";
 
 
 
@@ -48,6 +49,8 @@ const OurStore = () => {
     setCurrentPage(page);
   };
 
+  const { width } = getWindowDimensions()
+
   const filteredProducts = useMemo(() => {
     let productsFiltered = products?.slice(currentPage * 12 - 12, currentPage * 12)
     if (sort?.includes("productName")) {
@@ -71,6 +74,8 @@ const OurStore = () => {
     return filteredCollections
   }, [sort, currentPage, pcategories, products, collection])
 
+  console.log(width)
+
   return (
     <>
       <ScrollToTopOnMount />
@@ -79,7 +84,7 @@ const OurStore = () => {
       <div className="store-wrapper home-wrapper-2 py-5">
         <div className="container-xxl">
           <div className="row">
-            <div className="col-3">
+            <div className="col-md-3 col-12">
               {!viewCollectionMode && <div className="filter-card mb-3">
                 <h3 className="filter-title">Lọc Theo Danh Mục</h3>
                 <div>
@@ -166,9 +171,9 @@ const OurStore = () => {
                 </div>
               }
             </div>
-            <div className="col-9">
+            <div className="col-md-9 col-12">
               <div className="filter-sort-grid">
-                <div className="d-flex justify-content-between align-items-center">
+                <div className="d-flex flex-wrap gap-md-0 gap-10 justify-content-between align-items-center">
                   <div className="d-flex align-items-center gap-10">
                     <p className="mb-0 d-block" style={{ width: "100px" }}>
                       Sắp xếp theo:
@@ -198,7 +203,7 @@ const OurStore = () => {
                     <div className="d-flex gap-10 align-items-center grid">
                       <img
                         onClick={() => {
-                          setGrid(3);
+                          setGrid(width > 720 ? 3 : 1);
                         }}
                         src="images/gr.svg"
                         c
@@ -208,7 +213,7 @@ const OurStore = () => {
                       />
                       <img
                         onClick={() => {
-                          setGrid(4);
+                          setGrid(width > 720 ? 4 : 2);
                         }}
                         src="images/gr3.svg"
                         className="d-block img-fluid"
@@ -216,7 +221,7 @@ const OurStore = () => {
                       />
                       <img
                         onClick={() => {
-                          setGrid(6);
+                          setGrid(width > 720 ? 6 : 3);
                         }}
                         src="images/gr2.svg"
                         className="d-block img-fluid"
@@ -242,17 +247,19 @@ const OurStore = () => {
                   /> : filteredCollections &&
                   filteredCollections?.map((item, index) => {
                     return (
-                      <SpecialProduct
-                        key={index}
-                        width={'49%'}
-                        collectionId={item?.collectionId}
-                        description={item?.description}
-                        collectionName={item?.collectionName}
-                        // sold={3}
-                        // price={200}
-                        image={item?.thumbnail ? item?.thumbnail : "https://st4.depositphotos.com/1393072/39779/v/450/depositphotos_397791404-stock-illustration-tool-box-line-icon-house.jpg"}
-                      // totalrating={3}
-                      />
+                      <div className="col-md-6 col-12" key={index}>
+                        <SpecialProduct
+                          key={index}
+                          width={'100%'}
+                          collectionId={item?.collectionId}
+                          description={item?.description}
+                          collectionName={item?.collectionName}
+                          // sold={3}
+                          // price={200}
+                          image={item?.thumbnail ? item?.thumbnail : "https://st4.depositphotos.com/1393072/39779/v/450/depositphotos_397791404-stock-illustration-tool-box-line-icon-house.jpg"}
+                        // totalrating={3}
+                        />
+                      </div>
                     );
                   })}
                 </div>
