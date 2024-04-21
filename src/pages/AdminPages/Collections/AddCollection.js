@@ -13,6 +13,7 @@ import { useFormik } from "formik";
 import { createCollection, getACollection, resetState, updateCol } from "features/collections/collectionsSlice";
 import { fetchAllToCL } from "utils/upload";
 import collectionService from "features/collections/collectionsService";
+import { Button } from "antd";
 
 
 let schema = yup.object().shape({
@@ -30,6 +31,8 @@ const AddCollection = () => {
   const isEditMode = getCollectionId !== undefined;
   const { collectionName, Description } = collectionState;
   const [files, setFiles] = useState([])
+  const [loading, setLoading] = useState(false);
+
   const normFile = (e) => {
     // handle event file changes in upload and dragger components
     const fileList = e
@@ -76,6 +79,7 @@ const AddCollection = () => {
       console.log(values); // Log the values here
       console.log(getCollectionId)
       try {
+        setLoading(true);
         if (
           !files?.[0]?.saved && files?.[0]
         ) {
@@ -105,6 +109,8 @@ const AddCollection = () => {
         }
       } catch (error) {
         toast.error("Có Lỗi Vui Lòng Thử Lại")
+      } finally {
+        setLoading(false);
       }
     },
   });
@@ -151,12 +157,17 @@ const AddCollection = () => {
               Bạn có thể đính kèm tối đa 1 tệp có kích thước bằng <strong>25MB</strong>{' '}
             </p>
           </div>
-          <button
+          <Button
             className="btn btn-success border-0 rounded-3 my-5"
-            type="submit"
+            type="primary"
+            loading={loading}
+            disabled={loading}
+            onClick={() => {
+              formik.submitForm();
+            }}
           >
             {getCollectionId !== undefined ? "Sửa" : "Thêm"} bộ sản phẩm
-          </button>
+          </Button>
         </form>
       </div>
     </div>

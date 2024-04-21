@@ -28,6 +28,7 @@ import { resetImgProductState } from "../../../features/product/productSlice";
 import { DefaultUpload } from "components/Upload";
 import { fetchAllToCL } from "utils/upload";
 import blogService from "features/blog/blogService";
+import { Button } from "antd";
 let schema = yup.object().shape({
   title: yup.string().required("Nhập tên bài"),
   description: yup.string().required("Nhập nội dung bài đăng"),
@@ -45,6 +46,7 @@ const Addblog = () => {
   const imgBlogState = useSelector((state) => state.blog.blogImages);
   const { blogName, blogDesc, blogImages } = blogState;
   const [files, setFiles] = useState([])
+  const [loading, setLoading] = useState(false);
 
   const normFile = (e) => {
     // handle event file changes in upload and dragger components
@@ -77,12 +79,12 @@ const Addblog = () => {
     initialValues: {
       title: blogName || "",
       description: blogDesc || "",
-      images: blogImages || "",
     },
     validationSchema: schema,
     onSubmit: async (values) => {
       console.log(values); // Log the values here
       try {
+        setLoading(true);
         if (
           !files?.[0]?.saved && files?.[0]
         ) {
@@ -115,6 +117,8 @@ const Addblog = () => {
         }
       } catch (error) {
         toast.error("Có lỗi xảy ra vui lòng thử lại")
+      } finally {
+        setLoading(false);
       }
     },
   });
@@ -163,12 +167,17 @@ const Addblog = () => {
               </p>
             </div>
           </div>
-          <button
+          <Button
             className="btn btn-success border-0 rounded-3 my-5"
-            type="submit"
+            type="primary"
+            onClick={() => {
+              formik.submitForm();
+            }}
+            loading={loading}
+            disabled={loading}
           >
             {getBlogId !== undefined ? "Sửa" : "Thêm"} Tin tức
-          </button>
+          </Button>
         </form>
       </div>
     </div>

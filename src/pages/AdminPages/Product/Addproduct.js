@@ -3,19 +3,17 @@ import { Button, Modal } from "antd";
 import adminCategoryService from "features/category/categoryService";
 import collectionService from "features/collections/collectionsService";
 import modelService from "features/models/modelsService";
-import { getModels } from "features/models/modelsSlice";
 import productService from "features/product/productService";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 import { fetchAllToCL } from "utils/upload";
 import * as yup from "yup";
 import CustomInput from "../../../components/CustomInput1";
 import {
-  getAProduct,
   resetState,
   updateProduct
 } from "../../../features/product/productSlice";
@@ -26,7 +24,6 @@ import {
 import { AddModel } from "../Model/AddModel";
 import { SelectedModelList } from "./SelectedModelList";
 import "./addproduct.css";
-import { toast } from 'react-toastify';
 
 let schema = yup.object().shape({
   productName: yup.string().required("Hãy điền tên cho sản phẩm"),
@@ -333,7 +330,7 @@ const Addproduct = () => {
               formik.submitForm();
             }}
             loading={loading}
-            disabled={!!formik?.errors || loading}
+            disabled={loading}
           >
             {getProductId !== undefined ? "Sửa" : "Thêm"} Sản Phẩm
           </Button>
