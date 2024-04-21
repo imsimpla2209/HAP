@@ -26,14 +26,13 @@ import {
 import { AddModel } from "../Model/AddModel";
 import { SelectedModelList } from "./SelectedModelList";
 import "./addproduct.css";
+import { toast } from 'react-toastify';
 
 let schema = yup.object().shape({
   productName: yup.string().required("Hãy điền tên cho sản phẩm"),
-  description: yup.string()?.nullable(),
   productCode: yup.string().required("Mã sản phẩm là cần thiết"),
-  collectionId: yup.string(),
-  categoryId: yup.string(),
-  tags: yup.string(),
+  collectionId: yup.string().nullable(),
+  categoryId: yup.string().nullable(),
   // quantity: yup.number(),
 });
 
@@ -48,7 +47,7 @@ const Addproduct = () => {
   const imgProductState = useSelector((state) => state.product.productImages);
   const imgState = useSelector((state) => state.upload.images);
   const [models, setModels] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const [selectedModel, setSelectedModel] = useState({});
 
   const [addModelModal, setAddModelModal] = useState(false);
@@ -137,13 +136,14 @@ const Addproduct = () => {
     validationSchema: schema,
 
     onSubmit: async (values) => {
+      setLoading(true);
       const productData = {
         productCode: values.productCode,
         productName: values.productName,
         categoryId: Number(values.categoryId),
-        collectionIdList: [
+        collectionIdList: values.collectionId ? [
           Number(values.collectionId),
-        ]
+        ] : [],
       }
       let productId = getProductId;
       if (getProductId !== undefined) {
@@ -179,15 +179,18 @@ const Addproduct = () => {
           }));
           console.log("Upload successful:", uploadModels);
           formik.resetForm();
+          toast.success("Thêm Sản Phẩm Thành Công !!")
           setTimeout(() => {
             navigate("/admin/product-list");
             dispatch(resetUploadState());
             dispatch(resetState());
-          }, 1000);
+          }, 100);
         } catch (error) {
           console.error("Error uploading models:", error);
+          toast.error("Có Lỗi Xảy Ra Vui Lòng Thử Lại");
         }
       }
+      setLoading(false);
     },
   });
 
@@ -305,86 +308,6 @@ const Addproduct = () => {
               <div className="error">{formik.errors.categoryId}</div>
             )}
           </div>
-          {/* <div className="form-group">
-            <label htmlFor="quantity">Số lượng sản phẩm</label>
-            <CustomInput
-              type="number"
-              name="quantity"
-              onCh={formik.handleChange("quantity")}
-              onBlr={formik.handleBlur("quantity")}
-              val={formik.values.quantity.toString()}
-            />
-            <div className="error">
-              {formik.touched.quantity && formik.errors.quantity}
-            </div>
-          </div> */}
-          {/* <div className="form-group">
-            <div className="upload-form bg-white border-1 p-5 text-center">
-              <Dropzone onDrop={handleDrop}>
-                {({ getRootProps, getInputProps }) => (
-                  <section>
-                    <div {...getRootProps()}>
-                      <input {...getInputProps()} />
-                      <p>
-                        Kéo và thả một số tệp vào đây hoặc nhấp để chọn tệp
-                      </p>
-                    </div>
-                  </section>
-                )}
-              </Dropzone>
-            </div>
-            {getProductId === undefined ? (
-              <div className="showimages d-flex flex-wrap gap-3">
-                {imgState?.map((i, j) => {
-                  return (
-                    <div className=" position-relative" key={j}>
-                      <button
-                        type="button"
-                        onClick={() => dispatch(delImg(i.public_id))}
-                        className="btn-close position-absolute"
-                        style={{ top: "10px", right: "10px" }}
-                      ></button>
-                      <img src={i.url} alt="" width={200} height={200} />
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              imgProductState === null || (
-                <div className="showimages d-flex flex-wrap gap-3">
-                  {imgProductState?.map((i, j) => {
-                    return (
-                      <div className=" position-relative" key={j}>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            dispatch(resetImgProductState());
-                            dispatch(delImg(i.public_id));
-                          }}
-                          className="btn-close position-absolute"
-                          style={{ top: "10px", right: "10px" }}
-                        ></button>
-                        <img src={i.url} alt="" width={200} height={200} />
-                      </div>
-                    );
-                  })}
-                  {imgState?.map((i, j) => {
-                    return (
-                      <div className=" position-relative" key={j}>
-                        <button
-                          type="button"
-                          onClick={() => dispatch(delImg(i.public_id))}
-                          className="btn-close position-absolute"
-                          style={{ top: "10px", right: "10px" }}
-                        ></button>
-                        <img src={i.url} alt="" width={200} height={200} />
-                      </div>
-                    );
-                  })}
-                </div>
-              )
-            )}
-          </div> */}
           <div className="form-group">
             <div className="d-flex align-items-center justify-content-between mb-2">
               <label htmlFor="productName">Mẫu</label>
@@ -409,7 +332,8 @@ const Addproduct = () => {
             onClick={() => {
               formik.submitForm();
             }}
-          // disabled={!!formik?.errors}
+            loading={loading}
+            disabled={!!formik?.errors || loading}
           >
             {getProductId !== undefined ? "Sửa" : "Thêm"} Sản Phẩm
           </Button>

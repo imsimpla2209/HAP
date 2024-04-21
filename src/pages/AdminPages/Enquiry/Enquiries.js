@@ -12,6 +12,7 @@ import {
 import { AiFillDelete, AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import CustomModal from "../../../components/CustomModal";
+import { getUserProfile } from "features/customer/user/authSlice";
 const columns = [
   {
     title: "SNo",
@@ -39,11 +40,11 @@ const columns = [
     dataIndex: "action",
   },
 ];
-
 const Enquiries = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [enqId, setenqId] = useState("");
+
   const showModal = (e) => {
     setOpen(true);
     setenqId(e);

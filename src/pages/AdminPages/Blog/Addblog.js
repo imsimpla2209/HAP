@@ -25,6 +25,9 @@ import {
 
 // import { getBlogcats } from "../../../features/admin/blogcat/blogcatSlice";
 import { resetImgProductState } from "../../../features/product/productSlice";
+import { DefaultUpload } from "components/Upload";
+import { fetchAllToCL } from "utils/upload";
+import blogService from "features/blog/blogService";
 let schema = yup.object().shape({
   title: yup.string().required("Nhập tên bài"),
   description: yup.string().required("Nhập nội dung bài đăng"),
@@ -41,12 +44,16 @@ const Addblog = () => {
   console.log(blogState);
   const imgBlogState = useSelector((state) => state.blog.blogImages);
   const { blogName, blogDesc, blogImages } = blogState;
+  const [files, setFiles] = useState([])
 
-  const [images, setImages] = useState([]);
-
-  // useEffect(() => {
-  //   dispatch(getBlogcats());
-  // }, []);
+  const normFile = (e) => {
+    // handle event file changes in upload and dragger components
+    const fileList = e
+    console.log('file', e)
+    fileList[0] = { ...fileList[0], saved: false }
+    setFiles(fileList)
+    return e
+  }
   useEffect(() => {
     if (getBlogId !== undefined) {
       dispatch(getABlog(getBlogId));
@@ -59,30 +66,8 @@ const Addblog = () => {
   const img = [];
 
   useEffect(() => {
-    imgState.forEach((i) => {
-      img.push({
-        public_id: i.public_id,
-        url: i.url,
-      });
-    });
-
-    formik.setValues({
-      ...formik.values,
-      images: [...img],
-    });
-  }, [imgState]);
-
-  useEffect(() => {
     formik.values.images = img;
   }, [blogImages]);
-
-  const handleDrop = (acceptedFiles) => {
-    dispatch(uploadImg(acceptedFiles));
-    formik.setValues({
-      ...formik.values,
-      images: [...formik.values.images],
-    });
-  };
 
   console.log(blogName);
   console.log(blogDesc);
@@ -95,25 +80,41 @@ const Addblog = () => {
       images: blogImages || "",
     },
     validationSchema: schema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log(values); // Log the values here
-      if (getBlogId !== undefined) {
-        const data = { id: getBlogId, blogData: values };
-        dispatch(updateBlog(data));
-        formik.resetForm();
-        setTimeout(() => {
-          navigate("/admin/blog-list");
-          dispatch(resetState());
-          dispatch(resetUploadState());
-        }, 1000);
-      } else {
-        console.log(values);
-        dispatch(createBlog(values));
-        formik.resetForm();
-        setTimeout(() => {
-          navigate("/admin/blog-list");
-          dispatch(resetUploadState());
-        }, 1000);
+      try {
+        if (
+          !files?.[0]?.saved && files?.[0]
+        ) {
+          delete files?.[0]?.saved
+          const fileNameList = await fetchAllToCL(files?.map(file => file?.originFileObj))
+          values.thumbnail = fileNameList?.[0]?.path
+        }
+        if (getBlogId !== undefined) {
+          const data = { id: getBlogId, blogData: values };
+
+          dispatch(updateBlog(data));
+          await blogService.updateBlog(data)
+          formik.resetForm();
+          toast.success("Sửa Tin Tức thành công")
+          setTimeout(() => {
+            navigate("/admin/blog-list");
+            dispatch(resetState());
+            dispatch(resetUploadState());
+          }, 100);
+
+        } else {
+          await blogService.createBlog(values)
+          toast.success("Đăng tải Tin Tức thành công")
+
+          formik.resetForm();
+          setTimeout(() => {
+            navigate("/admin/blog-list");
+            dispatch(resetUploadState());
+          }, 100);
+        }
+      } catch (error) {
+        toast.error("Có lỗi xảy ra vui lòng thử lại")
       }
     },
   });
@@ -151,36 +152,15 @@ const Addblog = () => {
           )}
           <div className="mb-4"></div>
           <div className="form-group">
-            <div className="upload-form bg-white border-1 p-5 text-center">
-              <Dropzone onDrop={handleDrop}>
-                {({ getRootProps, getInputProps }) => (
-                  <section>
-                    <div {...getRootProps()}>
-                      <input {...getInputProps()} />
-                      <p>
-                        Thả đính kèm vào đây
-                      </p>
-                    </div>
-                  </section>
-                )}
-              </Dropzone>
-            </div>
-            <div className="">
-              {imgState && imgState.length > 0 && (
-                <div className="showimages d-flex flex-wrap gap-3">
-                  {imgState.map((image, index) => (
-                    <div className=" position-relative" key={index}>
-                      <button
-                        type="button"
-                        onClick={() => dispatch(delImg(image.public_id))}
-                        className="btn-close position-absolute"
-                        style={{ top: "10px", right: "10px" }}
-                      ></button>
-                      <img src={image.url} alt="" width={200} height={200} />
-                    </div>
-                  ))}
-                </div>
-              )}
+            <div className="mt-3 py-2 pb-4">
+              <p className="fw-bold">Ảnh nền</p>
+
+              <div className="attachments-cn">
+                <DefaultUpload normFile={normFile} files={files} maxCount={1}></DefaultUpload>
+              </div>
+              <p className="my-3 mx-4 ">
+                Bạn có thể đính kèm tối đa 1 tệp có kích thước bằng <strong>25MB</strong>{' '}
+              </p>
             </div>
           </div>
           <button

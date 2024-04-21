@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { createCollection, getACollection, resetState, updateCol } from "features/collections/collectionsSlice";
 import { fetchAllToCL } from "utils/upload";
+import collectionService from "features/collections/collectionsService";
 
 
 let schema = yup.object().shape({
@@ -74,28 +75,36 @@ const AddCollection = () => {
     onSubmit: async (values) => {
       console.log(values); // Log the values here
       console.log(getCollectionId)
-      if (
-        !files?.[0]?.saved && files?.[0]
-      ) {
-        delete files?.[0]?.saved
-        const fileNameList = await fetchAllToCL(files?.map(file => file?.originFileObj))
-        values.thumbnail = fileNameList?.[0]?.path
-      }
-      if (getCollectionId !== undefined) {
-        const data = { id: getCollectionId, colData: values };
-        dispatch(updateCol(data));
-        formik.resetForm();
-        setTimeout(() => {
-          navigate("/admin/collection-list");
-          dispatch(resetState());
-        }, 1000);
-      } else {
-        console.log(values);
-        dispatch(createCollection(values));
-        formik.resetForm();
-        setTimeout(() => {
-          navigate("/admin/collection-list");
-        }, 1000);
+      try {
+        if (
+          !files?.[0]?.saved && files?.[0]
+        ) {
+          delete files?.[0]?.saved
+          const fileNameList = await fetchAllToCL(files?.map(file => file?.originFileObj))
+          values.thumbnail = fileNameList?.[0]?.path
+        }
+        if (getCollectionId !== undefined) {
+          const data = { id: getCollectionId, colData: values };
+          dispatch(updateCol(data));
+          await collectionService.updateCollection(values)
+          toast.success("Sửa bộ sản phẩm thành công")
+          formik.resetForm();
+          setTimeout(() => {
+            navigate("/admin/collection-list");
+            dispatch(resetState());
+          }, 100);
+        } else {
+          console.log(values);
+          await collectionService.createCollection(values)
+          toast.success("Thêm sản phẩm thành công")
+
+          formik.resetForm();
+          setTimeout(() => {
+            navigate("/admin/collection-list");
+          }, 1000);
+        }
+      } catch (error) {
+        toast.error("Có Lỗi Vui Lòng Thử Lại")
       }
     },
   });

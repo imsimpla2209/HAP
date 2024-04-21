@@ -2,6 +2,7 @@
 import { getCollections } from "features/collections/collectionsSlice";
 import { contactService } from "features/customer/contact/contactService";
 import { createQuery } from "features/customer/contact/contactSlice";
+import { getUserProfile } from "features/customer/user/authSlice";
 import { getProducts } from "features/product/productSlice";
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
@@ -30,13 +31,20 @@ const InformPrice = ({
   const dispatch = useDispatch()
   const productState = useSelector((state) => state.product.products);
   const collectionState = useSelector((state) => state.collections.collections);
+  const userState = useSelector((state) => state?.auth?.userInfor);
+  const getUser = () => {
+    dispatch(getUserProfile());
+  };
 
+  useEffect(() => {
+    getUser();
+  }, []);
   const formik = useFormik({
     initialValues: {
-      name: "",
+      name: userState?.lastName + " " + userState?.firstName || "",
       comment: "",
-      email: "",
-      mobile: ""
+      email: userState?.email || "",
+      mobile: userState?.phoneNumber || ""
     },
     validationSchema: contactSchema,
     onSubmit: async (values) => {

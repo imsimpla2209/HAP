@@ -1,14 +1,15 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
-import React from "react";
+import React, { useEffect } from "react";
 import BreadCrumb from "../../components/BreadCrumb";
 import Meta from "../../components/Meta";
 import { AiOutlineHome, AiOutlineMail } from "react-icons/ai";
 import { BiPhoneCall, BiInfoCircle } from "react-icons/bi";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createQuery } from "../../features/customer/contact/contactSlice";
 import { toast } from "react-toastify";
+import { getUserProfile } from "features/customer/user/authSlice";
 
 
 const contactSchema = yup.object({
@@ -20,12 +21,22 @@ const contactSchema = yup.object({
 
 const Contact = () => {
   const dispatch = useDispatch()
+
+  const userState = useSelector((state) => state?.auth?.userInfor);
+  const getUser = () => {
+    dispatch(getUserProfile());
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   const formik = useFormik({
     initialValues: {
-      name: "",
+      name: userState?.lastName + " " + userState?.firstName || "",
       comment: "",
-      email: "",
-      mobile: ""
+      email: userState?.email || "",
+      mobile: userState?.phoneNumber || ""
     },
     validationSchema: contactSchema,
     onSubmit: (values) => {
