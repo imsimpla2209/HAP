@@ -44,7 +44,7 @@ const Addblog = () => {
   const blogState = useSelector((state) => state.blog);
   console.log(blogState);
   const imgBlogState = useSelector((state) => state.blog.blogImages);
-  const { blogName, blogDesc, blogImages } = blogState;
+  const { title, content, blogImages } = blogState;
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false);
 
@@ -71,14 +71,14 @@ const Addblog = () => {
     formik.values.images = img;
   }, [blogImages]);
 
-  console.log(blogName);
-  console.log(blogDesc);
+  console.log(title);
+  console.log(content);
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      title: blogName || "",
-      description: blogDesc || "",
+      title: title || "",
+      description: content || "",
     },
     validationSchema: schema,
     onSubmit: async (values) => {
