@@ -531,7 +531,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="special-wrapper py-5 home-wrapper-2 mb-0">
+      <section className="special-wrapper py-3 home-wrapper-2 mb-0">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
@@ -689,7 +689,7 @@ const Home = () => {
         </div>
       </section> */}
 
-      <section className="blog-wrapper py-5 home-wrapper-2 mt-0">
+      <section className="blog-wrapper py-3 home-wrapper-2 mt-0">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">

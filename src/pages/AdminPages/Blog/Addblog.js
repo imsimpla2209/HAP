@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { React, useEffect, useState } from "react";
+import { React, useCallback, useEffect, useRef, useState } from "react";
 import CustomInput from "../../../components/CustomInput";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -123,6 +123,33 @@ const Addblog = () => {
     },
   });
 
+  const reactQuillRef = useRef(null);
+
+
+  const uploadToCloudinary = async (file) => {
+    const data = await fetchAllToCL([file], true)
+    const url = data?.[0]?.path;
+    return url
+  }
+
+  const imageHandler = useCallback(() => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
+    input.onchange = async () => {
+      if (input !== null && input.files !== null) {
+        const file = input.files[0];
+        const url = await uploadToCloudinary(file);
+        const quill = reactQuillRef.current;
+        if (quill) {
+          const range = quill.getEditorSelection();
+          range && quill.getEditor().insertEmbed(range.index, "image", url);
+        }
+      }
+    };
+  }, []);
+
   return (
     <div>
       <h3 className="mb-4 title">
@@ -148,8 +175,51 @@ const Addblog = () => {
             theme="snow"
             id="description"
             name="description"
+            ref={reactQuillRef}
             onChange={(value) => formik.setFieldValue("description", value)}
             value={formik.values.description}
+            placeholder="Bắt Đầu Viết..."
+            modules={{
+              toolbar: {
+                container: [
+                  [{ header: "1" }, { header: "2" }, { font: [] }],
+                  [{ size: [] }],
+                  ["bold", "italic", "underline", "strike", "blockquote"],
+                  [
+                    { list: "ordered" },
+                    { list: "bullet" },
+                    { indent: "-1" },
+                    { indent: "+1" },
+                  ],
+                  ["link", "image", "video"],
+                  ["code-block"],
+                  ["clean"],
+                ],
+                handlers: {
+                  image: imageHandler,   // <- 
+                },
+              },
+              clipboard: {
+                matchVisual: false,
+              },
+            }}
+            formats={[
+              "header",
+              "font",
+              "size",
+              "bold",
+              "italic",
+              "underline",
+              "strike",
+              "blockquote",
+              "list",
+              "bullet",
+              "indent",
+              "link",
+              "image",
+              "video",
+              "code-block",
+            ]}
           />
           {formik.touched.description && formik.errors.description && (
             <div className="error">{formik.errors.description}</div>

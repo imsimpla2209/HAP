@@ -117,12 +117,12 @@ const Header = ({ history }) => {
       <header className="header-top-strip py-1" >
         <div className="container-xxl">
           <div className="row">
-            <div className="col-md-6 col-12">
+            <div className="col-sm-6 col-12">
               <h5 className="gradient-yellow-text mb-0">
                 Hà An Phát
               </h5>
             </div>
-            <div className="col-md-6 col-12 text-end align-items-end d-flex justify-content-end gap-3">
+            <div className="col-sm-6 col-12 text-end align-items-end d-flex justify-content-end gap-3">
               <div className="menu-links">
                 <a className="text-end text-white mb-0 link-light" href="tel: 0345532150">
                   <FaPhoneAlt className="me-2 mb-1" />

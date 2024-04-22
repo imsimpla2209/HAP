@@ -86,9 +86,9 @@ const SingleProduct = () => {
   }, [cartState]);
   const hexToRgb = (hex) => {
     hex = hex?.replace("#", "");
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
+    const r = parseInt(hex?.substring(0, 2), 16);
+    const g = parseInt(hex?.substring(2, 4), 16);
+    const b = parseInt(hex?.substring(4, 6), 16);
     return [r, g, b];
   };
 
@@ -186,11 +186,13 @@ const SingleProduct = () => {
     }
   ]
 
+  console.log('s', productState?.[0]?.image)
+
   return (
     <>
       <ScrollToTopOnMount key={getProductId} />
       <Meta title={"Chi tiết sản phẩm"} />
-      <BreadCrumb title={productState?.productName} imageUrl={productState?.image} />
+      <BreadCrumb title={productState?.productName} imageUrl={productState?.image?.[0]?.path} />
       <div className="main-product-wrapper home-wrapper-2 py-5">
         <div className="container-xxl">
           <div className="row">

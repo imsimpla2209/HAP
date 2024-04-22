@@ -8,16 +8,24 @@ const BreadCrumb = (props) => {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     width: '100%',
-    height: '100vh', // Adjust this as per your requirement
+    height: '75px', // Adjust this as per your requirement
   };
 
   return (
-    <div className='breadscrumb mb-0 py-4' style={props?.imageUrl ? divStyle : {}}>
+    <div className='breadscrumb mb-0 py-4' style={props?.imageUrl ? divStyle : {
+      backgroundColor: "#000000",
+    }}>
       <div className="container-xxl">
         <div className="row">
           <div className="col-12">
-            <p className="text-center mb-0">
-              <Link to="/" className="text-dark me-1">
+            <p className="text-center mb-0 " style={{
+              fontWeight: '700',
+              color: 'whiteSmoke',
+            }}>
+              <Link to="/" className="me-1" style={{
+                fontWeight: '700',
+                color: 'whiteSmoke',
+              }}>
                 Trang chủ  /
               </Link>
               {title}

@@ -130,6 +130,7 @@ export const productSlice = createSlice({
         state.voteStar = action.payload.voteStar;
         state.sold = action.payload.sold;
         state.singleProduct = action.payload;
+        state.image = action.image;
       })
       .addCase(getAProduct.rejected, (state, action) => {
         state.isLoading = false;
