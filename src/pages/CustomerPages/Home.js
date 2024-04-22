@@ -531,7 +531,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="special-wrapper py-5 home-wrapper-2">
+      <section className="special-wrapper py-5 home-wrapper-2 mb-0">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
@@ -559,12 +559,12 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="popular-wrapper py-5 home-wrapper-2">
+      {/* <section className="popular-wrapper py-5 home-wrapper-2 mb-0">
         <div className="container-xxl">
           <div className="row ">
-            {/* <div className="col-12">
+            <div className="col-12">
               <h3 className="section-heading">Our Popular Products</h3>
-            </div> */}
+            </div>
             <div className="row ">
               {productState &&
                 productState
@@ -646,18 +646,17 @@ const Home = () => {
                         </Link>
                       </div>
                     );
-                    // }
                   })}
             </div>
           </div>
         </div>
-      </section>
-
+      </section> */}
+      {/* 
       <section className="marquee-wrapper py-5">
         <div className="container">
           <div className="row">
             <div className="col-12">
-              {/* <div className="marquee-inner-wrapper bg-white p-3 card-wrapper">
+              <div className="marquee-inner-wrapper bg-white p-3 card-wrapper">
                 <Marquee className="d-flex">
                   <div className="mx-4 w-25">
                     <img src="images/taylor-1.png" alt="brand" />
@@ -684,17 +683,17 @@ const Home = () => {
                     <img src="images/brand-08.png" alt="brand" />
                   </div>
                 </Marquee>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      <section className="blog-wrapper py-5 home-wrapper-2">
+      <section className="blog-wrapper py-5 home-wrapper-2 mt-0">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
-              <h3 className="section-heading">Tin tức mới nhất</h3>
+              <h3 className="section-heading mt-0">Tin tức mới nhất</h3>
             </div>
           </div>
           <div className="row">
@@ -703,7 +702,7 @@ const Home = () => {
               blogState.map((item, index) => {
                 if (index < 4) {
                   return (
-                    <div className="col-3 " key={index}>
+                    <div className="col-md-3 col-12" key={index}>
                       <BlogCard
                         postId={item?.postId}
                         title={item?.title}

@@ -86,7 +86,7 @@ const Addblog = () => {
       try {
         setLoading(true);
         if (
-          !files?.[0]?.saved && files?.[0]
+          !files?.[0]?.saved || files?.[0]
         ) {
           delete files?.[0]?.saved
           const fileNameList = await fetchAllToCL(files?.map(file => file?.originFileObj))
