@@ -122,7 +122,7 @@ const Home = () => {
                 <div className="carousel-inner">
                   <div className="carousel-item active">
                     <img
-                      src="images\bannertet.jpg"
+                      src="images\hapbanner.jpg"
                       className="carousel-img"
                       alt="main banner"
                       style={{
@@ -140,7 +140,7 @@ const Home = () => {
                   </div>
                   <div className="carousel-item">
                     <img
-                      src="images\bannertet.jpg"
+                      src="images\hapbanner.jpg"
                       className="carousel-img"
                       alt="main banner"
                     />
@@ -209,9 +209,11 @@ const Home = () => {
                   </Link>
                 </div>
               </div> */}
-              <div className="row mx-0 py-3 px-4 gap-2" style={{
+              <div className="row mx-0 py-3 px-4" style={{
                 background: '#000000',
-
+                backgroundImage: 'url("images/blackbg6.jpeg")',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
               }}>
                 <div className="col-md-8 col-12">
                   <h5 className="pattern-text-2 my-0" >
@@ -689,7 +691,7 @@ const Home = () => {
         </div>
       </section> */}
 
-      <section className="blog-wrapper py-3 home-wrapper-2 mt-0">
+      <section className="blog-wrapper py-3 pb-5 home-wrapper-2 mt-0">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">

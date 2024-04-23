@@ -112,7 +112,7 @@ a {
   
 }
 .button-other:hover {
-  background-color: var(--color-febd69);
+  background: -webkit-linear-gradient(90deg,  var(--color-bf4800) , #1b1a17);
   color: #131921;
   border: 1px solid transparent;
 
