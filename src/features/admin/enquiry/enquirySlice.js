@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk,createAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import enquiryService from "./enquiryService";
 
 export const getEnquiries = createAsyncThunk(
@@ -98,6 +98,7 @@ export const enquirySlice = createSlice({
         state.enqEmail = action.payload.email;
         state.enqComment = action.payload.comment;
         state.enqStatus = action.payload.status;
+        state.creationDate = action.payload.creationDate;
       })
       .addCase(getAEnquiry.rejected, (state, action) => {
         state.isLoading = false;

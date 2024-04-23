@@ -20,6 +20,11 @@ const login = async (userData) => {
   return response.data;
 };
 
+const getMe = async () => {
+  const response = await instance.get(`Customer/my`, config);
+  return response.data;
+};
+
 const logout = async () => {
   localStorage.clear();
   window.location.href = "/login";
@@ -185,5 +190,6 @@ export const authService = {
   updateOrder,
   updateUserPassword,
   getUserProf,
-  getUsers
+  getUsers,
+  getMe
 };

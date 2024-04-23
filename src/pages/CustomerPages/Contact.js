@@ -22,7 +22,7 @@ const contactSchema = yup.object({
 const Contact = () => {
   const dispatch = useDispatch()
 
-  const userState = useSelector((state) => state?.auth?.userInfor);
+  const userState = useSelector((state) => state?.auth?.myProfile);
   const getUser = () => {
     dispatch(getUserProfile());
   };
@@ -33,7 +33,7 @@ const Contact = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: userState?.lastName + " " + userState?.firstName || "",
+      name: userState?.lastName || "" + " " + userState?.firstName || "",
       comment: "",
       email: userState?.email || "",
       mobile: userState?.phoneNumber || ""

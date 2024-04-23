@@ -3,9 +3,17 @@ import "./App.css";
 
 import CustomerRoutes from "./routes/CustomerRoutes";
 import AdminRoutes from "./routes/AdminRoutes";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getMe } from "features/customer/user/authSlice";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getMe());
+  }, [dispatch]);
+
   return (
     <BrowserRouter>
       <CustomerRoutes />

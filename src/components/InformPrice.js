@@ -31,7 +31,7 @@ const InformPrice = ({
   const dispatch = useDispatch()
   const productState = useSelector((state) => state.product.products);
   const collectionState = useSelector((state) => state.collections.collections);
-  const userState = useSelector((state) => state?.auth?.userInfor);
+  const userState = useSelector((state) => state?.auth?.myProfile);
   const getUser = () => {
     dispatch(getUserProfile());
   };
