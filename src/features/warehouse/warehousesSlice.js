@@ -124,9 +124,10 @@ export const warehouseSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error
-        if (state.isError === true) {
-          toast.info(`Có lỗi xảy ra vui lòng thử lại, ${action.error}`);
-        }
+        toast.error(`Có lỗi xảy ra vui lòng thử lại, ${action.payload?.responseBody?.message}`, {
+          autoClose: 5000,
+        });
+
       }).addCase(getAWarehouse.pending, (state) => {
         state.isLoading = true;
       })
@@ -163,9 +164,10 @@ export const warehouseSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error
-        if (state.isError === true) {
-          toast.info(`Có lỗi xảy ra vui lòng thử lại, ${action.error}`);
-        }
+        toast.error(`Có lỗi xảy ra vui lòng thử lại, ${action.payload?.responseBody?.message}`, {
+          autoClose: 5000,
+        });
+
 
       })
       .addCase(deleteWarehouse.pending, (state) => {
@@ -185,9 +187,10 @@ export const warehouseSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
-        if (state.isError === true) {
-          toast.info(`Có lỗi xảy ra vui lòng thử lại, ${action.error}`);
-        }
+        toast.error(`Có lỗi xảy ra vui lòng thử lại, ${action.payload?.responseBody?.message}`, {
+          autoClose: 5000,
+        });
+
       })
       .addCase(resetState, () => initialState)
       .addCase(resetImgWarehouseState, (state) => {

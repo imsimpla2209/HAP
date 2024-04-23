@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import enquiryService from "./enquiryService";
+import { toast } from "react-toastify";
 
 export const getEnquiries = createAsyncThunk(
   "enquiry/get-enquiries",
@@ -85,6 +86,9 @@ export const enquirySlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
+        toast.error(`Có lỗi xảy ra vui lòng thử lại, ${action.payload?.responseBody?.message}`, {
+          autoClose: 5000,
+        });
       })
       .addCase(getAEnquiry.pending, (state) => {
         state.isLoading = true;

@@ -124,10 +124,10 @@ const Header = ({ history }) => {
             </div>
             <div className="col-sm-6 col-12 text-end align-items-end d-flex justify-content-end gap-3">
               <div className="menu-links">
-                <a className="text-end text-white mb-0 link-light" href="tel: 0345532150">
+                <a className="text-end text-white mb-0 link-light" href="tel: 0904866118">
                   <FaPhoneAlt className="me-2 mb-1" />
                   {" "}
-                  0345532150
+                  0904866118
                 </a>
               </div>
               <div className="menu-links">

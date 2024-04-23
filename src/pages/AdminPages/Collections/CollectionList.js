@@ -24,7 +24,7 @@ const columns = [
   {
     title: "Mô tả",
     dataIndex: "description",
-    // sorter: (a, b) => a.title.length - b.title.length,
+    render: (text) => <div style={{ margin: 0 }} dangerouslySetInnerHTML={{ __html: text }}></div>
   },
   {
     title: "",
