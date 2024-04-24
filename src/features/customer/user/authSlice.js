@@ -25,11 +25,11 @@ export const loginUser = createAsyncThunk(
 
 export const getMe = createAsyncThunk(
   "auth/me",
-  async (thunkAPI) => {
+  async (callback, thunkAPI) => {
     try {
       return await authService.getMe();
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      callback();
     }
   }
 );
@@ -423,14 +423,8 @@ export const authSlice = createSlice({
         state.isError = false;
         state.myProfile = action.payload;
       })
-      .addCase(getMe.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = false;
-        state.isError = true;
-        state.message = action.error;
-        if (action.payload && action.payload.status === 401) {
-          authService.logout();
-        }
+      .addCase(getMe.rejected, async (state, action) => {
+
       })
 
 

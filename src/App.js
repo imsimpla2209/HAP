@@ -1,4 +1,4 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useNavigate } from "react-router-dom";
 import "./App.css";
 
 import CustomerRoutes from "./routes/CustomerRoutes";
@@ -9,16 +9,20 @@ import { getMe } from "features/customer/user/authSlice";
 
 function App() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  const out = () => {
+    localStorage.clear();
+    navigate("/login");
+  }
   useEffect(() => {
-    dispatch(getMe());
-  }, [dispatch]);
+    dispatch(getMe(out));
+  }, []);
 
   return (
-    <BrowserRouter>
+    <>
       <CustomerRoutes />
       <AdminRoutes />
-    </BrowserRouter>
+    </>
   );
 }
 
