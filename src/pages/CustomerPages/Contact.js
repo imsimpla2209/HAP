@@ -15,7 +15,7 @@ import { getUserProfile } from "features/customer/user/authSlice";
 const contactSchema = yup.object({
   name: yup.string().required("Yêu cầu nhập tên"),
   email: yup.string().nullable().email("Email should be valid").required("Yêu cầu nhập Email "),
-  mobile: yup.number().default('').nullable().required("Yêu cầu nhập số điện thoại "),
+  mobile: yup.number().default('').nullable().required("Yêu cầu nhập số điện thoại ").typeError("Yêu cầu nhập số điện thoại "),
   comment: yup.string().default('').nullable().required("Yêu cầu nhập bình luận"),
 })
 
