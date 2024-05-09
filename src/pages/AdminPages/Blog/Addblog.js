@@ -94,7 +94,6 @@ const Addblog = () => {
         }
         if (getBlogId !== undefined) {
           const data = { id: getBlogId, blogData: values };
-
           dispatch(updateBlog(data));
           await blogService.updateBlog(data)
           formik.resetForm();

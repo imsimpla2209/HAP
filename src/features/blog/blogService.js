@@ -24,6 +24,7 @@ const updateBlog = async (blog) => {
     {
       Title: blog.blogData.title,
       Description: blog.blogData.description,
+      Thumbnail: blog.blogData.thumbnail,
       CreationDate: blog.blogData.CreationDate,
       LatestUpdate: blog.blogData.LatestUpdate,
     },
