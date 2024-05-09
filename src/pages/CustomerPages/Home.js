@@ -10,7 +10,7 @@ import BlogCard from "../../components/BlogCard";
 import ProductCard from "../../components/ProductCard";
 import SpecialProduct from "../../components/SpecialProduct";
 import ReactStars from "react-stars";
-import { RightOutlined } from '@ant-design/icons';
+import { RightOutlined } from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
 // import { getAllBLogs } from "../../features/customer/blogs/blogSlice";
@@ -96,29 +96,13 @@ const Home = () => {
       <section className="home-wrapper-1">
         <div className="col-12 mx-auto">
           <div className="row">
-            <div className="col-12 mx-auto" >
+            <div className="col-12 mx-auto">
               <div
-                id="carouselExampleIndicators"
-                className="carousel slide"
+                id="carouselExampleFade"
+                class="carousel slide carousel-fade"
                 // className="main-banner position-relative p-3"
                 data-bs-ride="carousel"
               >
-                <div className="carousel-indicators">
-                  <button
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="0"
-                    className="active"
-                    aria-current="true"
-                    aria-label="Slide 1"
-                  ></button>
-                  <button
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="1"
-                    aria-label="Slide 2"
-                  ></button>
-                </div>
                 <div className="carousel-inner">
                   <div className="carousel-item active">
                     <img
@@ -153,6 +137,36 @@ const Home = () => {
                       </Link> */}
                     </div>
                   </div>
+                  <div className="carousel-item">
+                    <img
+                      src="images\banner3.jpg"
+                      className="carousel-img"
+                      alt="main banner"
+                    />
+                    <div className="main-banner-content position-absolute">
+                      {/* <h4>SUPERCHANGED FOR PROS</h4>
+                      <h5>Guitars LakeWood</h5>
+                      <p></p> */}
+                      {/* <Link to={"/product"} className="button">
+                        Liên hệ ngay
+                      </Link> */}
+                    </div>
+                  </div>
+                  <div className="carousel-item">
+                    <img
+                      src="images\banner5.jpg"
+                      className="carousel-img"
+                      alt="main banner"
+                    />
+                    <div className="main-banner-content position-absolute">
+                      {/* <h4>SUPERCHANGED FOR PROS</h4>
+                      <h5>Guitars LakeWood</h5>
+                      <p></p> */}
+                      {/* <Link to={"/product"} className="button">
+                        Liên hệ ngay
+                      </Link> */}
+                    </div>
+                  </div>
                   {/* <div className="carousel-item">
                     <img
                       src="images\bannertet.jpg"
@@ -170,28 +184,28 @@ const Home = () => {
                   </div> */}
                 </div>
                 <button
-                  className="carousel-control-prev"
+                  class="carousel-control-prev"
                   type="button"
-                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-target="#carouselExampleFade"
                   data-bs-slide="prev"
                 >
                   <span
-                    className="carousel-control-prev-icon"
+                    class="carousel-control-prev-icon"
                     aria-hidden="true"
                   ></span>
-                  <span className="visually-hidden">Previous</span>
+                  <span class="visually-hidden">Previous</span>
                 </button>
                 <button
-                  className="carousel-control-next"
+                  class="carousel-control-next"
                   type="button"
-                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-target="#carouselExampleFade"
                   data-bs-slide="next"
                 >
                   <span
-                    className="carousel-control-next-icon"
+                    class="carousel-control-next-icon"
                     aria-hidden="true"
                   ></span>
-                  <span className="visually-hidden">Next</span>
+                  <span class="visually-hidden">Next</span>
                 </button>
               </div>
               {/* <div className="main-banner position-relative p-3">
@@ -209,14 +223,17 @@ const Home = () => {
                   </Link>
                 </div>
               </div> */}
-              <div className="row mx-0 py-3 px-4" style={{
-                background: '#000000',
-                backgroundImage: 'url("images/blackbg6.jpeg")',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-              }}>
+              <div
+                className="row mx-0 py-3 px-4"
+                style={{
+                  background: "#000000",
+                  backgroundImage: 'url("images/blackbg6.jpeg")',
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                }}
+              >
                 <div className="col-md-8 col-12">
-                  <h5 className="pattern-text-2 my-0" >
+                  <h5 className="pattern-text-2 my-0">
                     Chào mừng đến với Công ty TNHH PT TM XMK Hà An Phát
                   </h5>
                 </div>
@@ -225,7 +242,7 @@ const Home = () => {
                     className="button-other"
                     type="button"
                     onClick={() => {
-                      navigate("/contact")
+                      navigate("/contact");
                     }}
                   >
                     <Space className="pattern-text-2">
@@ -294,15 +311,17 @@ const Home = () => {
           <div className="row">
             <div className="col-12 d-flex align-items-baseline gap-3">
               <FaStarHalfAlt className="fs-4" />
-              <h3 className="section-heading">
-                Video Tiêu Biểu</h3>
+              <h3 className="section-heading">Video Tiêu Biểu</h3>
             </div>
             <div className="col-md-6 col-12">
-              <div className="embed-responsive embed-responsive-21by9 position-relative" style={{
-                height: 0,
-                paddingBottom: "56.25%",
-                overflow: "hidden",
-              }}>
+              <div
+                className="embed-responsive embed-responsive-21by9 position-relative"
+                style={{
+                  height: 0,
+                  paddingBottom: "56.25%",
+                  overflow: "hidden",
+                }}
+              >
                 <iframe
                   loading="lazy"
                   className="embed-responsive-item"
@@ -324,7 +343,10 @@ const Home = () => {
             <div className="col-md-6 d-none d-md-block">
               <div className="d-flex flex-wrap gap-10 justify-content-between align-items">
                 <div className="small-banner position-relative">
-                  <div className="embed-responsive embed-responsive-16by9 position-relative" style={{ paddingTop: "57%" }}>
+                  <div
+                    className="embed-responsive embed-responsive-16by9 position-relative"
+                    style={{ paddingTop: "57%" }}
+                  >
                     <iframe
                       loading="lazy"
                       title="VẬT LIỆU KÍNH TRANG TRÍ & NGHỆ THUẬT - THU HẰNG GLASS 0904 866 118"
@@ -341,10 +363,12 @@ const Home = () => {
                       allowFullScreen=""
                     ></iframe>
                   </div>
-
                 </div>
                 <div className="small-banner position-relative">
-                  <div className="embed-responsive embed-responsive-16by9 position-relative" style={{ paddingTop: "56.25%" }}>
+                  <div
+                    className="embed-responsive embed-responsive-16by9 position-relative"
+                    style={{ paddingTop: "56.25%" }}
+                  >
                     <iframe
                       loading="lazy"
                       title="THU HANG GLASS - CÔNG TY HÀ AN PHÁT"
@@ -363,7 +387,10 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="small-banner position-relative">
-                  <div className="embed-responsive embed-responsive-16by9 position-relative" style={{ paddingTop: "56.25%" }}>
+                  <div
+                    className="embed-responsive embed-responsive-16by9 position-relative"
+                    style={{ paddingTop: "56.25%" }}
+                  >
                     <iframe
                       loading="lazy"
                       title="THU HẰNG THĂM CƠ SỞ SX ĐÁ MINH QUỲNH VĨNH PHÚC - PHÚ THỌ."
@@ -382,7 +409,10 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="small-banner position-relative">
-                  <div className="embed-responsive embed-responsive-16by9 position-relative" style={{ paddingTop: "56.25%" }}>
+                  <div
+                    className="embed-responsive embed-responsive-16by9 position-relative"
+                    style={{ paddingTop: "56.25%" }}
+                  >
                     <iframe
                       loading="lazy"
                       title="CHÚC MỪNG NĂM 2023 - KHAI XUÂN CÔNG TY HÀ AN PHÁT  -  THU HẰNG GLASS HÀ NỘI VIỆT NAM"
@@ -428,7 +458,9 @@ const Home = () => {
                   <img src="images/service-03.png" alt="services" />
                   <div class="d-md-block d-none">
                     <h6 className="pattern-text-2">Hỗ Trợ 24/7</h6>
-                    <p className="mb-0 text-white">Tư vấn bởi chuyên gia tại xưởng</p>
+                    <p className="mb-0 text-white">
+                      Tư vấn bởi chuyên gia tại xưởng
+                    </p>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
@@ -460,7 +492,10 @@ const Home = () => {
             {productState &&
               productState.slice(0, 4).map((item, index) => {
                 return (
-                  <div key={index} className={`${"col-md-3 col-12 mt-md-0 mt-3"}`}>
+                  <div
+                    key={index}
+                    className={`${"col-md-3 col-12 mt-md-0 mt-3"}`}
+                  >
                     <Link className="product-card position-relative">
                       <div className="wishlist-icon position-absolute">
                         <button
@@ -504,7 +539,9 @@ const Home = () => {
                       </Link>
 
                       <div className="product-details">
-                        <h6 className="brand">{item?.category?.categoryName}</h6>
+                        <h6 className="brand">
+                          {item?.category?.categoryName}
+                        </h6>
                         <h5 className="product-title">{item?.productName}</h5>
                         {/* <ReactStars
                             count={5}
@@ -552,8 +589,12 @@ const Home = () => {
                     quantity={10}
                     // sold={3}
                     // price={200}
-                    image={item?.thumbnail ? item?.thumbnail : "https://st4.depositphotos.com/1393072/39779/v/450/depositphotos_397791404-stock-illustration-tool-box-line-icon-house.jpg"}
-                  // totalrating={3}
+                    image={
+                      item?.thumbnail
+                        ? item?.thumbnail
+                        : "https://st4.depositphotos.com/1393072/39779/v/450/depositphotos_397791404-stock-illustration-tool-box-line-icon-house.jpg"
+                    }
+                    // totalrating={3}
                   />
                 );
               })}
@@ -703,8 +744,8 @@ const Home = () => {
               // eslint-disable-next-line array-callback-return
               blogState.map((item, index) => {
                 if (index < 4) {
-                  console.log(item)
-                  console.log(item?.thumbnail)
+                  console.log(item);
+                  console.log(item?.thumbnail);
                   return (
                     <div className="col-md-3 col-12" key={index}>
                       <BlogCard
