@@ -17,17 +17,23 @@ const SpecialProduct = (props) => {
   // console.log(quantity)
   // console.log("sold",sold)
   return (
-    <div className={`${width ? '' : 'col-6'} mb-3`} style={{ width: width || 'auto' }}>
+    <div
+      className={`${width ? "" : "col-6"} mb-3`}
+      style={{ width: width || "auto" }}
+    >
       <div className="special-product-card">
         <div className="d-flex justify-content-between">
           <div>
-            <img
-              src={image}
-              style={{ width: "300px", height: "300px" }}
-              className="img-fluid special-img"
-              alt="watch"
-            />
+            <div>
+              <img
+                src={image}
+                style={{ width: "300px", height: "300px" }}
+                className="img-fluid special-img"
+                alt="watch"
+              />
+            </div>
           </div>
+
           <div className="special-product-content justify-content-between">
             <h5 className="brand"> </h5>
             <h6 className="">{collectionName}</h6>

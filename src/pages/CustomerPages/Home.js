@@ -703,13 +703,16 @@ const Home = () => {
               // eslint-disable-next-line array-callback-return
               blogState.map((item, index) => {
                 if (index < 4) {
+                  console.log(item)
+                  console.log(item?.thumbnail)
                   return (
                     <div className="col-md-3 col-12" key={index}>
                       <BlogCard
                         postId={item?.postId}
                         title={item?.title}
                         content={item?.content}
-                        image="https://img.freepik.com/premium-vector/global-network-connection-world-map-point-line-composition-concept-global-business-internet-technology-social-network-vector-illustration_230610-458.jpg"
+                        thumbnail={item?.thumbnail}
+                        // "https://img.freepik.com/premium-vector/global-network-connection-world-map-point-line-composition-concept-global-business-internet-technology-social-network-vector-illustration_230610-458.jpg"
                       />
                     </div>
                   );

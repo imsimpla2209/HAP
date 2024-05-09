@@ -411,6 +411,10 @@ a {
   border-radius: 10px;
   position: relative;
   overflow: hidden; /* Chắc chắn ảnh sẽ không tràn khỏi khung của div */
+  height: 90%;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: transform 0.5s ease; 
 }
 
 
@@ -648,10 +652,19 @@ a {
   height: 90%;
   background-color: white;
   border-radius: 10px;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: transform 0.5s ease; 
 }
 .special-product-card .special-img{
   display: flex;
-  padding-right: 20px;
+  padding-right: 10%;
+  padding-bottom: 10%;
+  width: 80%;
+  height: 60px; /* Đảm bảo chiều cao của ảnh là 200px */
+  overflow: hidden; /* Ẩn phần ảnh vượt qua chiều cao của div */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 /*Special Product Part End  */
 /*Home Page End*/
