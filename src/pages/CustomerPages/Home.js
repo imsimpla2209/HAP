@@ -408,7 +408,7 @@ const Home = () => {
                     ></iframe>
                   </div>
                 </div>
-                <div className="small-banner position-relative">
+                {/* <div className="small-banner position-relative">
                   <div
                     className="embed-responsive embed-responsive-16by9 position-relative"
                     style={{ paddingTop: "56.25%" }}
@@ -429,7 +429,7 @@ const Home = () => {
                       allowFullScreen=""
                     ></iframe>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

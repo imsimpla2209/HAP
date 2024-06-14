@@ -38,19 +38,19 @@ const Footer = () => {
               <div >
                 <a className="text-white fs-6">Cửa hàng </a>
                 <address className="text-white py-2 mb-1"><br />Địa chỉ: 112 đường Nước Phần Lan, Tứ Liên, Tây Hồ, Hà Nội</address>
-                <a href="tel: +84345532150"
-                  className="mt-4 d-block mb-2 text-white">Số điện thoại: +84345532150</a>
-                <a href="mailto: hdhien2002@gmail.com"
+                <a href="tel: +84904866118"
+                  className="mt-4 d-block mb-2 text-white">Số điện thoại: 0904866118</a>
+                {/* <a href="mailto: hdhien2002@gmail.com"
                   className="mt-4 d-block mb-2 text-white">Email</a>
                 <div class="social-icons d-flex align-items-center gap-30">
                   <a href="#"><i class="fa fa-apple" id="apple"></i></a>
                   <a href="#"><i class="fa fa-twitter" id="twitter"></i></a>
                   <a href="#"><i class="fa fa-github-square github" id="github"></i></a>
                   <a href="#"><i class="fa fa-facebook-square" id="facebook"></i></a>
-                </div>
+                </div> */}
               </div>
             </div>
-            <div className="col-4">
+            {/* <div className="col-4">
               <h4 className='text-white mb-4'>Thông tin</h4>
               <div className="footer-link d-flex flex-column">
                 <Link className="text-white py-2 mb-1">Chính sách bảo mật</Link>
@@ -64,7 +64,7 @@ const Footer = () => {
                 <Link className="text-white py-2 mb-1">Tài khoản</Link>
                 <Link className="text-white py-2 mb-1">Liên hệ</Link>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </footer>
