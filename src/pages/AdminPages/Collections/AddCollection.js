@@ -26,10 +26,10 @@ const AddCollection = () => {
   const location = useLocation();
   const getCollectionId = location.pathname.split("/")[3];
   console.log(getCollectionId);
-  const collectionState = useSelector((state) => state.collections);
+  const collectionState = useSelector((state) => state.collections.singleCollection);
   console.log(collectionState);
   const isEditMode = getCollectionId !== undefined;
-  const { collectionName, Description } = collectionState;
+  const { collectionName, description } = collectionState;
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false);
 
@@ -67,12 +67,13 @@ const AddCollection = () => {
       ]);
     }
   }, [collectionState]);
-
+  // console.log(collectionState.singleCollection.collectionName)
+console.log(description)
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       collectionName: collectionName || "",
-      description: Description || "",
+      description: description || "",
     },
     validationSchema: schema,
     onSubmit: async (values) => {
