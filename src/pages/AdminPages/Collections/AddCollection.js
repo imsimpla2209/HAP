@@ -26,10 +26,12 @@ const AddCollection = () => {
   const location = useLocation();
   const getCollectionId = location.pathname.split("/")[3];
   console.log(getCollectionId);
-  const collectionState = useSelector((state) => state.collections.singleCollection);
+  const collectionState = useSelector((state) => state.collections);
+  const singleCollectionState = collectionState.collections[0]
   console.log(collectionState);
+  console.log(singleCollectionState)
   const isEditMode = getCollectionId !== undefined;
-  const { collectionName, description } = collectionState;
+  const { collectionName, description } = singleCollectionState;
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false);
 
