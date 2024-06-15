@@ -333,7 +333,8 @@ const Home = () => {
                     width: "100%",
                     height: "100%",
                   }}
-                  src="https://www.youtube.com/embed/s3HPZ95J3Q8?feature=oembed"
+                  src="https://www.youtube.com/embed/RQERAjXz6Yw?feature=oembed"
+
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen=""
@@ -357,7 +358,8 @@ const Home = () => {
                         width: "100%",
                         height: "100%",
                       }}
-                      src="https://www.youtube.com/embed/RQERAjXz6Yw?feature=oembed"
+                      src="https://www.youtube.com/embed/s3HPZ95J3Q8?feature=oembed"
+
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       allowFullScreen=""
@@ -570,7 +572,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="special-wrapper py-3 home-wrapper-2 mb-0">
+      {/* <section className="special-wrapper py-3 home-wrapper-2 mb-0">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
@@ -600,7 +602,7 @@ const Home = () => {
               })}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* <section className="popular-wrapper py-5 home-wrapper-2 mb-0">
         <div className="container-xxl">
