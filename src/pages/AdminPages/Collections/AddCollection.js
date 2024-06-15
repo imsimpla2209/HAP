@@ -27,11 +27,13 @@ const AddCollection = () => {
   const getCollectionId = location.pathname.split("/")[3];
   console.log(getCollectionId);
   const collectionState = useSelector((state) => state.collections);
-  const singleCollectionState = collectionState.collections[0]
+  
+
+    // const singleCollectionState = collectionState.collections[0]
+  
   console.log(collectionState);
-  console.log(singleCollectionState)
   const isEditMode = getCollectionId !== undefined;
-  const { collectionName, description } = singleCollectionState;
+  const { collectionName, description } = collectionState;
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false);
 
@@ -74,8 +76,8 @@ console.log(description)
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      collectionName: collectionName || "",
-      description: description || "",
+      collectionName: isEditMode && collectionState.collections?.[0]?.collectionName || "",
+    description: isEditMode && collectionState.collections?.[0]?.description || "",
     },
     validationSchema: schema,
     onSubmit: async (values) => {
@@ -112,6 +114,10 @@ console.log(description)
         }
       } catch (error) {
         toast.error("Có Lỗi Vui Lòng Thử Lại")
+        setTimeout(() => {
+          navigate("/admin/collection-list");
+          dispatch(resetState());
+        }, 100);
       } finally {
         setLoading(false);
       }
