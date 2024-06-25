@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios'
 
 export const instance = axios.create({
-  baseURL: 'https://haanphat.azurewebsites.net/api/',
+  baseURL: 'https://haanphatvipglass.xyz//api/',
 });
 
 
